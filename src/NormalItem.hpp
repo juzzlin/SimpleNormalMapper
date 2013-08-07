@@ -2,13 +2,14 @@
 #define NORMALITEM_HPP
 
 #include <QGraphicsItem>
-#include <QPixmap>
 
 class NormalItem : public QGraphicsItem
 {
 public:
 
-    explicit NormalItem();
+    enum Type {Head, Tail};
+
+    explicit NormalItem(Type type = Head);
 
     //! \reimp
     virtual QRectF boundingRect () const;
@@ -19,6 +20,7 @@ public:
 
 private:
 
+    NormalItem::Type m_type;
 };
 
 #endif // NORMALITEM_HPP

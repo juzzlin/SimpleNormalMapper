@@ -11,7 +11,7 @@
 
 Editor::Editor(const std::vector<std::string> & args)
     : m_scene(new EditorScene(this))
-    , m_view(new EditorView(m_scene))
+    , m_view(new EditorView(*this))
     , m_window(new MainWindow(*this))
     , m_mode(Editor::None)
 {
@@ -20,7 +20,14 @@ Editor::Editor(const std::vector<std::string> & args)
 
 EditorView & Editor::view() const
 {
+    assert(m_view);
     return *m_view;
+}
+
+EditorScene & Editor::scene() const
+{
+    assert(m_scene);
+    return *m_scene;
 }
 
 void Editor::setMode(Editor::Mode mode)

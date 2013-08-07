@@ -33,6 +33,8 @@ public:
 
     EditorView & view() const;
 
+    EditorScene & scene() const;
+
 private:
 
     EditorScene * m_scene;
