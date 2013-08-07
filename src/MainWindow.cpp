@@ -179,7 +179,11 @@ void MainWindow::openImage()
 
     QString fileName = QFileDialog::getOpenFileName(
         this, tr("Open an image"), path, tr("All files (*.*);;JPEG (*.jpg *.jpeg);;PNG (*.png)"));
+    loadImageFile(fileName);
+}
 
+void MainWindow::loadImageFile(QString fileName)
+{
     QImage image;
     if (image.load(fileName))
     {

@@ -30,6 +30,11 @@ Editor::Editor(const std::vector<std::string> & args)
     , m_window(new MainWindow(*this))
     , m_mode(Editor::None)
 {
+    if (args.size() == 2)
+    {
+        m_window->loadImageFile(args.at(1).c_str());
+    }
+
     m_window->show();
 }
 

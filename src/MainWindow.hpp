@@ -29,6 +29,8 @@ public:
 
     MainWindow(Editor & editor);
 
+    void loadImageFile(QString fileName);
+
 protected:
 
     //! \reimp
