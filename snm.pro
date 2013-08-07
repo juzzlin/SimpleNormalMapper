@@ -18,7 +18,8 @@ HEADERS += \
     src/ImageItem.hpp \
     src/MainWindow.hpp \
     src/NormalItem.hpp \
-    src/Normal.hpp
+    src/Normal.hpp \
+    src/Renderer.hpp
 
 SOURCES += \
     src/Editor.cpp \
@@ -28,4 +29,5 @@ SOURCES += \
     src/main.cpp \
     src/MainWindow.cpp \
     src/NormalItem.cpp \
-    src/Normal.cpp
+    src/Normal.cpp \
+    src/Renderer.cpp
