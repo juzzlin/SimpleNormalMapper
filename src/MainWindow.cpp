@@ -112,6 +112,9 @@ void MainWindow::initMenuBar()
     m_deleteNormalsAction->setEnabled(false);
     connect(m_deleteNormalsAction, SIGNAL(triggered()), this, SLOT(deleteNormals()));
     editMenu->addAction(m_deleteNormalsAction);
+
+    QMenu * helpMenu = new QMenu(tr("&Help"), this);
+    menuBar->addMenu(helpMenu);
 }
 
 void MainWindow::initLayout()
