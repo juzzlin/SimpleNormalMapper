@@ -183,6 +183,7 @@ void MainWindow::openImage()
     QImage image;
     if (image.load(fileName))
     {
+        m_editor.clear();
         m_editor.setImage(image);
 
         m_insertNormalsAction->setEnabled(true);

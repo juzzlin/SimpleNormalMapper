@@ -15,13 +15,18 @@
 
 #include <QObject>
 #include <QImage>
+#include <QList>
 
 #include <string>
 #include <vector>
+#include <memory>
+
+#include "Normal.hpp"
 
 class EditorScene;
 class EditorView;
 class MainWindow;
+class Normal;
 
 class Editor : public QObject
 {
@@ -50,6 +55,12 @@ public:
 
     EditorScene & scene() const;
 
+    void addNormal(Normal & normal);
+
+public slots:
+
+    void clear();
+
 private:
 
     EditorScene * m_scene;
@@ -57,4 +68,8 @@ private:
     MainWindow  * m_window;
     QImage        m_image;
     Mode          m_mode;
+
+    typedef std::shared_ptr<Normal> NormalPtr;
+    typedef QList<NormalPtr> NormalList;
+    NormalList m_normals;
 };

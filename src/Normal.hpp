@@ -13,35 +13,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#include <QGraphicsView>
+#ifndef NORMAL_HPP
+#define NORMAL_HPP
 
-class Editor;
+class NormalItem;
 
-class EditorView : public QGraphicsView
+class Normal
 {
 public:
 
-    EditorView(Editor & editor, QWidget * parent = nullptr);
-
-protected:
-
-    //! \reimp
-    void mouseMoveEvent(QMouseEvent * event);
-
-    //! \reimp
-    void mousePressEvent(QMouseEvent * event);
-
-    //! \reimp
-    void mouseReleaseEvent(QMouseEvent * event);
-
-    //! \reimp
-    void keyPressEvent(QKeyEvent * event);
+    Normal(NormalItem & head, NormalItem & tail, NormalItem & knob);
 
 private:
 
-    void addNormal();
-
-    Editor & m_editor;
-    QPoint   m_clickedPos;
-    QPointF  m_clickedScenePos;
+    NormalItem & m_head;
+    NormalItem & m_tail;
+    NormalItem & m_knob;
 };
+
+#endif // NORMAL_HPP

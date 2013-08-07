@@ -69,6 +69,16 @@ void Editor::setImage(QImage image)
     imageItem->setPos(pixmap.width() / 2, pixmap.height() / 2);
 }
 
+void Editor::addNormal(Normal & normal)
+{
+    m_normals << NormalPtr(&normal);
+}
+
+void Editor::clear()
+{
+    m_normals.clear();
+}
+
 Editor::~Editor()
 {
     delete m_window;

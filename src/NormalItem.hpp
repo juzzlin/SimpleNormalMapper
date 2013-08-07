@@ -22,7 +22,7 @@ class NormalItem : public QGraphicsItem
 {
 public:
 
-    enum Type {Head, Tail};
+    enum Type {Head, Tail, Knob};
 
     explicit NormalItem(Type type = Head);
 

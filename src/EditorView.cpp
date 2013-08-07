@@ -39,12 +39,28 @@ void EditorView::mousePressEvent(QMouseEvent * event)
 
     if (m_editor.mode() == Editor::InsertNormals)
     {
-        QGraphicsItem * normalItem = new NormalItem(NormalItem::Head);
-        m_editor.scene().addItem(normalItem);
-        normalItem->setPos(m_clickedScenePos);
+        addNormal();
     }
 
     QGraphicsView::mousePressEvent(event);
+}
+
+void EditorView::addNormal()
+{
+    NormalItem * head = new NormalItem(NormalItem::Head);
+    m_editor.scene().addItem(head);
+    head->setPos(m_clickedScenePos);
+
+    NormalItem * tail = new NormalItem(NormalItem::Tail);
+    m_editor.scene().addItem(tail);
+    tail->setPos(m_clickedScenePos);
+
+    NormalItem * knob = new NormalItem(NormalItem::Knob);
+    m_editor.scene().addItem(knob);
+    knob->setPos(m_clickedScenePos);
+
+    Normal * normal = new Normal(*head, *tail, *knob);
+    m_editor.addNormal(*normal);
 }
 
 void EditorView::mouseReleaseEvent(QMouseEvent * event)
