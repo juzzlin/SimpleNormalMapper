@@ -1,0 +1,21 @@
+README
+======
+
+Simple Normal Mapper is a graphical editor with which one
+can generate normal maps for 2D images. Normal maps are
+used, for example, in 2D games to make an illusion of
+a 3D object.
+
+License
+-------
+
+Simple Normal Mapper source code is licensed under GNU GPLv3. 
+See COPYING for the complete license text.
+
+Installing
+----------
+
+See INSTALL for build and install instructions.
+
+-- Jussi Lind <jussi.lind@iki.fi>
+

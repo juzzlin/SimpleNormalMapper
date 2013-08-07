@@ -1,0 +1,16 @@
+Build & install instructions
+============================
+
+These are build & install instructions for Simple Normal Mapper.
+
+Build dependencies
+------------------
+
+Currently the build depends on Qt5 only.
+
+Building
+--------
+
+The simplest way to build SNM is to import the project into Qt Creator.
+
+-- Jussi Lind <jussi.lind@iki.fi>
