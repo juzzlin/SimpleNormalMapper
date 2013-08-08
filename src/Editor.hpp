@@ -14,6 +14,7 @@
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
 #include <QObject>
+#include <QPixmap>
 #include <QImage>
 #include <QList>
 
@@ -33,6 +34,9 @@ class Editor : public QObject
     Q_OBJECT
 
 public:
+
+    typedef std::shared_ptr<Normal> NormalPtr;
+    typedef QList<NormalPtr> NormalList;
 
     enum Mode
     {
@@ -70,8 +74,7 @@ private:
     MainWindow  * m_window;
     QImage        m_image;
     Mode          m_mode;
+    QPixmap       m_pixmap;
 
-    typedef std::shared_ptr<Normal> NormalPtr;
-    typedef QList<NormalPtr> NormalList;
     NormalList m_normals;
 };

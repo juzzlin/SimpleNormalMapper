@@ -15,6 +15,28 @@
 
 #include "Renderer.hpp"
 
+#include <QDebug>
+
 Renderer::Renderer()
 {
+}
+
+// Note that currently width and height must match the original width and height,
+// because it's assumed in the normal coordinates.
+QPixmap Renderer::render(int width, int height, Renderer::NormalList normals, bool qubic)
+{
+    QPixmap result(width, height);
+
+    for (int j = 0; j < height; j++)
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (Renderer::NormalPtr normal : normals)
+            {
+                qDebug() << normal->location();
+            }
+        }
+    }
+
+    return result;
 }

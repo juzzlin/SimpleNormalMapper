@@ -16,10 +16,24 @@
 #ifndef RENDERER_HPP
 #define RENDERER_HPP
 
+#include <QPixmap>
+#include <QList>
+#include <memory>
+
+#include "Normal.hpp"
+
 class Renderer
 {
 public:
+
+    typedef std::shared_ptr<Normal> NormalPtr;
+    typedef QList<NormalPtr> NormalList;
+
     Renderer();
+
+    QPixmap render(int width, int height, NormalList normals, bool qubic = false);
+
+private:
 };
 
 #endif // RENDERER_HPP

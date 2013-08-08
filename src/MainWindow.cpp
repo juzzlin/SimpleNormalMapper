@@ -16,6 +16,7 @@
 #include "MainWindow.hpp"
 #include "Editor.hpp"
 #include "EditorView.hpp"
+#include "RenderDialog.hpp"
 
 #include <QAction>
 #include <QApplication>
@@ -250,6 +251,10 @@ void MainWindow::moveNormals()
 
 void MainWindow::renderNormalMap()
 {
+    m_editor.renderNormalMap();
+
+    RenderDialog dlg(this);
+    dlg.exec();
 }
 
 void MainWindow::closeEvent(QCloseEvent * event)

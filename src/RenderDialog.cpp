@@ -13,31 +13,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef NORMAL_HPP
-#define NORMAL_HPP
+#include "RenderDialog.hpp"
 
-#include <QVector3D>
-#include <QPointF>
-
-class NormalItem;
-
-class Normal
+RenderDialog::RenderDialog(QWidget * parent) :
+    QDialog(parent)
 {
-public:
+    setWindowTitle(tr("Render"));
 
-    Normal(NormalItem & head, NormalItem & tail, NormalItem & knob);
+    initLayout();
+}
 
-    const QVector3D & vector() const;
+void RenderDialog::initLayout()
+{
+}
 
-    QPointF location() const;
-
-private:
-
-    NormalItem & m_head;
-    NormalItem & m_tail;
-    NormalItem & m_knob;
-
-    QVector3D m_vector;
-};
-
-#endif // NORMAL_HPP
+void RenderDialog::save()
+{
+}

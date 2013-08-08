@@ -18,6 +18,7 @@
 #include "EditorView.hpp"
 #include "ImageItem.hpp"
 #include "MainWindow.hpp"
+#include "Renderer.hpp"
 
 #include <QGraphicsItem>
 #include <QDebug>
@@ -62,16 +63,15 @@ Editor::Mode Editor::mode() const
 
 void Editor::setImage(QImage image)
 {
-    QPixmap pixmap;
-    pixmap.convertFromImage(image);
+    m_pixmap.convertFromImage(image);
 
     m_view->ensureVisible(0, 0, 0, 0);
-    m_scene->setSceneRect(0, 0, pixmap.width(), pixmap.height());
+    m_scene->setSceneRect(0, 0, m_pixmap.width(), m_pixmap.height());
     m_scene->clear();
 
-    QGraphicsItem * imageItem = new ImageItem(pixmap);
+    QGraphicsItem * imageItem = new ImageItem(m_pixmap);
     m_scene->addItem(imageItem);
-    imageItem->setPos(pixmap.width() / 2, pixmap.height() / 2);
+    imageItem->setPos(m_pixmap.width() / 2, m_pixmap.height() / 2);
 }
 
 void Editor::addNormal(Normal & normal)
@@ -86,6 +86,8 @@ void Editor::clear()
 
 void Editor::renderNormalMap()
 {
+    Renderer renderer;
+    renderer.render(m_pixmap.width(), m_pixmap.height(), m_normals);
 }
 
 Editor::~Editor()

@@ -20,5 +20,16 @@ Normal::Normal(NormalItem & head, NormalItem & tail, NormalItem & knob)
     : m_head(head)
     , m_tail(tail)
     , m_knob(knob)
+    , m_vector(0, 0, 1) // Point upwards by default
 {
+}
+
+const QVector3D & Normal::vector() const
+{
+    return m_vector;
+}
+
+QPointF Normal::location() const
+{
+    return m_head.pos();
 }
