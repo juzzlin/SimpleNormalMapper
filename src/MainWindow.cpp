@@ -98,17 +98,17 @@ void MainWindow::initMenuBar()
     QMenu * editMenu = new QMenu(tr("&Edit"), this);
     menuBar->addMenu(editMenu);
 
-    m_insertNormalsAction = new QAction(tr("&Insert normals.."), this);
+    m_insertNormalsAction = new QAction(tr("&Insert normals"), this);
     m_insertNormalsAction->setEnabled(false);
     connect(m_insertNormalsAction, SIGNAL(triggered()), this, SLOT(insertNormals()));
     editMenu->addAction(m_insertNormalsAction);
 
-    m_moveNormalsAction = new QAction(tr("&Move normals.."), this);
+    m_moveNormalsAction = new QAction(tr("&Move normals"), this);
     m_moveNormalsAction->setEnabled(false);
     connect(m_moveNormalsAction, SIGNAL(triggered()), this, SLOT(moveNormals()));
     editMenu->addAction(m_moveNormalsAction);
 
-    m_deleteNormalsAction = new QAction(tr("&Delete normals.."), this);
+    m_deleteNormalsAction = new QAction(tr("&Delete normals"), this);
     m_deleteNormalsAction->setEnabled(false);
     connect(m_deleteNormalsAction, SIGNAL(triggered()), this, SLOT(deleteNormals()));
     editMenu->addAction(m_deleteNormalsAction);
@@ -190,6 +190,8 @@ void MainWindow::loadImageFile(QString fileName)
     QImage image;
     if (image.load(fileName))
     {
+        statusBar()->showMessage(tr("Ready."));
+
         m_editor.clear();
         m_editor.setImage(image);
 
@@ -208,16 +210,19 @@ void MainWindow::loadImageFile(QString fileName)
 void MainWindow::insertNormals()
 {
     m_editor.setMode(Editor::InsertNormals);
+    statusBar()->showMessage(tr("Insert normals.."));
 }
 
 void MainWindow::deleteNormals()
 {
     m_editor.setMode(Editor::DeleteNormals);
+    statusBar()->showMessage(tr("Delete normals.."));
 }
 
 void MainWindow::moveNormals()
 {
     m_editor.setMode(Editor::MoveNormals);
+    statusBar()->showMessage(tr("Move normals.."));
 }
 
 void MainWindow::closeEvent(QCloseEvent * event)
