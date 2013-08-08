@@ -20,7 +20,8 @@ HEADERS += \
     src/NormalItem.hpp \
     src/Normal.hpp \
     src/Renderer.hpp \
-    src/RenderDialog.hpp
+    src/RenderDialog.hpp \
+    src/SettingsDialog.hpp
 
 SOURCES += \
     src/Editor.cpp \
@@ -32,4 +33,5 @@ SOURCES += \
     src/NormalItem.cpp \
     src/Normal.cpp \
     src/Renderer.cpp \
-    src/RenderDialog.cpp
+    src/RenderDialog.cpp \
+    src/SettingsDialog.cpp

@@ -20,6 +20,7 @@ class QAction;
 class QCloseEvent;
 class QSlider;
 class QTextEdit;
+class SettingsDialog;
 
 class MainWindow : public QMainWindow
 {
@@ -64,12 +65,12 @@ private:
 
     void initMenuBar();
 
-    Editor & m_editor;
-
-    QAction   * m_insertNormalsAction;
-    QAction   * m_deleteNormalsAction;
-    QAction   * m_moveNormalsAction;
-    QAction   * m_renderNormalMapAction;
-    QSlider   * m_scaleSlider;
-    QTextEdit * m_console;
+    Editor         & m_editor;
+    QAction        * m_insertNormalsAction;
+    QAction        * m_deleteNormalsAction;
+    QAction        * m_moveNormalsAction;
+    QAction        * m_renderNormalMapAction;
+    QSlider        * m_scaleSlider;
+    QTextEdit      * m_console;
+    SettingsDialog * m_settingsDialog;
 };
