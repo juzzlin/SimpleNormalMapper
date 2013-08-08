@@ -36,6 +36,10 @@ protected:
     //! \reimp
     void closeEvent(QCloseEvent * event);
 
+public slots:
+
+    void enableRendering();
+
 private slots:
 
     void openImage();
@@ -50,6 +54,8 @@ private slots:
 
     void updateScale(int value);
 
+    void renderNormalMap();
+
 private:
 
     void initLayout();
@@ -61,6 +67,7 @@ private:
     QAction   * m_insertNormalsAction;
     QAction   * m_deleteNormalsAction;
     QAction   * m_moveNormalsAction;
+    QAction   * m_renderNormalMapAction;
     QSlider   * m_scaleSlider;
     QTextEdit * m_console;
 };

@@ -81,6 +81,8 @@ MainWindow::MainWindow(Editor & editor)
 
     initMenuBar();
     initLayout();
+
+    connect(&editor.view(), SIGNAL(normalInserted()), this, SLOT(enableRendering()));
 }
 
 void MainWindow::initMenuBar()
@@ -112,6 +114,13 @@ void MainWindow::initMenuBar()
     m_deleteNormalsAction->setEnabled(false);
     connect(m_deleteNormalsAction, SIGNAL(triggered()), this, SLOT(deleteNormals()));
     editMenu->addAction(m_deleteNormalsAction);
+
+    editMenu->addSeparator();
+
+    m_renderNormalMapAction = new QAction(tr("&Render normal map.."), this);
+    m_renderNormalMapAction->setEnabled(false);
+    connect(m_renderNormalMapAction, SIGNAL(triggered()), this, SLOT(renderNormalMap()));
+    editMenu->addAction(m_renderNormalMapAction);
 
     QMenu * helpMenu = new QMenu(tr("&Help"), this);
     menuBar->addMenu(helpMenu);
@@ -170,6 +179,11 @@ void MainWindow::initLayout()
     splitter->setSizes(sizes);
 }
 
+void MainWindow::enableRendering()
+{
+    m_renderNormalMapAction->setEnabled(true);
+}
+
 void MainWindow::openImage()
 {
     // Load recent path
@@ -223,6 +237,10 @@ void MainWindow::moveNormals()
 {
     m_editor.setMode(Editor::MoveNormals);
     statusBar()->showMessage(tr("Move normals.."));
+}
+
+void MainWindow::renderNormalMap()
+{
 }
 
 void MainWindow::closeEvent(QCloseEvent * event)

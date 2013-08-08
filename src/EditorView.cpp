@@ -42,6 +42,8 @@ void EditorView::mousePressEvent(QMouseEvent * event)
         addNormal();
     }
 
+    emit normalInserted();
+
     QGraphicsView::mousePressEvent(event);
 }
 

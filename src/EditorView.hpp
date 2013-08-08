@@ -19,6 +19,8 @@ class Editor;
 
 class EditorView : public QGraphicsView
 {
+    Q_OBJECT
+
 public:
 
     EditorView(Editor & editor, QWidget * parent = nullptr);
@@ -36,6 +38,10 @@ protected:
 
     //! \reimp
     void keyPressEvent(QKeyEvent * event);
+
+signals:
+
+    void normalInserted();
 
 private:
 

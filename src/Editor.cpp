@@ -84,6 +84,10 @@ void Editor::clear()
     m_normals.clear();
 }
 
+void Editor::renderNormalMap()
+{
+}
+
 Editor::~Editor()
 {
     delete m_window;

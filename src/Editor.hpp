@@ -61,6 +61,8 @@ public slots:
 
     void clear();
 
+    void renderNormalMap();
+
 private:
 
     EditorScene * m_scene;
