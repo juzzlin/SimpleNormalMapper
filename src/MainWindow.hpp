@@ -40,6 +40,8 @@ public slots:
 
     void enableRendering();
 
+    void enableNormalEditing();
+
 private slots:
 
     void openImage();

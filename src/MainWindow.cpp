@@ -83,6 +83,7 @@ MainWindow::MainWindow(Editor & editor)
     initLayout();
 
     connect(&editor.view(), SIGNAL(normalInserted()), this, SLOT(enableRendering()));
+    connect(&editor.view(), SIGNAL(normalInserted()), this, SLOT(enableNormalEditing()));
 }
 
 void MainWindow::initMenuBar()
@@ -184,6 +185,12 @@ void MainWindow::enableRendering()
     m_renderNormalMapAction->setEnabled(true);
 }
 
+void MainWindow::enableNormalEditing()
+{
+    m_deleteNormalsAction->setEnabled(true);
+    m_moveNormalsAction->setEnabled(true);
+}
+
 void MainWindow::openImage()
 {
     // Load recent path
@@ -210,8 +217,6 @@ void MainWindow::loadImageFile(QString fileName)
         m_editor.setImage(image);
 
         m_insertNormalsAction->setEnabled(true);
-        m_deleteNormalsAction->setEnabled(true);
-        m_moveNormalsAction->setEnabled(true);
 
         console("Succesfully loaded '" + fileName + "'.");
     }
