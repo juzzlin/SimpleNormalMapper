@@ -22,23 +22,23 @@
 #include <QCloseEvent>
 #include <QDateTime>
 #include <QDebug>
-#include <QHBoxLayout>
-#include <QStandardPaths>
 #include <QDesktopWidget>
 #include <QFileDialog>
+#include <QHBoxLayout>
 #include <QImage>
 #include <QLabel>
+#include <QMainWindow>
+#include <QMenu>
+#include <QMenuBar>
+#include <QMessageBox>
 #include <QSettings>
 #include <QSizePolicy>
 #include <QSlider>
 #include <QSplitter>
 #include <QStatusBar>
+#include <QStandardPaths>
 #include <QTextEdit>
 #include <QVBoxLayout>
-#include <QMainWindow>
-#include <QMenu>
-#include <QMenuBar>
-#include <QMessageBox>
 
 namespace
 {
@@ -115,7 +115,6 @@ void MainWindow::initMenuBar()
     m_deleteNormalsAction->setEnabled(false);
     connect(m_deleteNormalsAction, SIGNAL(triggered()), this, SLOT(deleteNormals()));
     editMenu->addAction(m_deleteNormalsAction);
-
     editMenu->addSeparator();
 
     m_renderNormalMapAction = new QAction(tr("&Render normal map.."), this);
@@ -125,6 +124,11 @@ void MainWindow::initMenuBar()
 
     QMenu * helpMenu = new QMenu(tr("&Help"), this);
     menuBar->addMenu(helpMenu);
+
+    // Add "about Qt"-action
+    QAction * aboutQtAct = new QAction(tr("About &Qt"), this);
+    helpMenu->addAction(aboutQtAct);
+    connect(aboutQtAct, &QAction::triggered, [this]{QMessageBox::aboutQt(this, tr("About Qt"));});
 }
 
 void MainWindow::initLayout()
