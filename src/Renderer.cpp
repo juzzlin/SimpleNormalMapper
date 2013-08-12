@@ -25,6 +25,8 @@ Renderer::Renderer()
 // because it's assumed in the normal coordinates.
 QPixmap Renderer::render(int width, int height, Renderer::NormalList normals, bool qubic)
 {
+    Q_UNUSED(qubic);
+
     QPixmap result(width, height);
 
     for (int j = 0; j < height; j++)

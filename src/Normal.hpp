@@ -25,7 +25,7 @@ class Normal
 {
 public:
 
-    Normal(NormalItem & head, NormalItem & tail, NormalItem & knob);
+    Normal(NormalItem & head, NormalItem & tail);
 
     const QVector3D & vector() const;
 
@@ -35,7 +35,6 @@ private:
 
     NormalItem & m_head;
     NormalItem & m_tail;
-    NormalItem & m_knob;
 
     QVector3D m_vector;
 };

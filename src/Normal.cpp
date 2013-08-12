@@ -16,10 +16,9 @@
 #include "Normal.hpp"
 #include "NormalItem.hpp"
 
-Normal::Normal(NormalItem & head, NormalItem & tail, NormalItem & knob)
+Normal::Normal(NormalItem & head, NormalItem & tail)
     : m_head(head)
     , m_tail(tail)
-    , m_knob(knob)
     , m_vector(0, 0, 1) // Point upwards by default
 {
 }

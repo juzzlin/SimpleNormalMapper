@@ -18,13 +18,15 @@
 
 #include <QGraphicsItem>
 
+class Normal;
+
 class NormalItem : public QGraphicsItem
 {
 public:
 
-    enum Type {Head, Tail, Knob};
+    enum Type {Head, Tail};
 
-    explicit NormalItem(Type type = Head);
+    explicit NormalItem(Type type);
 
     //! \reimp
     virtual QRectF boundingRect () const;
@@ -33,9 +35,19 @@ public:
     virtual void paint(QPainter * painter,
         const QStyleOptionGraphicsItem * option, QWidget * widget = 0);
 
+    //! Note that QGraphicsItem already defines type().
+    Type getType() const;
+
+    void setNormal(Normal & normal);
+
+    Normal & normal() const;
+
 private:
 
     NormalItem::Type m_type;
+    Normal         * m_normal;
+    QColor           m_color;
+    float            m_radius;
 };
 
 #endif // NORMALITEM_HPP

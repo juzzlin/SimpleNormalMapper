@@ -28,6 +28,7 @@ class EditorScene;
 class EditorView;
 class MainWindow;
 class Normal;
+class NormalItem;
 
 class Editor : public QObject
 {
@@ -61,6 +62,14 @@ public:
 
     void addNormal(Normal & normal);
 
+    void setSelectedNormalItem(NormalItem * normal);
+
+    NormalItem * selectedNormalItem() const;
+
+    void setMovedNormalItem(NormalItem * normal);
+
+    NormalItem * movedNormalItem() const;
+
 public slots:
 
     void clear();
@@ -72,6 +81,8 @@ private:
     EditorScene * m_scene;
     EditorView  * m_view;
     MainWindow  * m_window;
+    NormalItem  * m_selectedNormalItem;
+    NormalItem  * m_movedNormalItem;
     QImage        m_image;
     Mode          m_mode;
     QPixmap       m_pixmap;

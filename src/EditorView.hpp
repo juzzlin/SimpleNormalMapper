@@ -16,6 +16,7 @@
 #include <QGraphicsView>
 
 class Editor;
+class NormalItem;
 
 class EditorView : public QGraphicsView
 {
@@ -46,6 +47,10 @@ signals:
 private:
 
     void addNormal();
+
+    void handleMousePressEventOnNormalItem(QMouseEvent & event, NormalItem & normal);
+
+    void handleLeftButtonClickOnNormalItem(NormalItem & normalItem);
 
     Editor & m_editor;
     QPoint   m_clickedPos;

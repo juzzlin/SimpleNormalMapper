@@ -29,6 +29,8 @@ Editor::Editor(const std::vector<std::string> & args)
     : m_scene(new EditorScene(this))
     , m_view(new EditorView(*this))
     , m_window(new MainWindow(*this))
+    , m_selectedNormalItem(nullptr)
+    , m_movedNormalItem(nullptr)
     , m_mode(Editor::None)
 {
     if (args.size() == 2)
@@ -88,6 +90,26 @@ void Editor::renderNormalMap()
 {
     Renderer renderer;
     renderer.render(m_pixmap.width(), m_pixmap.height(), m_normals);
+}
+
+void Editor::setSelectedNormalItem(NormalItem * normal)
+{
+    m_selectedNormalItem = normal;
+}
+
+void Editor::setMovedNormalItem(NormalItem * normal)
+{
+    m_movedNormalItem = normal;
+}
+
+NormalItem * Editor::selectedNormalItem() const
+{
+    return m_selectedNormalItem;
+}
+
+NormalItem * Editor::movedNormalItem() const
+{
+    return m_movedNormalItem;
 }
 
 Editor::~Editor()

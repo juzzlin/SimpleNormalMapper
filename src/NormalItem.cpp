@@ -14,23 +14,30 @@
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
 #include "NormalItem.hpp"
+#include "Normal.hpp"
+
 #include <QPainter>
+#include <cassert>
 
 namespace {
-const int RADIUS = 5;
-const int LINE_WIDTH = 2;
-const QColor HEAD_COLOR(0, 255, 0, 128);
+const int HEAD_RADIUS = 10;
+const int TAIL_RADIUS = 20;
+const int LINE_WIDTH  = 2;
+const QColor HEAD_COLOR(0, 0, 255, 128);
 const QColor TAIL_COLOR(255, 0, 0, 128);
 }
 
 NormalItem::NormalItem(NormalItem::Type type)
     : m_type(type)
+    , m_normal(nullptr)
+    , m_color(type == Head ? HEAD_COLOR : TAIL_COLOR)
+    , m_radius(type == Head ? HEAD_RADIUS : TAIL_RADIUS)
 {
 }
 
 QRectF NormalItem::boundingRect () const
 {
-    return QRectF(-RADIUS / 2, -RADIUS / 2, RADIUS, RADIUS);
+    return QRectF(-m_radius / 2, -m_radius / 2, m_radius, m_radius);
 }
 
 void NormalItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
@@ -40,21 +47,30 @@ void NormalItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * opti
 
     painter->save();
 
-    if (m_type == Head)
-    {
-        painter->setPen(QPen(QBrush(HEAD_COLOR), LINE_WIDTH));
-    }
-    else
-    {
-        painter->setPen(QPen(QBrush(TAIL_COLOR), LINE_WIDTH));
-    }
-
+    painter->setPen(QPen(QBrush(m_color), LINE_WIDTH));
     painter->drawEllipse(
         QPointF(
-            boundingRect().x() + boundingRect().width() / 2  + LINE_WIDTH / 2,
-            boundingRect().y() + boundingRect().height() / 2 + LINE_WIDTH / 2),
-        LINE_WIDTH,
-        LINE_WIDTH);
+            boundingRect().x() + boundingRect().width() / 2  + LINE_WIDTH,
+            boundingRect().y() + boundingRect().height() / 2 + LINE_WIDTH),
+            boundingRect().width() / 2 - LINE_WIDTH,
+            boundingRect().height() / 2 - LINE_WIDTH);
 
     painter->restore();
 }
+
+NormalItem::Type NormalItem::getType() const
+{
+    return m_type;
+}
+
+void NormalItem::setNormal(Normal & normal)
+{
+    m_normal = &normal;
+}
+
+Normal & NormalItem::normal() const
+{
+    assert(m_normal);
+    return *m_normal;
+}
+

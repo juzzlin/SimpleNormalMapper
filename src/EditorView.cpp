@@ -19,6 +19,7 @@
 #include "NormalItem.hpp"
 
 #include <QMouseEvent>
+#include <QDebug>
 
 EditorView::EditorView(Editor & editor, QWidget * parent)
     : QGraphicsView(&editor.scene(), parent)
@@ -29,7 +30,12 @@ EditorView::EditorView(Editor & editor, QWidget * parent)
 
 void EditorView::mouseMoveEvent(QMouseEvent * event)
 {
-    QGraphicsView::mouseMoveEvent(event);
+    const QPointF mouseScenePos = mapToScene(event->pos());
+    if (m_editor.mode() == Editor::MoveNormals &&
+        m_editor.movedNormalItem())
+    {
+        m_editor.movedNormalItem()->setPos(mouseScenePos);
+    }
 }
 
 void EditorView::mousePressEvent(QMouseEvent * event)
@@ -41,36 +47,78 @@ void EditorView::mousePressEvent(QMouseEvent * event)
     {
         addNormal();
     }
+    else if (m_editor.mode() == Editor::MoveNormals)
+    {
+        QList<QGraphicsItem *> items = scene()->items(
+            m_clickedScenePos, Qt::IntersectsItemShape, Qt::DescendingOrder);
 
-    emit normalInserted();
+        if (items.size())
+        {
+            auto iter = items.begin();
+            while (iter != items.end())
+            {
+                QGraphicsItem * item = *iter;
+                if (NormalItem * normalItem = dynamic_cast<NormalItem *>(item))
+                {
+                    handleMousePressEventOnNormalItem(*event, *normalItem);
+                    return;
+                }
 
-    QGraphicsView::mousePressEvent(event);
+                iter++;
+            }
+        }
+    }
 }
 
 void EditorView::addNormal()
 {
-    NormalItem * head = new NormalItem(NormalItem::Head);
-    m_editor.scene().addItem(head);
-    head->setPos(m_clickedScenePos);
-
     NormalItem * tail = new NormalItem(NormalItem::Tail);
     m_editor.scene().addItem(tail);
     tail->setPos(m_clickedScenePos);
 
-    NormalItem * knob = new NormalItem(NormalItem::Knob);
-    m_editor.scene().addItem(knob);
-    knob->setPos(m_clickedScenePos);
+    NormalItem * head = new NormalItem(NormalItem::Head);
+    m_editor.scene().addItem(head);
+    head->setPos(m_clickedScenePos);
 
-    Normal * normal = new Normal(*head, *tail, *knob);
+    Normal * normal = new Normal(*head, *tail);
     m_editor.addNormal(*normal);
+
+    tail->setNormal(*normal);
+    head->setNormal(*normal);
+
+    emit normalInserted();
 }
 
 void EditorView::mouseReleaseEvent(QMouseEvent * event)
 {
-    QGraphicsView::mouseReleaseEvent(event);
+    Q_UNUSED(event);
+
+    if (m_editor.mode() == Editor::MoveNormals &&
+        m_editor.movedNormalItem())
+    {
+        m_editor.movedNormalItem()->setZValue(m_editor.movedNormalItem()->zValue() - 1);
+        m_editor.setMovedNormalItem(nullptr);
+    }
 }
 
 void EditorView::keyPressEvent(QKeyEvent * event)
 {
     QGraphicsView::keyPressEvent(event);
+}
+
+void EditorView::handleMousePressEventOnNormalItem(QMouseEvent & event, NormalItem & normalItem)
+{
+    if (event.button() == Qt::LeftButton)
+    {
+        handleLeftButtonClickOnNormalItem(normalItem);
+    }
+
+    QWidget::mousePressEvent(&event);
+}
+
+void EditorView::handleLeftButtonClickOnNormalItem(NormalItem & normalItem)
+{
+    normalItem.setZValue(normalItem.zValue() + 1);
+    m_editor.setMovedNormalItem(&normalItem);
+    m_editor.setSelectedNormalItem(&normalItem);
 }
