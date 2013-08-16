@@ -34,7 +34,32 @@ void EditorView::mouseMoveEvent(QMouseEvent * event)
     if (m_editor.mode() == Editor::MoveNormals &&
         m_editor.movedNormalItem())
     {
-        m_editor.movedNormalItem()->setPos(mouseScenePos);
+        NormalItem & head =
+            m_editor.movedNormalItem()->getType() == NormalItem::Head ?
+            *m_editor.movedNormalItem() : m_editor.movedNormalItem()->normal().head();
+
+        NormalItem & tail =
+            m_editor.movedNormalItem()->getType() == NormalItem::Tail ?
+            *m_editor.movedNormalItem() : m_editor.movedNormalItem()->normal().tail();
+
+        if (m_editor.movedNormalItem() == &head)
+        {
+            m_editor.movedNormalItem()->setPos(mouseScenePos);
+
+            const QVector2D diff(head.pos() - tail.pos());
+            if (diff.length() > Normal::OUTER_RADIUS)
+            {
+                head.setPos(tail.pos() + (diff.normalized() * Normal::OUTER_RADIUS).toPointF());
+            }
+        }
+        else
+        {
+            const QVector2D moveDiff(mouseScenePos - m_editor.movedNormalItem()->pos());
+            tail.moveBy(moveDiff.x(), moveDiff.y());
+            head.moveBy(moveDiff.x(), moveDiff.y());
+        }
+
+        tail.normal().updateLine();
     }
 }
 
@@ -80,7 +105,11 @@ void EditorView::addNormal()
     m_editor.scene().addItem(head);
     head->setPos(m_clickedScenePos);
 
-    Normal * normal = new Normal(*head, *tail);
+    QGraphicsLineItem * line = new QGraphicsLineItem(
+        tail->pos().x(), tail->pos().y(), head->pos().x(), head->pos().y());
+    m_editor.scene().addItem(line);
+
+    Normal * normal = new Normal(*head, *tail, *line);
     m_editor.addNormal(*normal);
 
     tail->setNormal(*normal);

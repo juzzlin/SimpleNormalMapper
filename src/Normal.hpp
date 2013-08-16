@@ -16,6 +16,7 @@
 #ifndef NORMAL_HPP
 #define NORMAL_HPP
 
+#include <QGraphicsLineItem>
 #include <QVector3D>
 #include <QPointF>
 
@@ -25,18 +26,28 @@ class Normal
 {
 public:
 
-    Normal(NormalItem & head, NormalItem & tail);
+    static const int OUTER_RADIUS = 20;
+
+    Normal(NormalItem & head, NormalItem & tail, QGraphicsLineItem & line);
 
     const QVector3D & vector() const;
 
     QPointF location() const;
 
+    NormalItem & head() const;
+
+    NormalItem & tail() const;
+
+    QGraphicsLineItem & line() const;
+
+    void updateLine();
+
 private:
 
-    NormalItem & m_head;
-    NormalItem & m_tail;
-
-    QVector3D m_vector;
+    NormalItem        & m_head;
+    NormalItem        & m_tail;
+    QGraphicsLineItem & m_line;
+    QVector3D           m_vector;
 };
 
 #endif // NORMAL_HPP

@@ -21,7 +21,6 @@
 
 namespace {
 const int HEAD_RADIUS = 10;
-const int TAIL_RADIUS = 20;
 const int LINE_WIDTH  = 2;
 const QColor HEAD_COLOR(0, 0, 255, 128);
 const QColor TAIL_COLOR(255, 0, 0, 128);
@@ -31,13 +30,13 @@ NormalItem::NormalItem(NormalItem::Type type)
     : m_type(type)
     , m_normal(nullptr)
     , m_color(type == Head ? HEAD_COLOR : TAIL_COLOR)
-    , m_radius(type == Head ? HEAD_RADIUS : TAIL_RADIUS)
+    , m_radius(type == Head ? HEAD_RADIUS : Normal::OUTER_RADIUS)
 {
 }
 
 QRectF NormalItem::boundingRect () const
 {
-    return QRectF(-m_radius / 2, -m_radius / 2, m_radius, m_radius);
+    return QRectF(-m_radius, -m_radius, m_radius * 2, m_radius * 2);
 }
 
 void NormalItem::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)

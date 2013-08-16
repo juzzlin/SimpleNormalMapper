@@ -16,11 +16,16 @@
 #include "Normal.hpp"
 #include "NormalItem.hpp"
 
-Normal::Normal(NormalItem & head, NormalItem & tail)
+#include <QBrush>
+#include <QPen>
+
+Normal::Normal(NormalItem & head, NormalItem & tail, QGraphicsLineItem & line)
     : m_head(head)
     , m_tail(tail)
+    , m_line(line)
     , m_vector(0, 0, 1) // Point upwards by default
 {
+    m_line.setPen(QPen(QBrush(QColor(0, 255, 0, 128)), 2, Qt::SolidLine, Qt::RoundCap));
 }
 
 const QVector3D & Normal::vector() const
@@ -32,3 +37,24 @@ QPointF Normal::location() const
 {
     return m_head.pos();
 }
+
+NormalItem & Normal::head() const
+{
+    return m_head;
+}
+
+NormalItem & Normal::tail() const
+{
+    return m_tail;
+}
+
+QGraphicsLineItem & Normal::line() const
+{
+    return m_line;
+}
+
+void Normal::updateLine()
+{
+    m_line.setLine(m_tail.pos().x(), m_tail.pos().y(), m_head.pos().x(), m_head.pos().y());
+}
+

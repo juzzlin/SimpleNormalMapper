@@ -109,7 +109,7 @@ void MainWindow::initMenuBar()
     connect(m_insertNormalsAction, SIGNAL(triggered()), this, SLOT(insertNormals()));
     editMenu->addAction(m_insertNormalsAction);
 
-    m_moveNormalsAction = new QAction(tr("&Move normals"), this);
+    m_moveNormalsAction = new QAction(tr("&Move/adjust normals"), this);
     m_moveNormalsAction->setEnabled(false);
     connect(m_moveNormalsAction, SIGNAL(triggered()), this, SLOT(moveNormals()));
     editMenu->addAction(m_moveNormalsAction);
