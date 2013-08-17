@@ -2,7 +2,7 @@ TEMPLATE        = app
 TARGET          = snm
 INCLUDEPATH    += .
 QT             += widgets
-QMAKE_CXXFLAGS += -std=c++0x
+QMAKE_CXXFLAGS += -std=c++11
 
 # Qt version check
 !contains(QT_VERSION, ^5\\..*) {
@@ -12,6 +12,7 @@ error("Use at least Qt 5.0.")
 
 # Input
 HEADERS += \
+    src/Config.hpp \
     src/Editor.hpp \
     src/EditorScene.hpp \
     src/EditorView.hpp \
@@ -21,9 +22,10 @@ HEADERS += \
     src/Normal.hpp \
     src/Renderer.hpp \
     src/RenderDialog.hpp \
-    src/SettingsDialog.hpp
+    src/SettingsDialog.hpp \
 
 SOURCES += \
+    src/Config.cpp \
     src/Editor.cpp \
     src/EditorScene.cpp \
     src/EditorView.cpp \
@@ -34,4 +36,4 @@ SOURCES += \
     src/Normal.cpp \
     src/Renderer.cpp \
     src/RenderDialog.cpp \
-    src/SettingsDialog.cpp
+    src/SettingsDialog.cpp \

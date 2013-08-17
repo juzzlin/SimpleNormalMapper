@@ -13,28 +13,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RENDERDIALOG_HPP
-#define RENDERDIALOG_HPP
+#ifndef CONFIG_HPP
+#define CONFIG_HPP
 
-#include <QDialog>
-
-class RenderDialog : public QDialog
+class Config
 {
-    Q_OBJECT
-
 public:
-
-    explicit RenderDialog(QWidget * parent = nullptr);
-
-private slots:
-
-    void render();
-
-    void save();
-
-private:
-
-    void initLayout();
+    Config();
 };
 
-#endif // RENDERDIALOG_HPP
+#endif // CONFIG_HPP

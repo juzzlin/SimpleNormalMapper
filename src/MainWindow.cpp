@@ -207,7 +207,6 @@ void MainWindow::openImage()
 {
     // Load recent path
     QSettings settings(QSETTINGS_COMPANY_NAME, QSETTINGS_SOFTWARE_NAME);
-
     settings.beginGroup(SETTINGS_GROUP);
     QString path = settings.value("recentPath",
     QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).toString();
@@ -258,8 +257,6 @@ void MainWindow::moveNormals()
 
 void MainWindow::renderNormalMap()
 {
-    m_editor.renderNormalMap();
-
     RenderDialog dlg(this);
     dlg.exec();
 }
