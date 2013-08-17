@@ -13,46 +13,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#include <QGraphicsView>
+#ifndef IO_HPP
+#define IO_HPP
 
-class Editor;
-class NormalItem;
+#include <QString>
 
-class EditorView : public QGraphicsView
+class IO
 {
-    Q_OBJECT
-
 public:
 
-    EditorView(Editor & editor, QWidget * parent = nullptr);
+    IO();
 
-protected:
+    void openNormals(QString fileName);
 
-    //! \reimp
-    void mouseMoveEvent(QMouseEvent * event);
-
-    //! \reimp
-    void mousePressEvent(QMouseEvent * event);
-
-    //! \reimp
-    void mouseReleaseEvent(QMouseEvent * event);
-
-    //! \reimp
-    void keyPressEvent(QKeyEvent * event);
-
-signals:
-
-    void normalInserted(bool);
+    void saveNormals(QString fileName);
 
 private:
-
-    void addNormal();
-
-    void handleMousePressEventOnNormalItem(QMouseEvent & event, NormalItem & normal);
-
-    void handleLeftButtonClickOnNormalItem(NormalItem & normalItem);
-
-    Editor & m_editor;
-    QPoint   m_clickedPos;
-    QPointF  m_clickedScenePos;
 };
+
+#endif // IO_HPP

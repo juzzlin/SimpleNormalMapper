@@ -17,6 +17,7 @@ HEADERS += \
     src/EditorScene.hpp \
     src/EditorView.hpp \
     src/ImageItem.hpp \
+    src/IO.hpp \
     src/MainWindow.hpp \
     src/NormalItem.hpp \
     src/Normal.hpp \
@@ -30,6 +31,7 @@ SOURCES += \
     src/EditorScene.cpp \
     src/EditorView.cpp \
     src/ImageItem.cpp \
+    src/IO.cpp \
     src/main.cpp \
     src/MainWindow.cpp \
     src/NormalItem.cpp \

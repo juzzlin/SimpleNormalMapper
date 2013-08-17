@@ -37,15 +37,13 @@ protected:
     //! \reimp
     void closeEvent(QCloseEvent * event);
 
-public slots:
-
-    void enableRendering();
-
-    void enableNormalEditing();
-
 private slots:
 
     void openImage();
+
+    void openNormals();
+
+    void saveNormals();
 
     void insertNormals();
 
@@ -70,6 +68,7 @@ private:
     QAction        * m_deleteNormalsAction;
     QAction        * m_moveNormalsAction;
     QAction        * m_renderNormalMapAction;
+    QAction        * m_saveNormalsAction;
     QSlider        * m_scaleSlider;
     QTextEdit      * m_console;
     SettingsDialog * m_settingsDialog;

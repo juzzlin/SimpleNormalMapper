@@ -115,7 +115,7 @@ void EditorView::addNormal()
     tail->setNormal(*normal);
     head->setNormal(*normal);
 
-    emit normalInserted();
+    emit normalInserted(true);
 }
 
 void EditorView::mouseReleaseEvent(QMouseEvent * event)

@@ -16,6 +16,7 @@
 #include "MainWindow.hpp"
 #include "Editor.hpp"
 #include "EditorView.hpp"
+#include "IO.hpp"
 #include "RenderDialog.hpp"
 #include "SettingsDialog.hpp"
 
@@ -61,6 +62,7 @@ MainWindow::MainWindow(Editor & editor)
     , m_insertNormalsAction(nullptr)
     , m_deleteNormalsAction(nullptr)
     , m_moveNormalsAction(nullptr)
+    , m_saveNormalsAction(nullptr)
     , m_scaleSlider(new QSlider(Qt::Horizontal, this))
     , m_console(new QTextEdit(this))
     , m_settingsDialog(new SettingsDialog(this))
@@ -85,8 +87,10 @@ MainWindow::MainWindow(Editor & editor)
     initMenuBar();
     initLayout();
 
-    connect(&editor.view(), SIGNAL(normalInserted()), this, SLOT(enableRendering()));
-    connect(&editor.view(), SIGNAL(normalInserted()), this, SLOT(enableNormalEditing()));
+    connect(&editor.view(), SIGNAL(normalInserted(bool)), m_renderNormalMapAction, SLOT(setEnabled(bool)));
+    connect(&editor.view(), SIGNAL(normalInserted(bool)), m_deleteNormalsAction, SLOT(setEnabled(bool)));
+    connect(&editor.view(), SIGNAL(normalInserted(bool)), m_moveNormalsAction, SLOT(setEnabled(bool)));
+    connect(&editor.view(), SIGNAL(normalInserted(bool)), m_saveNormalsAction, SLOT(setEnabled(bool)));
 }
 
 void MainWindow::initMenuBar()
@@ -97,9 +101,18 @@ void MainWindow::initMenuBar()
     QMenu * fileMenu = new QMenu(tr("&File"), this);
     menuBar->addMenu(fileMenu);
 
-    QAction * fileOpenAction = new QAction(tr("&Open image.."), this);
-    connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(openImage()));
-    fileMenu->addAction(fileOpenAction);
+    QAction * openImageAction = new QAction(tr("&Open new image.."), this);
+    connect(openImageAction, SIGNAL(triggered()), this, SLOT(openImage()));
+    fileMenu->addAction(openImageAction);
+
+    QAction * openNormalsAction = new QAction(tr("&Open normals.."), this);
+    connect(openNormalsAction, SIGNAL(triggered()), this, SLOT(openNormals()));
+    fileMenu->addAction(openNormalsAction);
+
+    m_saveNormalsAction = new QAction(tr("&Save normals.."), this);
+    connect(m_saveNormalsAction, SIGNAL(triggered()), this, SLOT(saveNormals()));
+    m_saveNormalsAction->setEnabled(false);
+    fileMenu->addAction(m_saveNormalsAction);
 
     QMenu * editMenu = new QMenu(tr("&Edit"), this);
     menuBar->addMenu(editMenu);
@@ -192,17 +205,6 @@ void MainWindow::initLayout()
     splitter->setSizes(sizes);
 }
 
-void MainWindow::enableRendering()
-{
-    m_renderNormalMapAction->setEnabled(true);
-}
-
-void MainWindow::enableNormalEditing()
-{
-    m_deleteNormalsAction->setEnabled(true);
-    m_moveNormalsAction->setEnabled(true);
-}
-
 void MainWindow::openImage()
 {
     // Load recent path
@@ -215,6 +217,37 @@ void MainWindow::openImage()
     QString fileName = QFileDialog::getOpenFileName(
         this, tr("Open an image"), path, tr("All files (*.*);;JPEG (*.jpg *.jpeg);;PNG (*.png)"));
     loadImageFile(fileName);
+}
+
+void MainWindow::openNormals()
+{
+    // Load recent path
+    QSettings settings(QSETTINGS_COMPANY_NAME, QSETTINGS_SOFTWARE_NAME);
+    settings.beginGroup(SETTINGS_GROUP);
+    QString path = settings.value("recentPath",
+    QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).toString();
+    settings.endGroup();
+
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open normals"), path, tr("SNM (*.snm)"));
+    m_editor.io().openNormals(fileName);
+}
+
+void MainWindow::saveNormals()
+{
+    // Load recent path
+    QSettings settings(QSETTINGS_COMPANY_NAME, QSETTINGS_SOFTWARE_NAME);
+    settings.beginGroup(SETTINGS_GROUP);
+    QString path = settings.value("recentPath",
+    QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).toString();
+    settings.endGroup();
+
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save normals"), path, tr("SNM (*.snm)"));
+    if (!fileName.endsWith(".snm"))
+    {
+        fileName.append(".snm");
+    }
+
+    m_editor.io().saveNormals(fileName);
 }
 
 void MainWindow::loadImageFile(QString fileName)

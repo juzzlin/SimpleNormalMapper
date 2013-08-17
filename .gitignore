@@ -22,4 +22,9 @@ moc_RenderDialog.o
 moc_SettingsDialog.cpp
 moc_SettingsDialog.o
 snm
+IO.o
+TODO
+TODO~
+snm.pro.user
+.gitignore~
 
