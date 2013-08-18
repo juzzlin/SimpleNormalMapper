@@ -14,23 +14,15 @@
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
 #include "RenderDialog.hpp"
+#include "Settings.hpp"
 
 #include <QFileDialog>
 #include <QLabel>
 #include <QPixmap>
 #include <QProgressBar>
 #include <QPushButton>
-#include <QSettings>
-#include <QStandardPaths>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-
-namespace
-{
-    const char * QSETTINGS_COMPANY_NAME  = "snm";
-    const char * QSETTINGS_SOFTWARE_NAME = "snm";
-    const char * SETTINGS_GROUP          = "MainWindow";
-}
 
 RenderDialog::RenderDialog(QWidget * parent) :
     QDialog(parent)
@@ -73,13 +65,8 @@ void RenderDialog::render()
 
 void RenderDialog::save()
 {
-    // Load recent path
-    QSettings settings(QSETTINGS_COMPANY_NAME, QSETTINGS_SOFTWARE_NAME);
-    settings.beginGroup(SETTINGS_GROUP);
-    QString path = settings.value("recentPath",
-    QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).toString();
-    settings.endGroup();
-
-    QString fileName = QFileDialog::getSaveFileName(
+    const QString path = Settings::loadRecentResultPath();
+    const QString fileName = QFileDialog::getSaveFileName(
         this, tr("Save the normal map image"), path, tr("JPEG (*.jpg *.jpeg);;PNG (*.png)"));
+    Settings::saveRecentResultPath(fileName);
 }

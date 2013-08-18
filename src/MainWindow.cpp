@@ -18,6 +18,7 @@
 #include "EditorView.hpp"
 #include "IO.hpp"
 #include "RenderDialog.hpp"
+#include "Settings.hpp"
 #include "SettingsDialog.hpp"
 
 #include <QAction>
@@ -34,12 +35,10 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
-#include <QSettings>
 #include <QSizePolicy>
 #include <QSlider>
 #include <QSplitter>
 #include <QStatusBar>
-#include <QStandardPaths>
 #include <QTextEdit>
 #include <QVBoxLayout>
 
@@ -47,9 +46,6 @@ namespace
 {
     const char       * SOFTWARE_NAME           = "Simple Normal Mapper";
     const char       * SOFTWARE_VERSION        = "0.0.0";
-    const char       * QSETTINGS_COMPANY_NAME  = "snm";
-    const char       * QSETTINGS_SOFTWARE_NAME = "snm";
-    const char       * SETTINGS_GROUP          = "MainWindow";
     const int          MARGIN                  = 0;
     const unsigned int MIN_ZOOM                = 0;
     const unsigned int MAX_ZOOM                = 400;
@@ -72,12 +68,7 @@ MainWindow::MainWindow(Editor & editor)
     QStatusBar * statusBar = new QStatusBar(this);
     setStatusBar(statusBar);
 
-    QSettings settings(QSETTINGS_COMPANY_NAME, QSETTINGS_SOFTWARE_NAME);
-
-    // Read dialog size data
-    settings.beginGroup(SETTINGS_GROUP);
-    resize(settings.value("size", QSize(640, 480)).toSize());
-    settings.endGroup();
+    resize(Settings::loadWindowSize());
 
     // Try to center the window.
     QRect geometry(QApplication::desktop()->availableGeometry());
@@ -207,40 +198,24 @@ void MainWindow::initLayout()
 
 void MainWindow::openImage()
 {
-    // Load recent path
-    QSettings settings(QSETTINGS_COMPANY_NAME, QSETTINGS_SOFTWARE_NAME);
-    settings.beginGroup(SETTINGS_GROUP);
-    QString path = settings.value("recentPath",
-    QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).toString();
-    settings.endGroup();
-
-    QString fileName = QFileDialog::getOpenFileName(
+    const QString path = Settings::loadRecentImagePath();
+    const QString fileName = QFileDialog::getOpenFileName(
         this, tr("Open an image"), path, tr("All files (*.*);;JPEG (*.jpg *.jpeg);;PNG (*.png)"));
     loadImageFile(fileName);
+    Settings::saveRecentImagePath(fileName);
 }
 
 void MainWindow::openNormals()
 {
-    // Load recent path
-    QSettings settings(QSETTINGS_COMPANY_NAME, QSETTINGS_SOFTWARE_NAME);
-    settings.beginGroup(SETTINGS_GROUP);
-    QString path = settings.value("recentPath",
-    QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).toString();
-    settings.endGroup();
-
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open normals"), path, tr("SNM (*.snm)"));
+    const QString path = Settings::loadRecentNormalsPath();
+    const QString fileName = QFileDialog::getOpenFileName(this, tr("Open normals"), path, tr("SNM (*.snm)"));
     m_editor.io().openNormals(fileName);
+    Settings::saveRecentNormalsPath(path);
 }
 
 void MainWindow::saveNormals()
 {
-    // Load recent path
-    QSettings settings(QSETTINGS_COMPANY_NAME, QSETTINGS_SOFTWARE_NAME);
-    settings.beginGroup(SETTINGS_GROUP);
-    QString path = settings.value("recentPath",
-    QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).toString();
-    settings.endGroup();
-
+    const QString path = Settings::loadRecentNormalsPath();
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save normals"), path, tr("SNM (*.snm)"));
     if (!fileName.endsWith(".snm"))
     {
@@ -248,6 +223,7 @@ void MainWindow::saveNormals()
     }
 
     m_editor.io().saveNormals(fileName);
+    Settings::saveRecentNormalsPath(fileName);
 }
 
 void MainWindow::loadImageFile(QString fileName)
@@ -296,14 +272,7 @@ void MainWindow::renderNormalMap()
 
 void MainWindow::closeEvent(QCloseEvent * event)
 {
-    // Open settings file
-    QSettings settings(QSETTINGS_COMPANY_NAME, QSETTINGS_SOFTWARE_NAME);
-
-    // Save window size
-    settings.beginGroup(SETTINGS_GROUP);
-    settings.setValue("size", size());
-    settings.endGroup();
-
+    Settings::saveWindowSize(size());
     event->accept();
 }
 
