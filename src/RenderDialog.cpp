@@ -34,7 +34,7 @@ RenderDialog::RenderDialog(QWidget * parent) :
 
 void RenderDialog::initLayout()
 {
-    QVBoxLayout * vLayout = new QVBoxLayout(this);
+    QVBoxLayout * vLayout = new QVBoxLayout;
     QLabel * label = new QLabel(this);
     label->setPixmap(QPixmap(640, 400));
     vLayout->addWidget(label);
@@ -43,7 +43,7 @@ void RenderDialog::initLayout()
     progress->setValue(0);
     vLayout->addWidget(progress);
 
-    QHBoxLayout * hLayout = new QHBoxLayout(this);
+    QHBoxLayout * hLayout = new QHBoxLayout;
     QPushButton * render = new QPushButton(tr("&Render"), this);
     connect(render, SIGNAL(clicked()), this, SLOT(render()));
     hLayout->addWidget(render);
