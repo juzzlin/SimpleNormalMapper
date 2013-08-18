@@ -51,6 +51,10 @@ void EditorView::mouseMoveEvent(QMouseEvent * event)
             {
                 head.setPos(tail.pos() + (diff.normalized() * Normal::OUTER_RADIUS).toPointF());
             }
+
+            const float angle = (1.0 - diff.length() / Normal::OUTER_RADIUS) * 90.0;
+            head.normal().setAngle(angle);
+            head.normal().setDirection(diff);
         }
         else
         {

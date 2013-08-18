@@ -17,6 +17,7 @@
 #define NORMAL_HPP
 
 #include <QGraphicsLineItem>
+#include <QVector2D>
 #include <QVector3D>
 #include <QPointF>
 
@@ -29,6 +30,14 @@ public:
     static const int OUTER_RADIUS = 20;
 
     Normal(NormalItem & head, NormalItem & tail, QGraphicsLineItem & line);
+
+    void setAngle(float degrees);
+
+    float angle() const;
+
+    void setDirection(QVector2D direction);
+
+    const QVector2D & direction() const;
 
     const QVector3D & vector() const;
 
@@ -47,6 +56,8 @@ private:
     NormalItem        & m_head;
     NormalItem        & m_tail;
     QGraphicsLineItem & m_line;
+    float               m_angle;
+    QVector2D           m_direction;
     QVector3D           m_vector;
 };
 

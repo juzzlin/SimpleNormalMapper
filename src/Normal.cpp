@@ -19,13 +19,42 @@
 #include <QBrush>
 #include <QPen>
 
+#include <cmath>
+
 Normal::Normal(NormalItem & head, NormalItem & tail, QGraphicsLineItem & line)
     : m_head(head)
     , m_tail(tail)
     , m_line(line)
+    , m_angle(90)
+    , m_direction(0, 0)
     , m_vector(0, 0, 1) // Point upwards by default
 {
     m_line.setPen(QPen(QBrush(QColor(0, 255, 0, 128)), 2, Qt::SolidLine, Qt::RoundCap));
+}
+
+void Normal::setAngle(float degrees)
+{
+    degrees = std::fmin(90, degrees);
+    degrees = std::fmax(0, degrees);
+    m_vector.setZ(std::sin(degrees * 3.1415 / 180));
+    m_vector.normalize();
+}
+
+float Normal::angle() const
+{
+    return m_angle;
+}
+
+void Normal::setDirection(QVector2D direction)
+{
+    m_vector.setX(direction.x());
+    m_vector.setY(direction.y());
+    m_vector.normalize();
+}
+
+const QVector2D & Normal::direction() const
+{
+    return m_direction;
 }
 
 const QVector3D & Normal::vector() const
