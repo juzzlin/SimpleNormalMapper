@@ -18,13 +18,16 @@
 
 #include <QDialog>
 
+class Editor;
+class QLabel;
+
 class RenderDialog : public QDialog
 {
     Q_OBJECT
 
 public:
 
-    explicit RenderDialog(QWidget * parent = nullptr);
+    explicit RenderDialog(Editor & editor, QWidget * parent = nullptr);
 
 private slots:
 
@@ -35,6 +38,9 @@ private slots:
 private:
 
     void initLayout();
+
+    Editor & m_editor;
+    QLabel * m_pixmapLabel;
 };
 
 #endif // RENDERDIALOG_HPP

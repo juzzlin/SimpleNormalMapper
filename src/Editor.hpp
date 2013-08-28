@@ -57,6 +57,8 @@ public:
 
     void setImage(QImage image);
 
+    QPixmap image() const;
+
     EditorView & view() const;
 
     EditorScene & scene() const;
@@ -77,7 +79,7 @@ public slots:
 
     void clear();
 
-    void renderNormalMap();
+    QPixmap render();
 
 private:
 

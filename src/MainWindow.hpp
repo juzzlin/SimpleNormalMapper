@@ -39,23 +39,23 @@ protected:
 
 private slots:
 
+    void console(QString text);
+
+    void deleteNormals();
+
+    void insertNormals();
+
+    void moveNormals();
+
     void openImage();
 
     void openNormals();
 
+    void openRenderDialog();
+
     void saveNormals();
 
-    void insertNormals();
-
-    void deleteNormals();
-
-    void moveNormals();
-
-    void console(QString text);
-
     void updateScale(int value);
-
-    void renderNormalMap();
 
 private:
 
@@ -67,7 +67,7 @@ private:
     QAction        * m_insertNormalsAction;
     QAction        * m_deleteNormalsAction;
     QAction        * m_moveNormalsAction;
-    QAction        * m_renderNormalMapAction;
+    QAction        * m_openRenderDialogAction;
     QAction        * m_saveNormalsAction;
     QSlider        * m_scaleSlider;
     QTextEdit      * m_console;

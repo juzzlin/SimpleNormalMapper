@@ -14,6 +14,7 @@
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
 #include "RenderDialog.hpp"
+#include "Editor.hpp"
 #include "Settings.hpp"
 
 #include <QFileDialog>
@@ -24,8 +25,10 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
-RenderDialog::RenderDialog(QWidget * parent) :
-    QDialog(parent)
+RenderDialog::RenderDialog(Editor & editor, QWidget * parent)
+    : QDialog(parent)
+    , m_editor(editor)
+    , m_pixmapLabel(nullptr)
 {
     setWindowTitle(tr("Render"));
 
@@ -35,9 +38,10 @@ RenderDialog::RenderDialog(QWidget * parent) :
 void RenderDialog::initLayout()
 {
     QVBoxLayout * vLayout = new QVBoxLayout;
-    QLabel * label = new QLabel(this);
-    label->setPixmap(QPixmap(640, 400));
-    vLayout->addWidget(label);
+    m_pixmapLabel = new QLabel(this);
+    m_pixmapLabel->setPixmap(QPixmap(640, 400));
+    vLayout->addWidget(m_pixmapLabel);
+
     QProgressBar * progress = new QProgressBar(this);
     progress->setRange(0, 100);
     progress->setValue(0);
@@ -60,7 +64,7 @@ void RenderDialog::initLayout()
 
 void RenderDialog::render()
 {
-    // TODO
+    m_pixmapLabel->setPixmap(m_editor.render());
 }
 
 void RenderDialog::save()

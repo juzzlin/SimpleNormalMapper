@@ -17,8 +17,7 @@
 #define RENDERER_HPP
 
 #include <QPixmap>
-#include <QList>
-#include <memory>
+#include <QImage>
 
 #include "Normal.hpp"
 
@@ -26,14 +25,33 @@ class Renderer
 {
 public:
 
-    typedef std::shared_ptr<Normal> NormalPtr;
-    typedef QList<NormalPtr> NormalList;
+    struct HeightCell
+    {
+        float height;
+        QVector3D normal;
+    };
+
+    typedef QVector<HeightCell> HeightMap;
 
     Renderer();
 
-    QPixmap render(int width, int height, NormalList normals, bool qubic = false);
+    QPixmap render(QPixmap input);
 
 private:
+
+    Renderer::HeightMap buildHeightMap();
+
+    QVector3D calculateNormal(int x, int y, float r, float a);
+
+    void calculateNormals(float r);
+
+    float getHeight(int x, int y);
+
+    QImage m_image;
+
+    Renderer::HeightMap m_map;
+
+    int m_width, m_height;
 };
 
 #endif // RENDERER_HPP

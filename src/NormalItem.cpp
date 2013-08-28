@@ -21,6 +21,7 @@
 
 namespace {
 const int HEAD_RADIUS = 10;
+const int OUTER_RADIUS = 20;
 const int LINE_WIDTH  = 2;
 const QColor HEAD_COLOR(0, 0, 255, 128);
 const QColor TAIL_COLOR(255, 0, 0, 128);
@@ -30,7 +31,7 @@ NormalItem::NormalItem(NormalItem::Type type)
     : m_type(type)
     , m_normal(nullptr)
     , m_color(type == Head ? HEAD_COLOR : TAIL_COLOR)
-    , m_radius(type == Head ? HEAD_RADIUS : Normal::OUTER_RADIUS)
+    , m_radius(type == Head ? HEAD_RADIUS : OUTER_RADIUS)
 {
 }
 

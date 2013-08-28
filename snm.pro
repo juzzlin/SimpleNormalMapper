@@ -2,7 +2,7 @@ TEMPLATE        = app
 TARGET          = snm
 INCLUDEPATH    += .
 QT             += widgets
-QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++0x
 
 # Qt version check
 !contains(QT_VERSION, ^5\\..*) {

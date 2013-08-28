@@ -78,6 +78,11 @@ void Editor::setImage(QImage image)
     imageItem->setPos(m_pixmap.width() / 2, m_pixmap.height() / 2);
 }
 
+QPixmap Editor::image() const
+{
+    return m_pixmap;
+}
+
 void Editor::addNormal(Normal & normal)
 {
     m_normals << NormalPtr(&normal);
@@ -88,10 +93,10 @@ void Editor::clear()
     m_normals.clear();
 }
 
-void Editor::renderNormalMap()
+QPixmap Editor::render()
 {
     Renderer renderer;
-    renderer.render(m_pixmap.width(), m_pixmap.height(), m_normals);
+    return renderer.render(m_pixmap);
 }
 
 void Editor::setSelectedNormalItem(NormalItem * normal)

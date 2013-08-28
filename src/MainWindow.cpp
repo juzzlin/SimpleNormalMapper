@@ -78,7 +78,7 @@ MainWindow::MainWindow(Editor & editor)
     initMenuBar();
     initLayout();
 
-    connect(&editor.view(), SIGNAL(normalInserted(bool)), m_renderNormalMapAction, SLOT(setEnabled(bool)));
+    connect(&editor.view(), SIGNAL(normalInserted(bool)), m_openRenderDialogAction, SLOT(setEnabled(bool)));
     connect(&editor.view(), SIGNAL(normalInserted(bool)), m_deleteNormalsAction, SLOT(setEnabled(bool)));
     connect(&editor.view(), SIGNAL(normalInserted(bool)), m_moveNormalsAction, SLOT(setEnabled(bool)));
     connect(&editor.view(), SIGNAL(normalInserted(bool)), m_saveNormalsAction, SLOT(setEnabled(bool)));
@@ -124,10 +124,10 @@ void MainWindow::initMenuBar()
     editMenu->addAction(m_deleteNormalsAction);
     editMenu->addSeparator();
 
-    m_renderNormalMapAction = new QAction(tr("&Render normal map.."), this);
-    m_renderNormalMapAction->setEnabled(false);
-    connect(m_renderNormalMapAction, SIGNAL(triggered()), this, SLOT(renderNormalMap()));
-    editMenu->addAction(m_renderNormalMapAction);
+    m_openRenderDialogAction = new QAction(tr("&Render normal map.."), this);
+    m_openRenderDialogAction->setEnabled(false);
+    connect(m_openRenderDialogAction, SIGNAL(triggered()), this, SLOT(openRenderDialog()));
+    editMenu->addAction(m_openRenderDialogAction);
     editMenu->addSeparator();
 
     QAction * settingsAct = new QAction(tr("&Settings.."), this);
@@ -264,9 +264,9 @@ void MainWindow::moveNormals()
     statusBar()->showMessage(tr("Move normals.."));
 }
 
-void MainWindow::renderNormalMap()
+void MainWindow::openRenderDialog()
 {
-    RenderDialog dlg(this);
+    RenderDialog dlg(m_editor, this);
     dlg.exec();
 }
 
