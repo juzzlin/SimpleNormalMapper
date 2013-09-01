@@ -21,6 +21,8 @@
 
 #include <cmath>
 
+static const int DEFAULT_Z = -10;
+
 Renderer::Renderer()
     : m_width(0)
     , m_height(0)
@@ -61,7 +63,7 @@ Renderer::HeightMap Renderer::buildHeightMap()
 
             if (a == 0)
             {
-                output[index].height = -10;
+                output[index].height = DEFAULT_Z;
             }
             else
             {
@@ -77,10 +79,10 @@ Renderer::HeightMap Renderer::buildHeightMap()
 
 float Renderer::getHeight(int x, int y)
 {
-    x = x < 0 ? 0 : x;
-    x = x >= m_width ? m_width - 1 : x;
-    y = y < 0 ? 0 : y;
-    y = y >= m_height ? m_height - 1 : y;
+    if (x < 0 || x >= m_width || y < 0 || y >= m_height)
+    {
+        return DEFAULT_Z;
+    }
 
     return m_map.at(y * m_width + x).height;
 }
