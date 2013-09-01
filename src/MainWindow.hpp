@@ -41,15 +41,7 @@ private slots:
 
     void console(QString text);
 
-    void deleteNormals();
-
-    void insertNormals();
-
-    void moveNormals();
-
     void openImage();
-
-    void openNormals();
 
     void openRenderDialog();
 
@@ -64,9 +56,6 @@ private:
     void initMenuBar();
 
     Editor         & m_editor;
-    QAction        * m_insertNormalsAction;
-    QAction        * m_deleteNormalsAction;
-    QAction        * m_moveNormalsAction;
     QAction        * m_openRenderDialogAction;
     QAction        * m_saveNormalsAction;
     QSlider        * m_scaleSlider;

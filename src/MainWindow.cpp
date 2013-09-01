@@ -55,9 +55,6 @@ namespace
 
 MainWindow::MainWindow(Editor & editor)
     : m_editor(editor)
-    , m_insertNormalsAction(nullptr)
-    , m_deleteNormalsAction(nullptr)
-    , m_moveNormalsAction(nullptr)
     , m_saveNormalsAction(nullptr)
     , m_scaleSlider(new QSlider(Qt::Horizontal, this))
     , m_console(new QTextEdit(this))
@@ -77,11 +74,6 @@ MainWindow::MainWindow(Editor & editor)
 
     initMenuBar();
     initLayout();
-
-    connect(&editor.view(), SIGNAL(normalInserted(bool)), m_openRenderDialogAction, SLOT(setEnabled(bool)));
-    connect(&editor.view(), SIGNAL(normalInserted(bool)), m_deleteNormalsAction, SLOT(setEnabled(bool)));
-    connect(&editor.view(), SIGNAL(normalInserted(bool)), m_moveNormalsAction, SLOT(setEnabled(bool)));
-    connect(&editor.view(), SIGNAL(normalInserted(bool)), m_saveNormalsAction, SLOT(setEnabled(bool)));
 }
 
 void MainWindow::initMenuBar()
@@ -96,33 +88,13 @@ void MainWindow::initMenuBar()
     connect(openImageAction, SIGNAL(triggered()), this, SLOT(openImage()));
     fileMenu->addAction(openImageAction);
 
-    QAction * openNormalsAction = new QAction(tr("&Open normals.."), this);
-    connect(openNormalsAction, SIGNAL(triggered()), this, SLOT(openNormals()));
-    fileMenu->addAction(openNormalsAction);
-
-    m_saveNormalsAction = new QAction(tr("&Save normals.."), this);
+    m_saveNormalsAction = new QAction(tr("&Save normal map.."), this);
     connect(m_saveNormalsAction, SIGNAL(triggered()), this, SLOT(saveNormals()));
     m_saveNormalsAction->setEnabled(false);
     fileMenu->addAction(m_saveNormalsAction);
 
     QMenu * editMenu = new QMenu(tr("&Edit"), this);
     menuBar->addMenu(editMenu);
-
-    m_insertNormalsAction = new QAction(tr("&Insert normals"), this);
-    m_insertNormalsAction->setEnabled(false);
-    connect(m_insertNormalsAction, SIGNAL(triggered()), this, SLOT(insertNormals()));
-    editMenu->addAction(m_insertNormalsAction);
-
-    m_moveNormalsAction = new QAction(tr("&Move/adjust normals"), this);
-    m_moveNormalsAction->setEnabled(false);
-    connect(m_moveNormalsAction, SIGNAL(triggered()), this, SLOT(moveNormals()));
-    editMenu->addAction(m_moveNormalsAction);
-
-    m_deleteNormalsAction = new QAction(tr("&Delete normals"), this);
-    m_deleteNormalsAction->setEnabled(false);
-    connect(m_deleteNormalsAction, SIGNAL(triggered()), this, SLOT(deleteNormals()));
-    editMenu->addAction(m_deleteNormalsAction);
-    editMenu->addSeparator();
 
     m_openRenderDialogAction = new QAction(tr("&Render normal map.."), this);
     m_openRenderDialogAction->setEnabled(false);
@@ -205,14 +177,6 @@ void MainWindow::openImage()
     Settings::saveRecentImagePath(fileName);
 }
 
-void MainWindow::openNormals()
-{
-    const QString path = Settings::loadRecentNormalsPath();
-    const QString fileName = QFileDialog::getOpenFileName(this, tr("Open normals"), path, tr("SNM (*.snm)"));
-    m_editor.io().openNormals(fileName);
-    Settings::saveRecentNormalsPath(path);
-}
-
 void MainWindow::saveNormals()
 {
     const QString path = Settings::loadRecentNormalsPath();
@@ -236,7 +200,7 @@ void MainWindow::loadImageFile(QString fileName)
         m_editor.clear();
         m_editor.setImage(image);
 
-        m_insertNormalsAction->setEnabled(true);
+        m_openRenderDialogAction->setEnabled(true);
 
         console("Succesfully loaded '" + fileName + "'.");
     }
@@ -244,24 +208,6 @@ void MainWindow::loadImageFile(QString fileName)
     {
         QMessageBox::critical(this, tr("Load image"), tr("Failed to load ") + fileName);
     }
-}
-
-void MainWindow::insertNormals()
-{
-    m_editor.setMode(Editor::InsertNormals);
-    statusBar()->showMessage(tr("Insert normals.."));
-}
-
-void MainWindow::deleteNormals()
-{
-    m_editor.setMode(Editor::DeleteNormals);
-    statusBar()->showMessage(tr("Delete normals.."));
-}
-
-void MainWindow::moveNormals()
-{
-    m_editor.setMode(Editor::MoveNormals);
-    statusBar()->showMessage(tr("Move normals.."));
 }
 
 void MainWindow::openRenderDialog()
