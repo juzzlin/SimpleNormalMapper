@@ -1,13 +1,15 @@
 TEMPLATE        = app
 TARGET          = snm
 INCLUDEPATH    += .
-QT             += widgets
 QMAKE_CXXFLAGS += -std=c++0x
 
 # Qt version check
-!contains(QT_VERSION, ^5\\..*) {
-message("Cannot build Qt Creator with Qt version $${QT_VERSION}.")
-error("Use at least Qt 5.0.")
+message("Building for Qt version $${QT_VERSION}.")
+contains(QT_VERSION, ^5\\..*) {
+QT += widgets
+DEFINES += USE_QT5
+} else {
+QT += gui
 }
 
 # Input

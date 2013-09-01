@@ -16,7 +16,11 @@
 #include "Settings.hpp"
 
 #include <QSettings>
+#ifdef USE_QT5
 #include <QStandardPaths>
+#else
+#include <QDesktopServices>
+#endif
 
 namespace
 {
@@ -26,12 +30,21 @@ namespace
     const char * SETTINGS_GROUP_MAIN_WINDOW = "MainWindow";
 }
 
+QString homeLocation()
+{
+#ifdef USE_QT5
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+#else
+    return QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#endif
+
+}
+
 QString Settings::loadRecentResultPath()
 {
     QSettings settings(QSETTINGS_COMPANY_NAME, QSETTINGS_SOFTWARE_NAME);
     settings.beginGroup(SETTINGS_GROUP);
-    const QString path = settings.value("recentResultPath",
-        QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).toString();
+    const QString path = settings.value("recentResultPath", homeLocation()).toString();
     settings.endGroup();
     return path;
 }
@@ -48,8 +61,7 @@ QString Settings::loadRecentImagePath()
 {
     QSettings settings(QSETTINGS_COMPANY_NAME, QSETTINGS_SOFTWARE_NAME);
     settings.beginGroup(SETTINGS_GROUP);
-    const QString path = settings.value("recentImagePath",
-        QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).toString();
+    const QString path = settings.value("recentImagePath", homeLocation()).toString();
     settings.endGroup();
     return path;
 }
@@ -66,8 +78,7 @@ QString Settings::loadRecentNormalsPath()
 {
     QSettings settings(QSETTINGS_COMPANY_NAME, QSETTINGS_SOFTWARE_NAME);
     settings.beginGroup(SETTINGS_GROUP);
-    const QString path = settings.value("recentNormalsPath",
-        QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).toString();
+    const QString path = settings.value("recentNormalsPath", homeLocation()).toString();
     settings.endGroup();
     return path;
 }

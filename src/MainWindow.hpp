@@ -47,6 +47,8 @@ private slots:
 
     void saveNormals();
 
+    void showAboutQt();
+
     void updateScale(int value);
 
 private:

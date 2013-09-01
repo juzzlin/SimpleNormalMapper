@@ -112,7 +112,12 @@ void MainWindow::initMenuBar()
     // Add "about Qt"-action
     QAction * aboutQtAct = new QAction(tr("About &Qt"), this);
     helpMenu->addAction(aboutQtAct);
-    connect(aboutQtAct, &QAction::triggered, [this]{QMessageBox::aboutQt(this, tr("About Qt"));});
+    connect(aboutQtAct, SIGNAL(QAction::triggered), this, SLOT(showAboutQt()));
+}
+
+void MainWindow::showAboutQt()
+{
+    QMessageBox::aboutQt(this, tr("About Qt"));
 }
 
 void MainWindow::initLayout()
