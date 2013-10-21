@@ -35,7 +35,7 @@ public:
 
     Renderer();
 
-    QPixmap render(QPixmap input);
+    QPixmap render(QPixmap input, float radius);
 
 private:
 

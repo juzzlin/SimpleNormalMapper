@@ -19,7 +19,9 @@
 #include <QDialog>
 
 class Editor;
+class QCheckBox;
 class QLabel;
+class QSlider;
 
 class RenderDialog : public QDialog
 {
@@ -35,12 +37,23 @@ private slots:
 
     void save();
 
+    void radiusChanged(int newRadius);
+
+    void previewChanged(bool checked);
+
 private:
 
     void initLayout();
 
+    void updateRadiusLabel();
+
+    int m_currentRadius;
+
     Editor & m_editor;
     QLabel * m_pixmapLabel;
+    QCheckBox * m_previewCheckBox;
+    QLabel * m_radiusLabel;
+
 };
 
 #endif // RENDERDIALOG_HPP

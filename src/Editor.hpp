@@ -79,7 +79,7 @@ public slots:
 
     void clear();
 
-    QPixmap render();
+    QPixmap render(float radius);
 
 private:
 

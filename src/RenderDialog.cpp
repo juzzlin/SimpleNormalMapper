@@ -17,7 +17,9 @@
 #include "Editor.hpp"
 #include "Settings.hpp"
 
+#include <QCheckBox>
 #include <QFileDialog>
+#include <QSlider>
 #include <QLabel>
 #include <QPixmap>
 #include <QProgressBar>
@@ -27,8 +29,11 @@
 
 RenderDialog::RenderDialog(Editor & editor, QWidget * parent)
     : QDialog(parent)
+    , m_currentRadius(0)
     , m_editor(editor)
     , m_pixmapLabel(nullptr)
+    , m_previewCheckBox(nullptr)
+    , m_radiusLabel(nullptr)
 {
     setWindowTitle(tr("Render"));
 
@@ -42,12 +47,30 @@ void RenderDialog::initLayout()
     m_pixmapLabel->setPixmap(QPixmap(640, 400));
     vLayout->addWidget(m_pixmapLabel);
 
+    QHBoxLayout * hLayout = new QHBoxLayout;
+    QHBoxLayout * radiusLayout = new QHBoxLayout;
+    m_radiusLabel = new QLabel(this);
+    m_previewCheckBox = new QCheckBox("Preview");
+    m_previewCheckBox->setChecked(false);
+    connect(m_previewCheckBox, SIGNAL(toggled(bool)), this, SLOT(previewChanged(bool)));
+    radiusLayout->addWidget(m_previewCheckBox);
+    QSlider * radiusSlider = new QSlider(Qt::Horizontal, this);
+    QPixmap image = m_editor.image();
+    int maxRadius = image.width() > image.height() ? image.width() : image.height();
+    connect(radiusSlider, SIGNAL(valueChanged(int)), this, SLOT(radiusChanged(int)));
+    radiusSlider->setRange(1, maxRadius);
+    radiusLayout->addWidget(radiusSlider);
+    updateRadiusLabel();
+    radiusLayout->addWidget(m_radiusLabel);
+    hLayout->addLayout(radiusLayout);
     QProgressBar * progress = new QProgressBar(this);
     progress->setRange(0, 100);
     progress->setValue(0);
-    vLayout->addWidget(progress);
+    hLayout->addWidget(progress);
 
-    QHBoxLayout * hLayout = new QHBoxLayout;
+    vLayout->addLayout(hLayout);
+
+    hLayout = new QHBoxLayout;
     QPushButton * render = new QPushButton(tr("&Render"), this);
     connect(render, SIGNAL(clicked()), this, SLOT(render()));
     hLayout->addWidget(render);
@@ -64,7 +87,7 @@ void RenderDialog::initLayout()
 
 void RenderDialog::render()
 {
-    m_pixmapLabel->setPixmap(m_editor.render());
+    m_pixmapLabel->setPixmap(m_editor.render(m_currentRadius));
 }
 
 void RenderDialog::save()
@@ -73,4 +96,27 @@ void RenderDialog::save()
     const QString fileName = QFileDialog::getSaveFileName(
         this, tr("Save the normal map image"), path, tr("JPEG (*.jpg *.jpeg);;PNG (*.png)"));
     Settings::saveRecentResultPath(fileName);
+}
+
+void RenderDialog::radiusChanged(int newRadius)
+{
+    m_currentRadius = newRadius;
+    updateRadiusLabel();
+    if (m_previewCheckBox->checkState() == Qt::Checked)
+    {
+        render();
+    }
+}
+
+void RenderDialog::previewChanged(bool checked)
+{
+    if (checked)
+    {
+        render();
+    }
+}
+
+void RenderDialog::updateRadiusLabel()
+{
+    m_radiusLabel->setText(QString("Sample radius: %1").arg(m_currentRadius));
 }

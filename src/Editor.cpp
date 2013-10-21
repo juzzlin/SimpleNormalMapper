@@ -93,10 +93,10 @@ void Editor::clear()
     m_normals.clear();
 }
 
-QPixmap Editor::render()
+QPixmap Editor::render(float radius)
 {
     Renderer renderer;
-    return renderer.render(m_pixmap);
+    return renderer.render(m_pixmap, radius);
 }
 
 void Editor::setSelectedNormalItem(NormalItem * normal)
