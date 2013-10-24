@@ -43,7 +43,6 @@ Renderer::HeightMap Renderer::buildHeightMap()
             const int r = qRed(m_image.pixel(i, j));
             const int g = qGreen(m_image.pixel(i, j));
             const int b = qBlue(m_image.pixel(i, j));
-            const int a = qAlpha(m_image.pixel(i, j));
             const int intensity = 0.2989 * r + 0.5870 * g + 0.1140 * b;
             minIntensity = intensity < minIntensity ? intensity : minIntensity;
             maxIntensity = intensity > maxIntensity ? intensity : maxIntensity;
