@@ -19,7 +19,6 @@
 #include "IO.hpp"
 #include "ImageItem.hpp"
 #include "MainWindow.hpp"
-#include "Renderer.hpp"
 
 #include <QGraphicsItem>
 #include <QDebug>
@@ -76,6 +75,8 @@ void Editor::setImage(QImage image)
     QGraphicsItem * imageItem = new ImageItem(m_pixmap);
     m_scene->addItem(imageItem);
     imageItem->setPos(m_pixmap.width() / 2, m_pixmap.height() / 2);
+
+    m_renderer.setInput(m_pixmap);
 }
 
 QPixmap Editor::image() const
@@ -95,8 +96,7 @@ void Editor::clear()
 
 QPixmap Editor::render(float radius)
 {
-    Renderer renderer;
-    return renderer.render(m_pixmap, radius);
+    return m_renderer.render(radius);
 }
 
 void Editor::setSelectedNormalItem(NormalItem * normal)

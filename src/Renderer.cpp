@@ -122,13 +122,8 @@ void Renderer::calculateNormals(float r)
     }
 }
 
-QPixmap Renderer::render(QPixmap input, float radius)
+QPixmap Renderer::render(float radius)
 {
-    m_width  = input.width();
-    m_height = input.height();
-    m_image  = input.toImage();
-    m_map    = buildHeightMap();
-
     calculateNormals(radius);
 
     QImage result(m_width, m_height, QImage::Format_ARGB32);
@@ -161,4 +156,12 @@ QPixmap Renderer::render(QPixmap input, float radius)
     QPixmap pixmapResult;
     pixmapResult.convertFromImage(result);
     return pixmapResult;
+}
+
+void Renderer::setInput(QPixmap input)
+{
+    m_width  = input.width();
+    m_height = input.height();
+    m_image  = input.toImage();
+    m_map    = buildHeightMap();
 }

@@ -23,6 +23,7 @@
 #include <memory>
 
 #include "Normal.hpp"
+#include "Renderer.hpp"
 
 class EditorScene;
 class EditorView;
@@ -93,4 +94,5 @@ private:
     Mode          m_mode;
     QPixmap       m_pixmap;
     NormalList    m_normals;
+    Renderer      m_renderer;
 };
