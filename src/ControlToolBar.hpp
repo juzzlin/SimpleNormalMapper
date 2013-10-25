@@ -21,7 +21,7 @@
 class RenderPreview;
 class Renderer;
 class QCheckBox;
-class QLabel;
+class QSlider;
 
 class ControlToolBar : public QToolBar
 {
@@ -42,15 +42,15 @@ private:
 
     void initToolbar();
 
-    void updateRadiusLabel();
-    void updateAmplitudeLabel();
+    void updateRadiusToolTip();
+    void updateAmplitudeToolTip();
 
     float m_currentAmplitude;
     float m_currentRadius;
 
     QCheckBox * m_previewCheckBox;
-    QLabel * m_radiusLabel;
-    QLabel * m_amplitudeLabel;
+    QSlider * m_radiusSlider;
+    QSlider * m_amplitudeSlider;
     RenderPreview * m_renderPreview;
     Renderer & m_renderer;
 

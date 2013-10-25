@@ -27,8 +27,8 @@ ControlToolBar::ControlToolBar(RenderPreview * renderPreview, Renderer& renderer
     , m_currentAmplitude(1.0)
     , m_currentRadius(1)
     , m_previewCheckBox(nullptr)
-    , m_radiusLabel(nullptr)
-    , m_amplitudeLabel(nullptr)
+    , m_radiusSlider(nullptr)
+    , m_amplitudeSlider(nullptr)
     , m_renderPreview(renderPreview)
     , m_renderer(renderer)
 {
@@ -44,7 +44,7 @@ void ControlToolBar::radiusChanged(int radius)
     if (m_currentRadius != radius)
     {
         m_currentRadius = radius;
-        updateRadiusLabel();
+        updateRadiusToolTip();
 
         m_renderer.setRadius(radius);
 
@@ -68,7 +68,7 @@ void ControlToolBar::amplitudeChanged(int amplitude)
     if (m_currentAmplitude != amplitude)
     {
         m_currentAmplitude = 0.01 * amplitude;
-        updateAmplitudeLabel();
+        updateAmplitudeToolTip();
 
         // Updates height map
         m_renderer.setAmplitude(m_currentAmplitude);
@@ -82,33 +82,28 @@ void ControlToolBar::amplitudeChanged(int amplitude)
 
 void ControlToolBar::initToolbar()
 {
-    QSlider * radiusSlider = new QSlider(Qt::Horizontal, this);
-    addWidget(radiusSlider);
-    m_radiusLabel = new QLabel(this);
-    addWidget(m_radiusLabel);
-    radiusSlider->setRange(1, 30);
-    radiusSlider->setValue(1);
-    updateRadiusLabel();
-    connect(radiusSlider, SIGNAL(valueChanged(int)), this, SLOT(radiusChanged(int)));
-
+    addWidget(new QLabel("Sampling radius", this));
+    m_radiusSlider = new QSlider(Qt::Horizontal, this);
+    addWidget(m_radiusSlider);
+    m_radiusSlider->setRange(1, 30);
+    m_radiusSlider->setValue(1);
+    updateRadiusToolTip();
+    connect(m_radiusSlider, SIGNAL(valueChanged(int)), this, SLOT(radiusChanged(int)));
     addSeparator();
 
-    QSlider * amplitudeSlider = new QSlider(Qt::Horizontal, this);
-    addWidget(amplitudeSlider);
-    m_amplitudeLabel = new QLabel(this);
-    addWidget(m_amplitudeLabel);
-    amplitudeSlider->setRange(0, 500);
-    amplitudeSlider->setValue(10);
-    updateAmplitudeLabel();
-    connect(amplitudeSlider, SIGNAL(valueChanged(int)), this, SLOT(amplitudeChanged(int)));
-
+    addWidget(new QLabel("Height amplitude", this));
+    m_amplitudeSlider = new QSlider(Qt::Horizontal, this);
+    addWidget(m_amplitudeSlider);
+    m_amplitudeSlider->setRange(0, 500);
+    m_amplitudeSlider->setValue(10);
+    updateAmplitudeToolTip();
+    connect(m_amplitudeSlider, SIGNAL(valueChanged(int)), this, SLOT(amplitudeChanged(int)));
     addSeparator();
 
     m_previewCheckBox = new QCheckBox("Live preview");
     m_previewCheckBox->setChecked(false);
     connect(m_previewCheckBox, SIGNAL(toggled(bool)), this, SLOT(previewChanged(bool)));
     addWidget(m_previewCheckBox);
-
     addSeparator();
 
     QPushButton * render = new QPushButton(tr("&Render"), this);
@@ -120,12 +115,12 @@ void ControlToolBar::initToolbar()
     addWidget(save);
 }
 
-void ControlToolBar::updateRadiusLabel()
+void ControlToolBar::updateRadiusToolTip()
 {
-    m_radiusLabel->setText(QString("Sampling radius: %1").arg(m_currentRadius));
+    m_radiusSlider->setToolTip(QString::number(m_currentRadius));
 }
 
-void ControlToolBar::updateAmplitudeLabel()
+void ControlToolBar::updateAmplitudeToolTip()
 {
-    m_amplitudeLabel->setText(QString("Height amplitude: %1").arg(m_currentAmplitude));
+    m_amplitudeSlider->setToolTip(QString::number(m_currentAmplitude));
 }
