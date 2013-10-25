@@ -14,10 +14,11 @@
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
 #include "MainWindow.hpp"
+#include "ControlToolBar.hpp"
 #include "Editor.hpp"
 #include "EditorView.hpp"
 #include "IO.hpp"
-#include "RenderDialog.hpp"
+#include "RenderPreview.hpp"
 #include "Settings.hpp"
 #include "SettingsDialog.hpp"
 
@@ -40,6 +41,7 @@
 #include <QSplitter>
 #include <QStatusBar>
 #include <QTextEdit>
+#include <QToolBar>
 #include <QVBoxLayout>
 
 namespace
@@ -53,8 +55,10 @@ namespace
     const int          CONSOLE_HEIGHT          = 64;
 }
 
-MainWindow::MainWindow(Editor & editor)
+MainWindow::MainWindow(Editor & editor, Renderer & renderer)
     : m_editor(editor)
+    , m_renderPreview(new RenderPreview(renderer, this))
+    , m_controlToolbar(new ControlToolBar(m_renderPreview, renderer, this))
     , m_saveNormalsAction(nullptr)
     , m_scaleSlider(new QSlider(Qt::Horizontal, this))
     , m_console(new QTextEdit(this))
@@ -72,6 +76,7 @@ MainWindow::MainWindow(Editor & editor)
     move(geometry.width() / 2 - width() / 2,
         geometry.height() / 2 - height() / 2);
 
+    addToolBar(Qt::LeftToolBarArea, m_controlToolbar);
     initMenuBar();
     initLayout();
 }
@@ -96,12 +101,6 @@ void MainWindow::initMenuBar()
     QMenu * editMenu = new QMenu(tr("&Edit"), this);
     menuBar->addMenu(editMenu);
 
-    m_openRenderDialogAction = new QAction(tr("&Render normal map.."), this);
-    m_openRenderDialogAction->setEnabled(false);
-    connect(m_openRenderDialogAction, SIGNAL(triggered()), this, SLOT(openRenderDialog()));
-    editMenu->addAction(m_openRenderDialogAction);
-    editMenu->addSeparator();
-
     QAction * settingsAct = new QAction(tr("&Settings.."), this);
     editMenu->addAction(settingsAct);
     connect(settingsAct, SIGNAL(triggered()), m_settingsDialog, SLOT(exec()));
@@ -122,21 +121,20 @@ void MainWindow::showAboutQt()
 
 void MainWindow::initLayout()
 {
-    // Create a splitter
-    QSplitter * splitter = new QSplitter(this);
-    splitter->setOrientation(Qt::Vertical);
-
     // Create layouts for slider, view and toolbar
     QVBoxLayout * centralLayout = new QVBoxLayout;
-    centralLayout->addWidget(qobject_cast<QWidget *>(&m_editor.view()));
-
+    QSplitter * viewSplitter = new QSplitter(this);
+    viewSplitter->setOrientation(Qt::Horizontal);
+    viewSplitter->addWidget(qobject_cast<QWidget *>(&m_editor.view()));
+    viewSplitter->addWidget(m_renderPreview);
+    centralLayout->addWidget(viewSplitter);
     // Add zoom slider to the layout
     m_scaleSlider->setRange(MIN_ZOOM, MAX_ZOOM);
     m_scaleSlider->setValue(INI_ZOOM);
     m_scaleSlider->setTracking(false);
     m_scaleSlider->setTickInterval(10);
     m_scaleSlider->setTickPosition(QSlider::TicksBelow);
-    connect(m_scaleSlider, SIGNAL(valueChanged(int)), this, SLOT(updateScale(int)));
+    connect(m_scaleSlider, SIGNAL(sliderMoved(int)), this, SLOT(updateScale(int)));
     QHBoxLayout * sliderLayout = new QHBoxLayout;
     sliderLayout->addWidget(new QLabel(tr("Scale:")));
     sliderLayout->addWidget(m_scaleSlider);
@@ -146,14 +144,17 @@ void MainWindow::initLayout()
     m_console->setReadOnly(true);
     m_console->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
     m_console->resize(m_console->width(), 50);
-    QWidget * dummy = new QWidget(this);
-    splitter->addWidget(dummy);
-    dummy->setLayout(centralLayout);
-    dummy->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-    splitter->addWidget(m_console);
+    QWidget * views = new QWidget(this);
+
+    QSplitter * consoleSplitter = new QSplitter(this);
+    consoleSplitter->setOrientation(Qt::Vertical);
+    consoleSplitter->addWidget(views);
+    views->setLayout(centralLayout);
+    views->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    consoleSplitter->addWidget(m_console);
 
     // Set contents margins so that they look nice
-    splitter->setContentsMargins(
+    consoleSplitter->setContentsMargins(
         centralLayout->contentsMargins().left(),
         0,
         centralLayout->contentsMargins().right(),
@@ -166,11 +167,11 @@ void MainWindow::initLayout()
         centralLayout->contentsMargins().bottom());
 
     // Set splitter as the central widget
-    setCentralWidget(splitter);
+    setCentralWidget(consoleSplitter);
 
     QList<int> sizes;
     sizes << height() - CONSOLE_HEIGHT << CONSOLE_HEIGHT;
-    splitter->setSizes(sizes);
+    consoleSplitter->setSizes(sizes);
 }
 
 void MainWindow::openImage()
@@ -205,20 +206,12 @@ void MainWindow::loadImageFile(QString fileName)
         m_editor.clear();
         m_editor.setImage(image);
 
-        m_openRenderDialogAction->setEnabled(true);
-
         console("Succesfully loaded '" + fileName + "'.");
     }
     else
     {
         QMessageBox::critical(this, tr("Load image"), tr("Failed to load ") + fileName);
     }
-}
-
-void MainWindow::openRenderDialog()
-{
-    RenderDialog dlg(m_editor, this);
-    dlg.exec();
 }
 
 void MainWindow::closeEvent(QCloseEvent * event)
@@ -234,6 +227,7 @@ void MainWindow::updateScale(int value)
     QTransform transform;
     transform.scale(scale, scale);
     m_editor.view().setTransform(transform);
+    m_renderPreview->setTransform(transform);
 
     console(QString("Scale set to %1%").arg(value));
 }

@@ -80,8 +80,6 @@ public slots:
 
     void clear();
 
-    QPixmap render(float radius);
-
 private:
 
     EditorScene * m_scene;

@@ -13,58 +13,47 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#include <QMainWindow>
+#ifndef CONTROLTOOLBAR_HPP
+#define CONTROLTOOLBAR_HPP
 
-class Editor;
-class Renderer;
+#include <QToolBar>
+
 class RenderPreview;
-class QAction;
-class QCloseEvent;
-class QSlider;
-class QTextEdit;
-class QToolBar;
-class SettingsDialog;
+class Renderer;
+class QCheckBox;
+class QLabel;
 
-class MainWindow : public QMainWindow
+class ControlToolBar : public QToolBar
 {
     Q_OBJECT
-
 public:
-
-    MainWindow(Editor & editor, Renderer & renderer);
-
-    void loadImageFile(QString fileName);
-
-protected:
-
-    //! \reimp
-    void closeEvent(QCloseEvent * event);
+    ControlToolBar(RenderPreview * renderPreview, Renderer & renderer, QWidget * parent = nullptr);
+    ~ControlToolBar();
 
 private slots:
 
-    void console(QString text);
+    void radiusChanged(int radius);
 
-    void openImage();
+    void previewChanged(bool preview);
 
-    void saveNormals();
-
-    void showAboutQt();
-
-    void updateScale(int value);
+    void amplitudeChanged(int amplitude);
 
 private:
 
-    void initLayout();
+    void initToolbar();
 
-    void initMenuBar();
+    void updateRadiusLabel();
+    void updateAmplitudeLabel();
 
-    void initControlToolbar();
+    float m_currentAmplitude;
+    float m_currentRadius;
 
-    Editor         & m_editor;
-    RenderPreview  * m_renderPreview;
-    QToolBar       * m_controlToolbar;
-    QAction        * m_saveNormalsAction;
-    QSlider        * m_scaleSlider;
-    QTextEdit      * m_console;
-    SettingsDialog * m_settingsDialog;
+    QCheckBox * m_previewCheckBox;
+    QLabel * m_radiusLabel;
+    QLabel * m_amplitudeLabel;
+    RenderPreview * m_renderPreview;
+    Renderer & m_renderer;
+
 };
+
+#endif // CONTROLTOOLBAR_HPP

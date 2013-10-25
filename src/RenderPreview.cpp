@@ -13,47 +13,36 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef RENDERDIALOG_HPP
-#define RENDERDIALOG_HPP
+#include "RenderPreview.hpp"
+#include "Editor.hpp"
+#include "Settings.hpp"
+#include <QFileDialog>
+#include <QPixmap>
 
-#include <QDialog>
-
-class Editor;
-class QCheckBox;
-class QLabel;
-class QSlider;
-
-class RenderDialog : public QDialog
+RenderPreview::RenderPreview(Renderer & renderer, QWidget* parent)
+    : QGraphicsView(parent)
+    , m_rendered()
+    , m_scene()
+    , m_renderer(renderer)
 {
-    Q_OBJECT
+    setScene(&m_scene);
+    setBackgroundBrush(QBrush(Qt::black));
+}
 
-public:
+RenderPreview::~RenderPreview()
+{
+}
 
-    explicit RenderDialog(Editor & editor, QWidget * parent = nullptr);
+void RenderPreview::render()
+{
+    m_scene.clear();
+    m_scene.addPixmap(m_renderer.render());
+}
 
-private slots:
-
-    void render();
-
-    void save();
-
-    void radiusChanged(int newRadius);
-
-    void previewChanged(bool checked);
-
-private:
-
-    void initLayout();
-
-    void updateRadiusLabel();
-
-    int m_currentRadius;
-
-    Editor & m_editor;
-    QLabel * m_pixmapLabel;
-    QCheckBox * m_previewCheckBox;
-    QLabel * m_radiusLabel;
-
-};
-
-#endif // RENDERDIALOG_HPP
+void RenderPreview::save()
+{
+    const QString path = Settings::loadRecentResultPath();
+    const QString fileName = QFileDialog::getSaveFileName(
+        this, tr("Save the normal map image"), path, tr("JPEG (*.jpg *.jpeg);;PNG (*.png)"));
+    Settings::saveRecentResultPath(fileName);
+}

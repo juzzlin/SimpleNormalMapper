@@ -35,9 +35,19 @@ public:
 
     Renderer();
 
-    QPixmap render(float radius);
+    QPixmap render();
 
     void setInput(QPixmap input);
+
+    void setAmplitude(float amplitude);
+    float amplitude() const;
+
+    void setRadius(float radius);
+    float radius() const;
+
+    int height() const;
+
+    int width() const;
 
 private:
 
@@ -54,6 +64,9 @@ private:
     Renderer::HeightMap m_map;
 
     int m_width, m_height;
+
+    float m_radius;
+    float m_amplitude;
 };
 
 #endif // RENDERER_HPP

@@ -29,10 +29,11 @@ Editor::Editor(const std::vector<std::string> & args)
     : m_scene(new EditorScene(this))
     , m_view(new EditorView(*this))
     , m_io(new IO)
-    , m_window(new MainWindow(*this))
+    , m_window(new MainWindow(*this, m_renderer))
     , m_selectedNormalItem(nullptr)
     , m_movedNormalItem(nullptr)
     , m_mode(Editor::None)
+    , m_renderer()
 {
     if (args.size() == 2)
     {
@@ -92,11 +93,6 @@ void Editor::addNormal(Normal & normal)
 void Editor::clear()
 {
     m_normals.clear();
-}
-
-QPixmap Editor::render(float radius)
-{
-    return m_renderer.render(radius);
 }
 
 void Editor::setSelectedNormalItem(NormalItem * normal)

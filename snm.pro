@@ -15,6 +15,7 @@ QT += gui
 # Input
 HEADERS += \
     src/Config.hpp \
+    src/ControlToolBar.hpp \
     src/Editor.hpp \
     src/EditorScene.hpp \
     src/EditorView.hpp \
@@ -24,12 +25,13 @@ HEADERS += \
     src/NormalItem.hpp \
     src/Normal.hpp \
     src/Renderer.hpp \
-    src/RenderDialog.hpp \
+    src/RenderPreview.hpp \
     src/SettingsDialog.hpp \
     src/Settings.hpp
 
 SOURCES += \
     src/Config.cpp \
+    src/ControlToolBar.cpp \
     src/Editor.cpp \
     src/EditorScene.cpp \
     src/EditorView.cpp \
@@ -40,6 +42,6 @@ SOURCES += \
     src/NormalItem.cpp \
     src/Normal.cpp \
     src/Renderer.cpp \
-    src/RenderDialog.cpp \
+    src/RenderPreview.cpp \
     src/SettingsDialog.cpp \
     src/Settings.cpp

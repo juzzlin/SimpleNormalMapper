@@ -26,6 +26,8 @@ static const int DEFAULT_Z = -10;
 Renderer::Renderer()
     : m_width(0)
     , m_height(0)
+    , m_radius(1)
+    , m_amplitude(1.0f)
 {
 }
 
@@ -62,11 +64,11 @@ Renderer::HeightMap Renderer::buildHeightMap()
 
             if (a == 0)
             {
-                output[index].height = DEFAULT_Z;
+                output[index].height = m_amplitude * DEFAULT_Z;
             }
             else
             {
-                output[index].height = float(intensity - minIntensity) / (maxIntensity - minIntensity);
+                output[index].height = m_amplitude * float(intensity - minIntensity) / (maxIntensity - minIntensity);
             }
 
             output[index].normal = QVector3D(0, 0, 0);
@@ -121,9 +123,9 @@ void Renderer::calculateNormals(float r)
     }
 }
 
-QPixmap Renderer::render(float radius)
+QPixmap Renderer::render()
 {
-    calculateNormals(radius);
+    calculateNormals(m_radius);
 
     QImage result(m_width, m_height, QImage::Format_ARGB32);
 
@@ -164,3 +166,41 @@ void Renderer::setInput(QPixmap input)
     m_image  = input.toImage();
     m_map    = buildHeightMap();
 }
+
+void Renderer::setAmplitude(float amplitude)
+{
+    if (m_amplitude != amplitude)
+    {
+        m_amplitude = amplitude;
+        m_map = buildHeightMap();
+    }
+}
+
+float Renderer::amplitude() const
+{
+    return m_amplitude;
+}
+
+void Renderer::setRadius(float radius)
+{
+    if (m_radius != radius)
+    {
+        m_radius = radius;
+    }
+}
+
+float Renderer::radius() const
+{
+    return m_radius;
+}
+
+int Renderer::width() const
+{
+    return m_width;
+}
+
+int Renderer::height() const
+{
+    return m_height;
+}
+
