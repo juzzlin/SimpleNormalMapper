@@ -36,7 +36,9 @@ RenderPreview::~RenderPreview()
 void RenderPreview::render()
 {
     m_scene.clear();
-    m_scene.addPixmap(m_renderer.render());
+    QPixmap result = m_renderer.render();
+    QGraphicsPixmapItem* item = m_scene.addPixmap(result);
+    item->setPos(result.width(), result.height());
 }
 
 void RenderPreview::save()
