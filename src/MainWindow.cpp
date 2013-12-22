@@ -99,6 +99,10 @@ void MainWindow::initMenuBar()
     m_saveNormalsAction->setEnabled(false);
     fileMenu->addAction(m_saveNormalsAction);
 
+    QAction * quitAction = new QAction(tr("&Quit"), this);
+    connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
+    fileMenu->addAction(quitAction);
+
     QMenu * helpMenu = new QMenu(tr("&Help"), this);
     menuBar->addMenu(helpMenu);
 
@@ -202,6 +206,7 @@ void MainWindow::closeEvent(QCloseEvent * event)
 {
     Settings::saveWindowSize(size());
 
+    m_editor.quit();
     QApplication::quit();
 
     event->accept();

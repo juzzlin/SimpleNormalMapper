@@ -69,6 +69,12 @@ void Editor::setImage(QImage image)
     QMetaObject::invokeMethod(m_renderer, "setInput", Q_ARG(QPixmap, m_pixmap));
 }
 
+void Editor::quit()
+{
+    m_renderThread->quit();
+    m_renderThread->wait();
+}
+
 QPixmap Editor::image() const
 {
     return m_pixmap;

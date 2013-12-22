@@ -40,6 +40,8 @@ public:
 
     void setImage(QImage image);
 
+    void quit();
+
     QPixmap image() const;
 
     EditorView & view() const;
