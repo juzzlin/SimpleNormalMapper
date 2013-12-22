@@ -15,14 +15,13 @@
 
 #include "ControlToolBar.hpp"
 #include "Editor.hpp"
-#include "Renderer.hpp"
 #include "RenderPreview.hpp"
 #include <QCheckBox>
 #include <QLabel>
 #include <QPushButton>
 #include <QSlider>
 
-ControlToolBar::ControlToolBar(RenderPreview * renderPreview, Renderer& renderer, QWidget* parent)
+ControlToolBar::ControlToolBar(RenderPreview * renderPreview, QWidget* parent)
     : QToolBar("Controls", parent)
     , m_currentAmplitude(1.0)
     , m_currentRadius(1)
@@ -31,7 +30,6 @@ ControlToolBar::ControlToolBar(RenderPreview * renderPreview, Renderer& renderer
     , m_amplitudeSlider(nullptr)
     , m_renderButton(nullptr)
     , m_renderPreview(renderPreview)
-    , m_renderer(renderer)
 {
     initToolbar();
 }
@@ -47,7 +45,7 @@ void ControlToolBar::changeRadius(int radius)
         m_currentRadius = radius;
         updateRadiusToolTip();
 
-        m_renderer.setRadius(radius);
+        emit radiusChanged(radius);
 
         if (m_previewCheckBox->checkState() == Qt::Checked)
         {
@@ -68,11 +66,10 @@ void ControlToolBar::changeAmplitude(int amplitude)
 {
     if (m_currentAmplitude != amplitude)
     {
-        m_currentAmplitude = 0.01 * amplitude;
+        m_currentAmplitude = 0.01f * amplitude;
         updateAmplitudeToolTip();
 
-        // Updates height map
-        m_renderer.setAmplitude(m_currentAmplitude);
+        emit amplitudeChanged(amplitude);
 
         if (m_previewCheckBox->checkState() == Qt::Checked)
         {

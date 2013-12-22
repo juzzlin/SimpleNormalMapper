@@ -18,10 +18,13 @@
 
 #include <QPixmap>
 #include <QImage>
+#include <QThread>
 #include <QVector3D>
 
-class Renderer
+class Renderer : public QThread
 {
+    Q_OBJECT
+
 public:
 
     struct HeightCell
@@ -32,21 +35,23 @@ public:
 
     typedef QVector<HeightCell> HeightMap;
 
-    Renderer();
+    explicit Renderer(QObject * parent = nullptr);
 
-    QPixmap render();
+    virtual void run();
 
-    void setInput(QPixmap input);
+public slots:
+
+    void render();
+
+    void setInput(const QPixmap & input);
 
     void setAmplitude(float amplitude);
-    float amplitude() const;
 
     void setRadius(float radius);
-    float radius() const;
 
-    int height() const;
+signals:
 
-    int width() const;
+    void processingFinished(const QPixmap & result);
 
 private:
 
@@ -58,14 +63,13 @@ private:
 
     float getHeight(int x, int y);
 
-    QImage m_image;
-
+    QImage              m_image;
+    QPixmap             m_result;
     Renderer::HeightMap m_map;
-
-    int m_width, m_height;
-
-    float m_radius;
-    float m_amplitude;
+    int                 m_width;
+    int                 m_height;
+    float               m_radius;
+    float               m_amplitude;
 };
 
 #endif // RENDERER_HPP

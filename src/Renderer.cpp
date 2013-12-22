@@ -23,12 +23,18 @@
 
 static const int DEFAULT_Z = -10;
 
-Renderer::Renderer()
-    : m_width(0)
+Renderer::Renderer(QObject * parent)
+    : QThread(parent)
+    , m_width(0)
     , m_height(0)
     , m_radius(1)
     , m_amplitude(1.0f)
 {
+}
+
+void Renderer::run()
+{
+    QThread::run();
 }
 
 Renderer::HeightMap Renderer::buildHeightMap()
@@ -123,7 +129,7 @@ void Renderer::calculateNormals(float r)
     }
 }
 
-QPixmap Renderer::render()
+void Renderer::render()
 {
     calculateNormals(m_radius);
 
@@ -154,12 +160,11 @@ QPixmap Renderer::render()
         }
     }
 
-    QPixmap pixmapResult;
-    pixmapResult.convertFromImage(result);
-    return pixmapResult;
+    m_result.convertFromImage(result);
+    emit processingFinished(m_result);
 }
 
-void Renderer::setInput(QPixmap input)
+void Renderer::setInput(const QPixmap & input)
 {
     m_width  = input.width();
     m_height = input.height();
@@ -176,31 +181,7 @@ void Renderer::setAmplitude(float amplitude)
     }
 }
 
-float Renderer::amplitude() const
-{
-    return m_amplitude;
-}
-
 void Renderer::setRadius(float radius)
 {
-    if (m_radius != radius)
-    {
-        m_radius = radius;
-    }
+    m_radius = radius;
 }
-
-float Renderer::radius() const
-{
-    return m_radius;
-}
-
-int Renderer::width() const
-{
-    return m_width;
-}
-
-int Renderer::height() const
-{
-    return m_height;
-}
-

@@ -19,7 +19,6 @@
 #include <QToolBar>
 
 class RenderPreview;
-class Renderer;
 
 class QCheckBox;
 class QPushButton;
@@ -28,8 +27,9 @@ class QSlider;
 class ControlToolBar : public QToolBar
 {
     Q_OBJECT
+
 public:
-    ControlToolBar(RenderPreview * renderPreview, Renderer & renderer, QWidget * parent = nullptr);
+    ControlToolBar(RenderPreview * renderPreview, QWidget * parent = nullptr);
     ~ControlToolBar();
 
 public slots:
@@ -48,6 +48,10 @@ signals:
 
     void renderButtonClicked();
 
+    void amplitudeChanged(float amplitude);
+
+    void radiusChanged(float radius);
+
 private:
 
     void initToolbar();
@@ -63,8 +67,6 @@ private:
     QSlider       * m_amplitudeSlider;
     QPushButton   * m_renderButton;
     RenderPreview * m_renderPreview;
-    Renderer      & m_renderer;
-
 };
 
 #endif // CONTROLTOOLBAR_HPP

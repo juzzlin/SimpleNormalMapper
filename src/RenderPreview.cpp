@@ -23,12 +23,13 @@
 
 RenderPreview::RenderPreview(Renderer & renderer, QWidget* parent)
     : QGraphicsView(parent)
-    , m_rendered()
     , m_scene()
     , m_renderer(renderer)
 {
     setScene(&m_scene);
     setBackgroundBrush(QBrush(Qt::black));
+
+    connect(&m_renderer, SIGNAL(processingFinished(const QPixmap &)), this, SLOT(updatePreview(const QPixmap &)));
 }
 
 RenderPreview::~RenderPreview()
@@ -46,8 +47,13 @@ void RenderPreview::prepareForImage(QImage image)
 
 void RenderPreview::render()
 {
+    // Renderer is a thread so use invokeMethod to safely call render().
+    QMetaObject::invokeMethod(&m_renderer, "render");
+}
+
+void RenderPreview::updatePreview(const QPixmap & result)
+{
     m_scene.clear();
-    QPixmap result = m_renderer.render();
     QGraphicsPixmapItem* item = m_scene.addPixmap(result);
     item->setPos(0, 0);
 }

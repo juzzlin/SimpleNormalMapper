@@ -38,9 +38,12 @@ public slots:
 
     void prepareForImage(QImage image);
 
+private slots:
+
+    void updatePreview(const QPixmap & result);
+
 private:
 
-    QPixmap        m_rendered;
     QGraphicsScene m_scene;
     Renderer &     m_renderer;
 

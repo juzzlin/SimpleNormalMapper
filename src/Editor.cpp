@@ -27,8 +27,8 @@
 Editor::Editor(const std::vector<std::string> & args)
     : m_scene(new EditorScene(this))
     , m_view(new EditorView(*this))
-    , m_window(new MainWindow(*this, m_renderer))
-    , m_renderer()
+    , m_renderer(new Renderer(this))
+    , m_window(new MainWindow(*this, *m_renderer))
 {
     if (args.size() == 2)
     {
@@ -36,6 +36,7 @@ Editor::Editor(const std::vector<std::string> & args)
     }
 
     m_window->show();
+    m_renderer->run();
 }
 
 EditorView & Editor::view() const
@@ -62,7 +63,8 @@ void Editor::setImage(QImage image)
     m_scene->addItem(imageItem);
     imageItem->setPos(m_pixmap.width() / 2, m_pixmap.height() / 2);
 
-    m_renderer.setInput(m_pixmap);
+    // Renderer is a thread so use invokeMethod to safely set the input.
+    QMetaObject::invokeMethod(m_renderer, "setInput", Q_ARG(QPixmap, m_pixmap));
 }
 
 QPixmap Editor::image() const

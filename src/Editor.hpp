@@ -49,8 +49,8 @@ private:
 
     EditorScene * m_scene;
     EditorView  * m_view;
+    Renderer    * m_renderer;
     MainWindow  * m_window;
     QImage        m_image;
     QPixmap       m_pixmap;
-    Renderer      m_renderer;
 };

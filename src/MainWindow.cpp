@@ -56,7 +56,7 @@ namespace
 MainWindow::MainWindow(Editor & editor, Renderer & renderer)
     : m_editor(editor)
     , m_renderPreview(new RenderPreview(renderer, this))
-    , m_controlToolbar(new ControlToolBar(m_renderPreview, renderer, this))
+    , m_controlToolbar(new ControlToolBar(m_renderPreview, this))
     , m_saveNormalsAction(nullptr)
     , m_scaleSlider(new QSlider(Qt::Horizontal, this))
     , m_console(new QTextEdit(this))
@@ -76,6 +76,9 @@ MainWindow::MainWindow(Editor & editor, Renderer & renderer)
     addToolBar(Qt::LeftToolBarArea, m_controlToolbar);
     initMenuBar();
     initLayout();
+
+    connect(m_controlToolbar, SIGNAL(amplitudeChanged(float)), &renderer, SLOT(setAmplitude(float)));
+    connect(m_controlToolbar, SIGNAL(radiusChanged(float)), &renderer, SLOT(setRadius(float)));
 }
 
 void MainWindow::initMenuBar()
