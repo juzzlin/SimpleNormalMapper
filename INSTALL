@@ -11,6 +11,11 @@ Currently the build depends on Qt5 only.
 Building
 --------
 
-The simplest way to build SNM is to import the project into Qt Creator.
+The simplest way to build Simple Normal Mapper is to import the project into Qt Creator.
+
+Building from command line on Linux:
+
+$ ./configure
+$ make
 
 -- Jussi Lind <jussi.lind@iki.fi>
