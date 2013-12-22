@@ -29,6 +29,7 @@ ControlToolBar::ControlToolBar(RenderPreview * renderPreview, Renderer& renderer
     , m_previewCheckBox(nullptr)
     , m_radiusSlider(nullptr)
     , m_amplitudeSlider(nullptr)
+    , m_renderButton(nullptr)
     , m_renderPreview(renderPreview)
     , m_renderer(renderer)
 {
@@ -39,7 +40,7 @@ ControlToolBar::~ControlToolBar()
 {
 }
 
-void ControlToolBar::radiusChanged(int radius)
+void ControlToolBar::changeRadius(int radius)
 {
     if (m_currentRadius != radius)
     {
@@ -55,7 +56,7 @@ void ControlToolBar::radiusChanged(int radius)
     }
 }
 
-void ControlToolBar::previewChanged(bool preview)
+void ControlToolBar::changePreview(bool preview)
 {
     if (preview)
     {
@@ -63,7 +64,7 @@ void ControlToolBar::previewChanged(bool preview)
     }
 }
 
-void ControlToolBar::amplitudeChanged(int amplitude)
+void ControlToolBar::changeAmplitude(int amplitude)
 {
     if (m_currentAmplitude != amplitude)
     {
@@ -87,8 +88,9 @@ void ControlToolBar::initToolbar()
     addWidget(m_radiusSlider);
     m_radiusSlider->setRange(1, 30);
     m_radiusSlider->setValue(1);
+    m_radiusSlider->setEnabled(false);
     updateRadiusToolTip();
-    connect(m_radiusSlider, SIGNAL(valueChanged(int)), this, SLOT(radiusChanged(int)));
+    connect(m_radiusSlider, SIGNAL(valueChanged(int)), this, SLOT(changeRadius(int)));
     addSeparator();
 
     addWidget(new QLabel("Height amplitude", this));
@@ -96,23 +98,30 @@ void ControlToolBar::initToolbar()
     addWidget(m_amplitudeSlider);
     m_amplitudeSlider->setRange(0, 500);
     m_amplitudeSlider->setValue(10);
+    m_amplitudeSlider->setEnabled(false);
     updateAmplitudeToolTip();
-    connect(m_amplitudeSlider, SIGNAL(valueChanged(int)), this, SLOT(amplitudeChanged(int)));
+    connect(m_amplitudeSlider, SIGNAL(valueChanged(int)), this, SLOT(changeAmplitude(int)));
     addSeparator();
 
     m_previewCheckBox = new QCheckBox("Live preview");
     m_previewCheckBox->setChecked(false);
-    connect(m_previewCheckBox, SIGNAL(toggled(bool)), this, SLOT(previewChanged(bool)));
+    m_previewCheckBox->setEnabled(false);
+    connect(m_previewCheckBox, SIGNAL(toggled(bool)), this, SLOT(changePreview(bool)));
     addWidget(m_previewCheckBox);
     addSeparator();
 
-    QPushButton * render = new QPushButton(tr("&Render"), this);
-    connect(render, SIGNAL(clicked()), m_renderPreview, SLOT(render()));
-    addWidget(render);
+    m_renderButton = new QPushButton(tr("&Render"), this);
+    connect(m_renderButton, SIGNAL(clicked()), m_renderPreview, SLOT(render()));
+    m_renderButton->setEnabled(false);
+    addWidget(m_renderButton);
+}
 
-    QPushButton * save = new QPushButton(tr("&Save"), this);
-    connect(save, SIGNAL(clicked()), m_renderPreview, SLOT(save()));
-    addWidget(save);
+void ControlToolBar::enableControls()
+{
+    m_radiusSlider->setEnabled(true);
+    m_amplitudeSlider->setEnabled(true);
+    m_previewCheckBox->setEnabled(true);
+    m_renderButton->setEnabled(true);
 }
 
 void ControlToolBar::updateRadiusToolTip()

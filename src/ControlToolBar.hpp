@@ -20,7 +20,9 @@
 
 class RenderPreview;
 class Renderer;
+
 class QCheckBox;
+class QPushButton;
 class QSlider;
 
 class ControlToolBar : public QToolBar
@@ -30,13 +32,21 @@ public:
     ControlToolBar(RenderPreview * renderPreview, Renderer & renderer, QWidget * parent = nullptr);
     ~ControlToolBar();
 
+public slots:
+
+    void enableControls();
+
 private slots:
 
-    void radiusChanged(int radius);
+    void changeRadius(int radius);
 
-    void previewChanged(bool preview);
+    void changePreview(bool preview);
 
-    void amplitudeChanged(int amplitude);
+    void changeAmplitude(int amplitude);
+
+signals:
+
+    void renderButtonClicked();
 
 private:
 
@@ -48,11 +58,12 @@ private:
     float m_currentAmplitude;
     float m_currentRadius;
 
-    QCheckBox * m_previewCheckBox;
-    QSlider * m_radiusSlider;
-    QSlider * m_amplitudeSlider;
+    QCheckBox     * m_previewCheckBox;
+    QSlider       * m_radiusSlider;
+    QSlider       * m_amplitudeSlider;
+    QPushButton   * m_renderButton;
     RenderPreview * m_renderPreview;
-    Renderer & m_renderer;
+    Renderer      & m_renderer;
 
 };
 

@@ -22,7 +22,7 @@ class QAction;
 class QCloseEvent;
 class QSlider;
 class QTextEdit;
-class QToolBar;
+class ControlToolBar;
 class SettingsDialog;
 
 class MainWindow : public QMainWindow
@@ -60,7 +60,7 @@ private:
 
     Editor         & m_editor;
     RenderPreview  * m_renderPreview;
-    QToolBar       * m_controlToolbar;
+    ControlToolBar * m_controlToolbar;
     QAction        * m_saveNormalsAction;
     QSlider        * m_scaleSlider;
     QTextEdit      * m_console;
