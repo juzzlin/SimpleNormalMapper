@@ -62,7 +62,8 @@ private:
     float getHeight(int x, int y);
 
     QImage              m_image;
-    QPixmap             m_result;
+    QImage              m_result;
+    QPixmap             m_output;
     Renderer::HeightMap m_map;
     int                 m_width;
     int                 m_height;

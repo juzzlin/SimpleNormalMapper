@@ -128,8 +128,6 @@ void Renderer::render()
 {
     calculateNormals(m_radius);
 
-    QImage result(m_width, m_height, QImage::Format_ARGB32);
-
     for (int j = 0; j < m_height; j++)
     {
         for (int i = 0; i < m_width; i++)
@@ -151,12 +149,12 @@ void Renderer::render()
             b = b < 0   ? 0   : b;
             b = b > 255 ? 255 : b;
 
-            result.setPixel(i, j, qRgb(r, g, b));
+            m_result.setPixel(i, j, qRgb(r, g, b));
         }
     }
 
-    m_result.convertFromImage(result);
-    emit processingFinished(m_result);
+    m_output.convertFromImage(m_result);
+    emit processingFinished(m_output);
 }
 
 void Renderer::setInput(const QPixmap & input)
@@ -164,6 +162,7 @@ void Renderer::setInput(const QPixmap & input)
     m_width  = input.width();
     m_height = input.height();
     m_image  = input.toImage();
+    m_result = QImage(m_width, m_height, QImage::Format_ARGB32);
     m_map    = buildHeightMap();
 }
 
