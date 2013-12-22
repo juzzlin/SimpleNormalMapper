@@ -18,10 +18,10 @@
 
 #include <QPixmap>
 #include <QImage>
-#include <QThread>
+#include <QObject>
 #include <QVector3D>
 
-class Renderer : public QThread
+class Renderer : public QObject
 {
     Q_OBJECT
 

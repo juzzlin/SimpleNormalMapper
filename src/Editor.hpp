@@ -15,6 +15,7 @@
 
 #include <QObject>
 #include <QPixmap>
+#include <QThread>
 #include <QImage>
 #include <QList>
 
@@ -50,6 +51,7 @@ private:
     EditorScene * m_scene;
     EditorView  * m_view;
     Renderer    * m_renderer;
+    QThread     * m_renderThread;
     MainWindow  * m_window;
     QImage        m_image;
     QPixmap       m_pixmap;

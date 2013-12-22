@@ -18,13 +18,12 @@
 #include <QDebug>
 #include <QImage>
 #include <QRgb>
-
 #include <cmath>
 
 static const int DEFAULT_Z = -10;
 
 Renderer::Renderer(QObject * parent)
-    : QThread(parent)
+    : QObject(parent)
     , m_width(0)
     , m_height(0)
     , m_radius(1)

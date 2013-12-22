@@ -202,7 +202,6 @@ void MainWindow::closeEvent(QCloseEvent * event)
 {
     Settings::saveWindowSize(size());
 
-    m_renderer.quit();
     QApplication::quit();
 
     event->accept();

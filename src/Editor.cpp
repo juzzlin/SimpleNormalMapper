@@ -27,7 +27,8 @@
 Editor::Editor(const std::vector<std::string> & args)
     : m_scene(new EditorScene(this))
     , m_view(new EditorView(*this))
-    , m_renderer(new Renderer(this))
+    , m_renderer(new Renderer)
+    , m_renderThread(new QThread(this))
     , m_window(new MainWindow(*this, *m_renderer))
 {
     if (args.size() == 2)
@@ -36,7 +37,8 @@ Editor::Editor(const std::vector<std::string> & args)
     }
 
     m_window->show();
-    m_renderer->start();
+    m_renderer->moveToThread(m_renderThread);
+    m_renderThread->start();
 }
 
 EditorView & Editor::view() const
