@@ -1,5 +1,5 @@
 // This file is part of Simple Normal Mapper.
-// Copyright (C) 2013 Jussi Lind <jussi.lind@iki.fi>
+// Copyright (c) 2013 Simple Normal Mapper developers.
 //
 // Simple Normal Mapper is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
