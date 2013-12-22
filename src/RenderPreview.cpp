@@ -16,7 +16,9 @@
 #include "RenderPreview.hpp"
 #include "Editor.hpp"
 #include "Settings.hpp"
+
 #include <QFileDialog>
+#include <QGraphicsPixmapItem>
 #include <QPixmap>
 
 RenderPreview::RenderPreview(Renderer & renderer, QWidget* parent)

@@ -18,8 +18,7 @@
 
 #include <QPixmap>
 #include <QImage>
-
-#include "Normal.hpp"
+#include <QVector3D>
 
 class Renderer
 {

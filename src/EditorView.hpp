@@ -26,33 +26,7 @@ public:
 
     EditorView(Editor & editor, QWidget * parent = nullptr);
 
-protected:
-
-    //! \reimp
-    void mouseMoveEvent(QMouseEvent * event);
-
-    //! \reimp
-    void mousePressEvent(QMouseEvent * event);
-
-    //! \reimp
-    void mouseReleaseEvent(QMouseEvent * event);
-
-    //! \reimp
-    void keyPressEvent(QKeyEvent * event);
-
-signals:
-
-    void normalInserted(bool);
-
 private:
 
-    void addNormal();
-
-    void handleMousePressEventOnNormalItem(QMouseEvent & event, NormalItem & normal);
-
-    void handleLeftButtonClickOnNormalItem(NormalItem & normalItem);
-
     Editor & m_editor;
-    QPoint   m_clickedPos;
-    QPointF  m_clickedScenePos;
 };

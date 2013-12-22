@@ -22,14 +22,11 @@
 #include <vector>
 #include <memory>
 
-#include "Normal.hpp"
 #include "Renderer.hpp"
 
 class EditorScene;
 class EditorView;
 class MainWindow;
-class Normal;
-class NormalItem;
 
 class Editor : public QObject
 {
@@ -37,23 +34,8 @@ class Editor : public QObject
 
 public:
 
-    typedef std::shared_ptr<Normal> NormalPtr;
-    typedef QList<NormalPtr> NormalList;
-
-    enum Mode
-    {
-        None,
-        InsertNormals,
-        MoveNormals,
-        DeleteNormals
-    };
-
     Editor(const std::vector<std::string> & args);
     virtual ~Editor();
-
-    void setMode(Editor::Mode mode);
-
-    Editor::Mode mode() const;
 
     void setImage(QImage image);
 
@@ -63,30 +45,12 @@ public:
 
     EditorScene & scene() const;
 
-    void addNormal(Normal & normal);
-
-    void setSelectedNormalItem(NormalItem * normal);
-
-    NormalItem * selectedNormalItem() const;
-
-    void setMovedNormalItem(NormalItem * normal);
-
-    NormalItem * movedNormalItem() const;
-
-public slots:
-
-    void clear();
-
 private:
 
     EditorScene * m_scene;
     EditorView  * m_view;
     MainWindow  * m_window;
-    NormalItem  * m_selectedNormalItem;
-    NormalItem  * m_movedNormalItem;
     QImage        m_image;
-    Mode          m_mode;
     QPixmap       m_pixmap;
-    NormalList    m_normals;
     Renderer      m_renderer;
 };

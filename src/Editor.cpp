@@ -28,9 +28,6 @@ Editor::Editor(const std::vector<std::string> & args)
     : m_scene(new EditorScene(this))
     , m_view(new EditorView(*this))
     , m_window(new MainWindow(*this, m_renderer))
-    , m_selectedNormalItem(nullptr)
-    , m_movedNormalItem(nullptr)
-    , m_mode(Editor::None)
     , m_renderer()
 {
     if (args.size() == 2)
@@ -53,16 +50,6 @@ EditorScene & Editor::scene() const
     return *m_scene;
 }
 
-void Editor::setMode(Editor::Mode mode)
-{
-    m_mode = mode;
-}
-
-Editor::Mode Editor::mode() const
-{
-    return m_mode;
-}
-
 void Editor::setImage(QImage image)
 {
     m_pixmap.convertFromImage(image);
@@ -83,40 +70,7 @@ QPixmap Editor::image() const
     return m_pixmap;
 }
 
-void Editor::addNormal(Normal & normal)
-{
-    m_normals << NormalPtr(&normal);
-}
-
-void Editor::clear()
-{
-    m_normals.clear();
-}
-
-void Editor::setSelectedNormalItem(NormalItem * normal)
-{
-    m_selectedNormalItem = normal;
-}
-
-void Editor::setMovedNormalItem(NormalItem * normal)
-{
-    m_movedNormalItem = normal;
-}
-
-NormalItem * Editor::selectedNormalItem() const
-{
-    return m_selectedNormalItem;
-}
-
-NormalItem * Editor::movedNormalItem() const
-{
-    return m_movedNormalItem;
-}
-
 Editor::~Editor()
 {
     delete m_window;
-
-    m_selectedNormalItem = nullptr;
-    m_movedNormalItem = nullptr;
 }

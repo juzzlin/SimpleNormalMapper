@@ -93,7 +93,7 @@ void MainWindow::initMenuBar()
     fileMenu->addAction(openImageAction);
 
     m_saveNormalsAction = new QAction(tr("&Save normal map.."), this);
-    connect(m_saveNormalsAction, SIGNAL(triggered()), this, SLOT(saveNormals()));
+    connect(m_saveNormalsAction, SIGNAL(triggered()), m_renderPreview, SLOT(save()));
     m_saveNormalsAction->setEnabled(false);
     fileMenu->addAction(m_saveNormalsAction);
 
@@ -110,7 +110,7 @@ void MainWindow::initMenuBar()
     // Add "about Qt"-action
     QAction * aboutQtAct = new QAction(tr("About &Qt"), this);
     helpMenu->addAction(aboutQtAct);
-    connect(aboutQtAct, SIGNAL(QAction::triggered), this, SLOT(showAboutQt()));
+    connect(aboutQtAct, SIGNAL(triggered()), this, SLOT(showAboutQt()));
 }
 
 void MainWindow::showAboutQt()
@@ -127,6 +127,7 @@ void MainWindow::initLayout()
     viewSplitter->addWidget(qobject_cast<QWidget *>(&m_editor.view()));
     viewSplitter->addWidget(m_renderPreview);
     centralLayout->addWidget(viewSplitter);
+
     // Add zoom slider to the layout
     m_scaleSlider->setRange(MIN_ZOOM, MAX_ZOOM);
     m_scaleSlider->setValue(INI_ZOOM);
@@ -189,7 +190,6 @@ void MainWindow::loadImageFile(QString fileName)
     {
         statusBar()->showMessage(tr("Ready."));
 
-        m_editor.clear();
         m_editor.setImage(image);
 
         console("Succesfully loaded '" + fileName + "'.");

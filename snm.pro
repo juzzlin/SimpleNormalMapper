@@ -21,8 +21,6 @@ HEADERS += \
     src/EditorView.hpp \
     src/ImageItem.hpp \
     src/MainWindow.hpp \
-    src/NormalItem.hpp \
-    src/Normal.hpp \
     src/Renderer.hpp \
     src/RenderPreview.hpp \
     src/SettingsDialog.hpp \
@@ -37,8 +35,6 @@ SOURCES += \
     src/ImageItem.cpp \
     src/main.cpp \
     src/MainWindow.cpp \
-    src/NormalItem.cpp \
-    src/Normal.cpp \
     src/Renderer.cpp \
     src/RenderPreview.cpp \
     src/SettingsDialog.cpp \
