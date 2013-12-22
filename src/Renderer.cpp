@@ -32,11 +32,6 @@ Renderer::Renderer(QObject * parent)
 {
 }
 
-void Renderer::run()
-{
-    QThread::run();
-}
-
 Renderer::HeightMap Renderer::buildHeightMap()
 {
     Renderer::HeightMap output;

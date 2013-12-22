@@ -60,6 +60,7 @@ private:
     Editor         & m_editor;
     RenderPreview  * m_renderPreview;
     ControlToolBar * m_controlToolbar;
+    Renderer       & m_renderer;
     QAction        * m_saveNormalsAction;
     QSlider        * m_scaleSlider;
     QTextEdit      * m_console;

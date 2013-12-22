@@ -36,7 +36,7 @@ Editor::Editor(const std::vector<std::string> & args)
     }
 
     m_window->show();
-    m_renderer->run();
+    m_renderer->start();
 }
 
 EditorView & Editor::view() const

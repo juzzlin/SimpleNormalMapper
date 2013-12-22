@@ -57,6 +57,7 @@ MainWindow::MainWindow(Editor & editor, Renderer & renderer)
     : m_editor(editor)
     , m_renderPreview(new RenderPreview(renderer, this))
     , m_controlToolbar(new ControlToolBar(m_renderPreview, this))
+    , m_renderer(renderer)
     , m_saveNormalsAction(nullptr)
     , m_scaleSlider(new QSlider(Qt::Horizontal, this))
     , m_console(new QTextEdit(this))
@@ -200,6 +201,10 @@ void MainWindow::loadImageFile(QString fileName)
 void MainWindow::closeEvent(QCloseEvent * event)
 {
     Settings::saveWindowSize(size());
+
+    m_renderer.quit();
+    QApplication::quit();
+
     event->accept();
 }
 

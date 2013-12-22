@@ -37,8 +37,6 @@ public:
 
     explicit Renderer(QObject * parent = nullptr);
 
-    virtual void run();
-
 public slots:
 
     void render();
