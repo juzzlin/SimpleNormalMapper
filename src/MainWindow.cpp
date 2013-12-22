@@ -45,7 +45,7 @@
 namespace
 {
     const char       * SOFTWARE_NAME           = "Simple Normal Mapper";
-    const char       * SOFTWARE_VERSION        = "0.0.0";
+    const char       * SOFTWARE_VERSION        = "0.1.0";
     const int          MARGIN                  = 0;
     const unsigned int MIN_ZOOM                = 0;
     const unsigned int MAX_ZOOM                = 400;
