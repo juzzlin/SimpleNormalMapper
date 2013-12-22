@@ -32,6 +32,9 @@ ControlToolBar::ControlToolBar(RenderPreview * renderPreview, QWidget* parent)
     , m_renderPreview(renderPreview)
 {
     initToolbar();
+
+    m_renderTimer.setInterval(250);
+    connect(&m_renderTimer, SIGNAL(timeout()), m_renderPreview, SLOT(render()));
 }
 
 ControlToolBar::~ControlToolBar()
@@ -40,17 +43,14 @@ ControlToolBar::~ControlToolBar()
 
 void ControlToolBar::changeRadius(int radius)
 {
-    if (m_currentRadius != radius)
+    m_currentRadius = radius * 0.1f;
+    updateRadiusToolTip();
+
+    emit radiusChanged(m_currentRadius);
+
+    if (m_previewCheckBox->checkState() == Qt::Checked)
     {
-        m_currentRadius = radius;
-        updateRadiusToolTip();
-
-        emit radiusChanged(radius);
-
-        if (m_previewCheckBox->checkState() == Qt::Checked)
-        {
-            m_renderPreview->render();
-        }
+        m_renderTimer.start();
     }
 }
 
@@ -58,23 +58,20 @@ void ControlToolBar::changePreview(bool preview)
 {
     if (preview)
     {
-        m_renderPreview->render();
+        m_renderTimer.start();
     }
 }
 
 void ControlToolBar::changeAmplitude(int amplitude)
 {
-    if (m_currentAmplitude != amplitude)
+    m_currentAmplitude = amplitude * 0.25f;
+    updateAmplitudeToolTip();
+
+    emit amplitudeChanged(m_currentAmplitude);
+
+    if (m_previewCheckBox->checkState() == Qt::Checked)
     {
-        m_currentAmplitude = 0.01f * amplitude;
-        updateAmplitudeToolTip();
-
-        emit amplitudeChanged(amplitude);
-
-        if (m_previewCheckBox->checkState() == Qt::Checked)
-        {
-            m_renderPreview->render();
-        }
+        m_renderTimer.start();
     }
 }
 
@@ -83,7 +80,7 @@ void ControlToolBar::initToolbar()
     addWidget(new QLabel("Sampling radius", this));
     m_radiusSlider = new QSlider(Qt::Horizontal, this);
     addWidget(m_radiusSlider);
-    m_radiusSlider->setRange(1, 30);
+    m_radiusSlider->setRange(1, 100);
     m_radiusSlider->setValue(1);
     m_radiusSlider->setEnabled(false);
     updateRadiusToolTip();
@@ -93,7 +90,7 @@ void ControlToolBar::initToolbar()
     addWidget(new QLabel("Height amplitude", this));
     m_amplitudeSlider = new QSlider(Qt::Horizontal, this);
     addWidget(m_amplitudeSlider);
-    m_amplitudeSlider->setRange(0, 500);
+    m_amplitudeSlider->setRange(0, 100);
     m_amplitudeSlider->setValue(10);
     m_amplitudeSlider->setEnabled(false);
     updateAmplitudeToolTip();

@@ -17,6 +17,7 @@
 #define CONTROLTOOLBAR_HPP
 
 #include <QToolBar>
+#include <QTimer>
 
 class RenderPreview;
 
@@ -67,6 +68,7 @@ private:
     QSlider       * m_amplitudeSlider;
     QPushButton   * m_renderButton;
     RenderPreview * m_renderPreview;
+    QTimer          m_renderTimer;
 };
 
 #endif // CONTROLTOOLBAR_HPP
