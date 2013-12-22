@@ -178,3 +178,8 @@ void Renderer::setRadius(float radius)
 {
     m_radius = radius;
 }
+
+const QImage & Renderer::image() const
+{
+    return m_result;
+}

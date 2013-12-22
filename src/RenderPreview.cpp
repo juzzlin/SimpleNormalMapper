@@ -64,4 +64,6 @@ void RenderPreview::save()
     const QString fileName = QFileDialog::getSaveFileName(
         this, tr("Save the normal map image"), path, tr("JPEG (*.jpg *.jpeg);;PNG (*.png)"));
     Settings::saveRecentResultPath(fileName);
+
+    m_renderer.image().save(fileName);
 }

@@ -37,6 +37,8 @@ public:
 
     explicit Renderer(QObject * parent = nullptr);
 
+    const QImage & image() const;
+
 public slots:
 
     void render();
