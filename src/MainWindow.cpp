@@ -182,6 +182,7 @@ void MainWindow::loadImageFile(QString fileName)
         statusBar()->showMessage(tr("Ready."));
 
         m_editor.setImage(image);
+        m_renderPreview->prepareForImage(image);
         m_controlToolbar->enableControls();
         m_saveNormalsAction->setEnabled(true);
 

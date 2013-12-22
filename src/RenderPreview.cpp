@@ -35,12 +35,21 @@ RenderPreview::~RenderPreview()
 {
 }
 
+void RenderPreview::prepareForImage(QImage image)
+{
+    QPixmap pixmap;
+    pixmap.convertFromImage(image);
+
+    m_scene.clear();
+    m_scene.setSceneRect(0, 0, pixmap.width(), pixmap.height());
+}
+
 void RenderPreview::render()
 {
     m_scene.clear();
     QPixmap result = m_renderer.render();
     QGraphicsPixmapItem* item = m_scene.addPixmap(result);
-    item->setPos(result.width(), result.height());
+    item->setPos(0, 0);
 }
 
 void RenderPreview::save()

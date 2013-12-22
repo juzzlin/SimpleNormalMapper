@@ -36,6 +36,8 @@ public slots:
 
     void save();
 
+    void prepareForImage(QImage image);
+
 private:
 
     QPixmap        m_rendered;
