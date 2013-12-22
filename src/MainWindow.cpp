@@ -192,7 +192,7 @@ void MainWindow::loadImageFile(QString fileName)
 
         m_editor.setImage(image);
 
-        console("Succesfully loaded '" + fileName + "'.");
+        console(tr("Succesfully loaded '") + fileName + "'.");
     }
     else
     {
@@ -215,7 +215,7 @@ void MainWindow::updateScale(int value)
     m_editor.view().setTransform(transform);
     m_renderPreview->setTransform(transform);
 
-    console(QString("Scale set to %1%").arg(value));
+    console(tr("Scale set to %1%").arg(value));
 }
 
 void MainWindow::console(QString text)
