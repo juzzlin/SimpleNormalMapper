@@ -95,9 +95,6 @@ void MainWindow::initMenuBar()
     m_saveNormalsAction->setEnabled(false);
     fileMenu->addAction(m_saveNormalsAction);
 
-    QMenu * editMenu = new QMenu(tr("&Edit"), this);
-    menuBar->addMenu(editMenu);
-
     QMenu * helpMenu = new QMenu(tr("&Help"), this);
     menuBar->addMenu(helpMenu);
 
