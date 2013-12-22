@@ -23,7 +23,6 @@ class QCloseEvent;
 class QSlider;
 class QTextEdit;
 class ControlToolBar;
-class SettingsDialog;
 
 class MainWindow : public QMainWindow
 {
@@ -64,5 +63,4 @@ private:
     QAction        * m_saveNormalsAction;
     QSlider        * m_scaleSlider;
     QTextEdit      * m_console;
-    SettingsDialog * m_settingsDialog;
 };

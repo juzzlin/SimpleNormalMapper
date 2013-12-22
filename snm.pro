@@ -23,7 +23,6 @@ HEADERS += \
     src/MainWindow.hpp \
     src/Renderer.hpp \
     src/RenderPreview.hpp \
-    src/SettingsDialog.hpp \
     src/Settings.hpp
 
 SOURCES += \
@@ -37,5 +36,4 @@ SOURCES += \
     src/MainWindow.cpp \
     src/Renderer.cpp \
     src/RenderPreview.cpp \
-    src/SettingsDialog.cpp \
     src/Settings.cpp

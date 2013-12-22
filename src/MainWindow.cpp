@@ -19,7 +19,6 @@
 #include "EditorView.hpp"
 #include "RenderPreview.hpp"
 #include "Settings.hpp"
-#include "SettingsDialog.hpp"
 
 #include <QAction>
 #include <QApplication>
@@ -61,7 +60,6 @@ MainWindow::MainWindow(Editor & editor, Renderer & renderer)
     , m_saveNormalsAction(nullptr)
     , m_scaleSlider(new QSlider(Qt::Horizontal, this))
     , m_console(new QTextEdit(this))
-    , m_settingsDialog(new SettingsDialog(this))
 {
     setWindowTitle(QString(SOFTWARE_NAME) + " " + SOFTWARE_VERSION);
 
@@ -99,10 +97,6 @@ void MainWindow::initMenuBar()
 
     QMenu * editMenu = new QMenu(tr("&Edit"), this);
     menuBar->addMenu(editMenu);
-
-    QAction * settingsAct = new QAction(tr("&Settings.."), this);
-    editMenu->addAction(settingsAct);
-    connect(settingsAct, SIGNAL(triggered()), m_settingsDialog, SLOT(exec()));
 
     QMenu * helpMenu = new QMenu(tr("&Help"), this);
     menuBar->addMenu(helpMenu);
