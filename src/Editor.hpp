@@ -27,7 +27,6 @@
 
 class EditorScene;
 class EditorView;
-class IO;
 class MainWindow;
 class Normal;
 class NormalItem;
@@ -74,8 +73,6 @@ public:
 
     NormalItem * movedNormalItem() const;
 
-    IO & io() const;
-
 public slots:
 
     void clear();
@@ -84,7 +81,6 @@ private:
 
     EditorScene * m_scene;
     EditorView  * m_view;
-    IO          * m_io;
     MainWindow  * m_window;
     NormalItem  * m_selectedNormalItem;
     NormalItem  * m_movedNormalItem;

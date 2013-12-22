@@ -46,8 +46,6 @@ private slots:
 
     void openImage();
 
-    void saveNormals();
-
     void showAboutQt();
 
     void updateScale(int value);

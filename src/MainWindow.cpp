@@ -17,7 +17,6 @@
 #include "ControlToolBar.hpp"
 #include "Editor.hpp"
 #include "EditorView.hpp"
-#include "IO.hpp"
 #include "RenderPreview.hpp"
 #include "Settings.hpp"
 #include "SettingsDialog.hpp"
@@ -181,19 +180,6 @@ void MainWindow::openImage()
         this, tr("Open an image"), path, tr("All files (*.*);;JPEG (*.jpg *.jpeg);;PNG (*.png)"));
     loadImageFile(fileName);
     Settings::saveRecentImagePath(fileName);
-}
-
-void MainWindow::saveNormals()
-{
-    const QString path = Settings::loadRecentNormalsPath();
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save normals"), path, tr("SNM (*.snm)"));
-    if (!fileName.endsWith(".snm"))
-    {
-        fileName.append(".snm");
-    }
-
-    m_editor.io().saveNormals(fileName);
-    Settings::saveRecentNormalsPath(fileName);
 }
 
 void MainWindow::loadImageFile(QString fileName)

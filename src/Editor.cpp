@@ -16,7 +16,6 @@
 #include "Editor.hpp"
 #include "EditorScene.hpp"
 #include "EditorView.hpp"
-#include "IO.hpp"
 #include "ImageItem.hpp"
 #include "MainWindow.hpp"
 
@@ -28,7 +27,6 @@
 Editor::Editor(const std::vector<std::string> & args)
     : m_scene(new EditorScene(this))
     , m_view(new EditorView(*this))
-    , m_io(new IO)
     , m_window(new MainWindow(*this, m_renderer))
     , m_selectedNormalItem(nullptr)
     , m_movedNormalItem(nullptr)
@@ -115,15 +113,9 @@ NormalItem * Editor::movedNormalItem() const
     return m_movedNormalItem;
 }
 
-IO & Editor::io() const
-{
-    return *m_io;
-}
-
 Editor::~Editor()
 {
     delete m_window;
-    delete m_io;
 
     m_selectedNormalItem = nullptr;
     m_movedNormalItem = nullptr;
