@@ -187,9 +187,9 @@ void MainWindow::loadImageFile(QString fileName)
 
         console(tr("Succesfully loaded '") + fileName + "'.");
     }
-    else
+    else if (fileName != "")
     {
-        QMessageBox::critical(this, tr("Load image"), tr("Failed to load ") + fileName);
+        QMessageBox::critical(this, tr("Load image"), tr("Failed to load '") + fileName + "'");
     }
 }
 
