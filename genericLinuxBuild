@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Assumes, that you have 64-bit (static) qt5 libs installed in ~/qt5.
+
+QT5_QMAKE=~/qt5/bin/qmake
+TAR=tar
+VERSION=0.1.1
+
+# Build
+
+$QT5_QMAKE && make
+
+# Install to packaging dir
+
+CREATE_PACKAGE_PATH=snm-$VERSION-linux-x86_64-qt5
+rm -rf $CREATE_PACKAGE_PATH
+mkdir $CREATE_PACKAGE_PATH
+
+cp -v ./snm $CREATE_PACKAGE_PATH
+
+TEXT_FILES="AUTHORS CHANGELOG COPYING README"
+cp -v $TEXT_FILES $CREATE_PACKAGE_PATH
+cd $CREATE_PACKAGE_PATH
+cd ..
+
+# Copy deps
+DEPS_PATH=$CREATE_PACKAGE_PATH/deps
+mkdir $DEPS_PATH
+ldd snm | awk '{print $3}' > deps.txt
+for i in $(cat deps.txt); do 
+    if [ -e $i ]; then cp -v $i $DEPS_PATH; fi;
+done
+
+# Copy start script
+cp snm.sh $CREATE_PACKAGE_PATH
+
+# Create zip archive
+TGZ_ARCHIVE=$CREATE_PACKAGE_PATH.tar.gz
+rm -f $TGZ_ARCHIVE
+$TAR czvf $TGZ_ARCHIVE $CREATE_PACKAGE_PATH
+
+ls -ltr
+
+echo "Done."
+
