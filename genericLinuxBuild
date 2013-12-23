@@ -23,16 +23,11 @@ cp -v $TEXT_FILES $CREATE_PACKAGE_PATH
 cd $CREATE_PACKAGE_PATH
 cd ..
 
-# Copy deps
-DEPS_PATH=$CREATE_PACKAGE_PATH/deps
-mkdir $DEPS_PATH
-ldd snm | awk '{print $3}' > deps.txt
-for i in $(cat deps.txt); do 
-    if [ -e $i ]; then cp -v $i $DEPS_PATH; fi;
-done
+# Copy qt config
+cp qt.conf $CREATE_PACKAGE_PATH
 
-# Copy start script
-cp snm.sh $CREATE_PACKAGE_PATH
+# Copy fonts
+cp -r -v libs $CREATE_PACKAGE_PATH
 
 # Create zip archive
 TGZ_ARCHIVE=$CREATE_PACKAGE_PATH.tar.gz
