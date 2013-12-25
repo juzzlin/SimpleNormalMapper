@@ -28,6 +28,7 @@
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QHBoxLayout>
+#include <QIcon>
 #include <QImage>
 #include <QLabel>
 #include <QMainWindow>
@@ -63,6 +64,7 @@ MainWindow::MainWindow(Editor & editor, Renderer & renderer)
     , m_console(new QTextEdit(this))
 {
     setWindowTitle(QString(SOFTWARE_NAME) + " " + SOFTWARE_VERSION);
+    setWindowIcon(QIcon(":/snm.png"));
 
     QStatusBar * statusBar = new QStatusBar(this);
     setStatusBar(statusBar);

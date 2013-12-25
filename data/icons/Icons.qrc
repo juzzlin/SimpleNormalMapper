@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>snm.png</file>
+    </qresource>
+</RCC>
+

@@ -37,3 +37,7 @@ SOURCES += \
     src/Renderer.cpp \
     src/RenderPreview.cpp \
     src/Settings.cpp
+
+RESOURCES += data/icons/Icons.qrc
+RC_FILE = data/icons/Windows.rc
+
