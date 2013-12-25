@@ -41,22 +41,43 @@ SOURCES += \
 RESOURCES += data/icons/Icons.qrc
 RC_FILE = data/icons/Windows.rc
 
-# Check if PREFIX environment variable is set.
-# If not, then assume /usr.
-_PREFIX = $$(PREFIX)
-isEmpty(_PREFIX) {
-    _PREFIX = /usr
+# Install to /opt by calling "OPT=1 qmake" or to wanted prefix
+# by e.g. "PREFIX=/usr qmake".
+
+_OPT = $$(OPT)
+_BIN = ""
+_DAT = ""
+if (!isEmpty(_OPT)) {
+message("Installs to /opt")
+    _BIN = /opt/snm
+    _DAT = /usr
+} else {
+    # Check if PREFIX environment variable is set.
+    # If not, then assume /usr.
+    _PREFIX = $$(PREFIX)
+    isEmpty(_PREFIX) {
+        _PREFIX = /usr
+    }
+    message("Installs to "$$_PREFIX)
+    _BIN = $$_PREFIX
+    _DAT = $$_PREFIX
 }
 
 unix {
-    target.path    = $$_PREFIX/bin
-    desktop.path   = $$_PREFIX/share/applications
+    target.path    = $$_BIN/bin
+    desktop.path   = $$_DAT/share/applications
     desktop.name   = snm.desktop
     desktop.files += data/snm.desktop
-    desktop.extra  = cp data/snm.desktop.in data/snm.desktop
-    icon1.path     = $$_PREFIX/share/icons/hicolor/64x64/apps
+
+    if (!isEmpty(_OPT)) {
+        desktop.extra  = cp data/snm.desktop.opt.in data/snm.desktop
+    } else {
+        desktop.extra  = cp data/snm.desktop.in data/snm.desktop
+    }
+
+    icon1.path     = $$_DAT/share/icons/hicolor/64x64/apps
     icon1.files   += data/icons/snm.png
-    icon2.path     = $$_PREFIX/share/pixmaps
+    icon2.path     = $$_DAT/share/pixmaps
     icon2.files   += data/icons/snm.png
     INSTALLS      += target desktop icon1 icon2
 }
