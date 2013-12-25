@@ -9,7 +9,7 @@ VERSION=0.1.1
 
 # Build
 
-$MXE_QT5_QMAKE && make
+$MXE_QT5_QMAKE && make || exit -1
 
 # Install to packaging dir
 

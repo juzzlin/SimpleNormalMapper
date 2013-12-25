@@ -8,7 +8,7 @@ VERSION=0.1.1
 
 # Build
 
-$QT5_QMAKE && make
+$QT5_QMAKE && make || exit -1
 
 # Install to packaging dir
 
