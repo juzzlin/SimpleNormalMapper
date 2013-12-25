@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Simple Normal Mapper
+Comment=Easy creation of normal maps
+Exec=snm
+Icon=snm
+Type=Application
+Categories=Utility;
+StartupNotify=true
+X-Ubuntu-Gettext-Domain=snm
+
