@@ -82,6 +82,7 @@ MainWindow::MainWindow(Editor & editor, Renderer & renderer)
 
     connect(m_controlToolbar, SIGNAL(amplitudeChanged(float)), &renderer, SLOT(setAmplitude(float)));
     connect(m_controlToolbar, SIGNAL(radiusChanged(float)), &renderer, SLOT(setRadius(float)));
+    connect(m_renderPreview, SIGNAL(messageLogged(QString)), this, SLOT(console(QString)));
 }
 
 void MainWindow::initMenuBar()

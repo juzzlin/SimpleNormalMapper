@@ -19,6 +19,7 @@
 
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
+#include <QMessageBox>
 #include <QPixmap>
 
 RenderPreview::RenderPreview(Renderer & renderer, QWidget* parent)
@@ -63,7 +64,18 @@ void RenderPreview::save()
     const QString path = Settings::loadRecentResultPath();
     const QString fileName = QFileDialog::getSaveFileName(
         this, tr("Save the normal map image"), path, tr("JPEG (*.jpg *.jpeg);;PNG (*.png)"));
-    Settings::saveRecentResultPath(fileName);
 
-    m_renderer.image().save(fileName);
+    if (m_renderer.image().save(fileName))
+    {
+        Settings::saveRecentResultPath(fileName);
+        emit messageLogged(tr("Successfully saved to '") + fileName + "'.");
+    }
+    else
+    {
+        QMessageBox::critical(
+            this,
+            tr("Saving failed!"),
+            tr("Unknown image type ") + fileName);
+        emit messageLogged(tr("Saving failed!"));
+    }
 }

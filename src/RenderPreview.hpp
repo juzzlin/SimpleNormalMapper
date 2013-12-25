@@ -42,6 +42,10 @@ private slots:
 
     void updatePreview(const QPixmap & result);
 
+signals:
+
+    void messageLogged(QString message);
+
 private:
 
     QGraphicsScene m_scene;
