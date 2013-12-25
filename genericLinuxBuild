@@ -24,7 +24,7 @@ cd $CREATE_PACKAGE_PATH
 cd ..
 
 # Copy qt config
-cp qt.conf $CREATE_PACKAGE_PATH
+cp data/qt.conf $CREATE_PACKAGE_PATH
 
 # Copy fonts
 cp -r -v libs $CREATE_PACKAGE_PATH
