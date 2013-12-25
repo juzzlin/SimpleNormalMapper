@@ -41,3 +41,19 @@ SOURCES += \
 RESOURCES += data/icons/Icons.qrc
 RC_FILE = data/icons/Windows.rc
 
+# Check if PREFIX environment variable is set.
+# If not, then assume /usr.
+_PREFIX = $$(PREFIX)
+isEmpty(_PREFIX) {
+    _PREFIX = /usr
+}
+
+target.path    = $$_PREFIX/bin
+desktop.path   = $$_PREFIX/share/applications
+desktop.files += data/snm.desktop
+icon1.path     = $$_PREFIX/share/icons/hicolor/64x64/apps
+icon1.files   += data/icons/snm.png
+icon2.path     = $$_PREFIX/share/pixmaps
+icon2.files   += data/icons/snm.png
+INSTALLS      += target desktop icon1 icon2
+
