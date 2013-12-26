@@ -47,6 +47,8 @@ private slots:
 
     void showAboutQt();
 
+    void showAboutDlg();
+
     void updateScale(int value);
 
 private:

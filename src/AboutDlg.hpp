@@ -13,17 +13,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef CONFIG_HPP
-#define CONFIG_HPP
+#ifndef ABOUTDLG_HPP
+#define ABOUTDLG_HPP
 
-#include <QString>
+#include <QDialog>
 
-class Config
+//! The about dialog.
+class AboutDlg : public QDialog
 {
+    Q_OBJECT
+
 public:
 
-    static QString name();
-    static QString version();
+    //! Constructor.
+    explicit AboutDlg(QWidget * parent = 0);
+
+private:
+
+    void initWidgets();
 };
 
-#endif // CONFIG_HPP
+#endif // ABOUTDLG_HPP

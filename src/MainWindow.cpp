@@ -14,6 +14,9 @@
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
 #include "MainWindow.hpp"
+
+#include "AboutDlg.hpp"
+#include "Config.hpp"
 #include "ControlToolBar.hpp"
 #include "Editor.hpp"
 #include "EditorView.hpp"
@@ -45,8 +48,6 @@
 
 namespace
 {
-    const char       * SOFTWARE_NAME           = "Simple Normal Mapper";
-    const char       * SOFTWARE_VERSION        = "0.1.1";
     const int          MARGIN                  = 0;
     const unsigned int MIN_ZOOM                = 0;
     const unsigned int MAX_ZOOM                = 400;
@@ -63,7 +64,7 @@ MainWindow::MainWindow(Editor & editor, Renderer & renderer)
     , m_scaleSlider(new QSlider(Qt::Horizontal, this))
     , m_console(new QTextEdit(this))
 {
-    setWindowTitle(QString(SOFTWARE_NAME) + " " + SOFTWARE_VERSION);
+    setWindowTitle(Config::name() + " v" + Config::version());
     setWindowIcon(QIcon(":/snm.png"));
 
     QStatusBar * statusBar = new QStatusBar(this);
@@ -109,6 +110,10 @@ void MainWindow::initMenuBar()
     QMenu * helpMenu = new QMenu(tr("&Help"), this);
     menuBar->addMenu(helpMenu);
 
+    QAction * about = new QAction(tr("About"), this);
+    helpMenu->addAction(about);
+    connect(about, SIGNAL(triggered()), this, SLOT(showAboutDlg()));
+
     // Add "about Qt"-action
     QAction * aboutQtAct = new QAction(tr("About &Qt"), this);
     helpMenu->addAction(aboutQtAct);
@@ -118,6 +123,12 @@ void MainWindow::initMenuBar()
 void MainWindow::showAboutQt()
 {
     QMessageBox::aboutQt(this, tr("About Qt"));
+}
+
+void MainWindow::showAboutDlg()
+{
+    AboutDlg aboutDlg;
+    aboutDlg.exec();
 }
 
 void MainWindow::initLayout()

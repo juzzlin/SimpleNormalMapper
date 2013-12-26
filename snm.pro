@@ -12,8 +12,11 @@ DEFINES += USE_QT5
 QT += gui
 }
 
+DEFINES += VERSION=\\\"0.1.1\\\"
+
 # Input
 HEADERS += \
+    src/AboutDlg.hpp \
     src/Config.hpp \
     src/ControlToolBar.hpp \
     src/Editor.hpp \
@@ -26,6 +29,7 @@ HEADERS += \
     src/Settings.hpp
 
 SOURCES += \
+    src/AboutDlg.cpp \
     src/Config.cpp \
     src/ControlToolBar.cpp \
     src/Editor.cpp \

@@ -15,6 +15,15 @@
 
 #include "Config.hpp"
 
-Config::Config()
+static const QString nameStr = "Simple Normal Mapper";
+static const QString verStr  = VERSION;
+
+QString Config::name()
 {
+    return nameStr;
+}
+
+QString Config::version()
+{
+    return verStr;
 }
