@@ -2,10 +2,10 @@
 
 PREFIX='/home/jussil/qt5'
 ./configure \
-            -developer-build \
             -opensource \
             -confirm-license \
             -force-pkg-config \
+            -fontconfig \
             -release \
             -static \
             -prefix $PREFIX \
