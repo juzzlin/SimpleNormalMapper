@@ -40,7 +40,7 @@ public slots:
 
 private slots:
 
-    void updatePreview(const QPixmap & result);
+    void updatePreview(const QImage & result);
 
 signals:
 

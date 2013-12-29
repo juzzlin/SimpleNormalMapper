@@ -152,15 +152,14 @@ void Renderer::render()
         }
     }
 
-    m_output.convertFromImage(m_result);
-    emit processingFinished(m_output);
+    emit processingFinished(m_result);
 }
 
-void Renderer::setInput(const QPixmap & input)
+void Renderer::setInput(const QImage & input)
 {
     m_width  = input.width();
     m_height = input.height();
-    m_image  = input.toImage();
+    m_image  = input;
     m_result = QImage(m_width, m_height, QImage::Format_ARGB32);
     m_map    = buildHeightMap();
 }

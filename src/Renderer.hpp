@@ -16,7 +16,6 @@
 #ifndef RENDERER_HPP
 #define RENDERER_HPP
 
-#include <QPixmap>
 #include <QImage>
 #include <QObject>
 #include <QVector3D>
@@ -43,7 +42,7 @@ public slots:
 
     void render();
 
-    void setInput(const QPixmap & input);
+    void setInput(const QImage & input);
 
     void setAmplitude(float amplitude);
 
@@ -51,7 +50,7 @@ public slots:
 
 signals:
 
-    void processingFinished(const QPixmap & result);
+    void processingFinished(const QImage & result);
 
 private:
 
@@ -65,7 +64,6 @@ private:
 
     QImage              m_image;
     QImage              m_result;
-    QPixmap             m_output;
     Renderer::HeightMap m_map;
     int                 m_width;
     int                 m_height;

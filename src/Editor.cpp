@@ -66,7 +66,7 @@ void Editor::setImage(QImage image)
     imageItem->setPos(m_pixmap.width() / 2, m_pixmap.height() / 2);
 
     // Renderer is a thread so use invokeMethod to safely set the input.
-    QMetaObject::invokeMethod(m_renderer, "setInput", Q_ARG(QPixmap, m_pixmap));
+    QMetaObject::invokeMethod(m_renderer, "setInput", Q_ARG(QImage, image));
 }
 
 void Editor::quit()

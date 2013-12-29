@@ -30,7 +30,7 @@ RenderPreview::RenderPreview(Renderer & renderer, QWidget* parent)
     setScene(&m_scene);
     setBackgroundBrush(QBrush(Qt::black));
 
-    connect(&m_renderer, SIGNAL(processingFinished(const QPixmap &)), this, SLOT(updatePreview(const QPixmap &)));
+    connect(&m_renderer, SIGNAL(processingFinished(const QImage &)), this, SLOT(updatePreview(const QImage &)));
 }
 
 RenderPreview::~RenderPreview()
@@ -52,10 +52,12 @@ void RenderPreview::render()
     QMetaObject::invokeMethod(&m_renderer, "render");
 }
 
-void RenderPreview::updatePreview(const QPixmap & result)
+void RenderPreview::updatePreview(const QImage & result)
 {
     m_scene.clear();
-    QGraphicsPixmapItem* item = m_scene.addPixmap(result);
+    QPixmap pixmap;
+    pixmap.fromImage(result);
+    QGraphicsPixmapItem* item = m_scene.addPixmap(pixmap);
     item->setPos(0, 0);
 }
 
