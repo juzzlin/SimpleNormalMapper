@@ -34,6 +34,7 @@ ControlToolBar::ControlToolBar(RenderPreview * renderPreview, QWidget* parent)
     initToolbar();
 
     m_renderTimer.setInterval(250);
+    m_renderTimer.setSingleShot(true);
     connect(&m_renderTimer, SIGNAL(timeout()), m_renderPreview, SLOT(render()));
 }
 
