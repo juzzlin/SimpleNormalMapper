@@ -27,7 +27,6 @@
 #include <QApplication>
 #include <QCloseEvent>
 #include <QDateTime>
-#include <QDebug>
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QHBoxLayout>

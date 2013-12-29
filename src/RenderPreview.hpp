@@ -36,7 +36,7 @@ public slots:
 
     void save();
 
-    void prepareForImage(QImage image);
+    void prepareForImage(const QImage & image);
 
 private slots:
 

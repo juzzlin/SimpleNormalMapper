@@ -20,7 +20,6 @@
 #include "MainWindow.hpp"
 
 #include <QGraphicsItem>
-#include <QDebug>
 
 #include <cassert>
 
@@ -55,15 +54,13 @@ EditorScene & Editor::scene() const
 
 void Editor::setImage(QImage image)
 {
+    m_view->ensureVisible(0, 0, 0, 0);
+
     m_pixmap.convertFromImage(image);
 
-    m_view->ensureVisible(0, 0, 0, 0);
     m_scene->setSceneRect(0, 0, m_pixmap.width(), m_pixmap.height());
     m_scene->clear();
-
-    QGraphicsItem * imageItem = new ImageItem(m_pixmap);
-    m_scene->addItem(imageItem);
-    imageItem->setPos(m_pixmap.width() / 2, m_pixmap.height() / 2);
+    m_scene->addItem(new QGraphicsPixmapItem(m_pixmap));
 
     // Renderer is a thread so use invokeMethod to safely set the input.
     QMetaObject::invokeMethod(m_renderer, "setInput", Q_ARG(QImage, image));

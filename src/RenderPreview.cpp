@@ -15,6 +15,7 @@
 
 #include "RenderPreview.hpp"
 #include "Editor.hpp"
+#include "ImageItem.hpp"
 #include "Settings.hpp"
 
 #include <QFileDialog>
@@ -37,13 +38,10 @@ RenderPreview::~RenderPreview()
 {
 }
 
-void RenderPreview::prepareForImage(QImage image)
+void RenderPreview::prepareForImage(const QImage & image)
 {
-    QPixmap pixmap;
-    pixmap.convertFromImage(image);
-
     m_scene.clear();
-    m_scene.setSceneRect(0, 0, pixmap.width(), pixmap.height());
+    m_scene.setSceneRect(0, 0, image.width(), image.height());
 }
 
 void RenderPreview::render()
@@ -54,11 +52,11 @@ void RenderPreview::render()
 
 void RenderPreview::updatePreview(const QImage & result)
 {
+    QPixmap pixmap = QPixmap::fromImage(result);
+
     m_scene.clear();
-    QPixmap pixmap;
-    pixmap.fromImage(result);
-    QGraphicsPixmapItem* item = m_scene.addPixmap(pixmap);
-    item->setPos(0, 0);
+    m_scene.setSceneRect(0, 0, pixmap.width(), pixmap.height());
+    m_scene.addItem(new QGraphicsPixmapItem(pixmap));
 }
 
 void RenderPreview::save()

@@ -15,7 +15,6 @@
 
 #include "Renderer.hpp"
 
-#include <QDebug>
 #include <QImage>
 #include <QRgb>
 #include <cmath>
