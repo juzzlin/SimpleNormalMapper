@@ -65,7 +65,7 @@ unix {
             _PREFIX = /usr
         }
         message("Installs to "$$_PREFIX)
-        _BIN = $$_PREFIX
+        _BIN = $$_PREFIX/bin
         _DAT = $$_PREFIX
     }
 
@@ -76,15 +76,13 @@ unix {
         _DAT = $$_DESTDIR/$$_DAT
     }
 
-    target.path    = $$_BIN/bin
-    desktop.path   = $$_DAT/share/applications
-    desktop.name   = snm.desktop
-    desktop.files += data/snm.desktop
+    target.path  = $$_BIN
+    desktop.path = $$_DAT/share/applications
 
     if (!isEmpty(_OPT)) {
-        desktop.extra  = cp data/snm.desktop.opt.in data/snm.desktop
+        desktop.files = data/opt/snm.desktop
     } else {
-        desktop.extra  = cp data/snm.desktop.in data/snm.desktop
+        desktop.files = data/snm.desktop
     }
 
     icon1.path     = $$_DAT/share/icons/hicolor/64x64/apps
