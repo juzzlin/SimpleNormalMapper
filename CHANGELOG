@@ -1,3 +1,11 @@
+1.1.0
+=====
+
+* Remove needless ImageItem.
+* Fix render timer.
+* Fix problems with Qt4.
+* Don't use QPixmap in the worker thread.
+
 1.0.1
 =====
 

@@ -1,5 +1,5 @@
-VERSION=1.0.1
-DEBIAN_VERSION=1.0.1-1
+VERSION=1.1.0
+DEBIAN_VERSION=1.1.0-1
 rm -rf *${VERSION}*
 cp ../simplenormalmapper-code/snm-$VERSION.tar.gz .
 mv snm-$VERSION.tar.gz snm_$VERSION.orig.tar.gz 

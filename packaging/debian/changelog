@@ -1,3 +1,12 @@
+snm (1.1.0-1) precise; urgency=low
+
+  * Remove needless ImageItem.
+  * Fix render timer.
+  * Fix problems with Qt4.
+  * Don't use QPixmap in the worker thread.
+
+ -- Jussi Lind <jussi.lind@iki.fi>  Sun, 29 Dec 2013 22:14:04 +0200
+
 snm (1.0.1-1) precise; urgency=low
 
   * Fix installation of desktop file.

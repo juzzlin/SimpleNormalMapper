@@ -12,7 +12,7 @@ DEFINES += USE_QT5
 QT += gui
 }
 
-DEFINES += VERSION=\\\"1.0.1\\\"
+DEFINES += VERSION=\\\"1.1.0\\\"
 
 # Input
 HEADERS += \
