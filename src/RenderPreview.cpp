@@ -15,7 +15,6 @@
 
 #include "RenderPreview.hpp"
 #include "Editor.hpp"
-#include "ImageItem.hpp"
 #include "Settings.hpp"
 
 #include <QFileDialog>

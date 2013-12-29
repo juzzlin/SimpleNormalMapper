@@ -16,7 +16,6 @@
 #include "Editor.hpp"
 #include "EditorScene.hpp"
 #include "EditorView.hpp"
-#include "ImageItem.hpp"
 #include "MainWindow.hpp"
 
 #include <QGraphicsItem>

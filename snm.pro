@@ -22,7 +22,6 @@ HEADERS += \
     src/Editor.hpp \
     src/EditorScene.hpp \
     src/EditorView.hpp \
-    src/ImageItem.hpp \
     src/MainWindow.hpp \
     src/Renderer.hpp \
     src/RenderPreview.hpp \
@@ -35,7 +34,6 @@ SOURCES += \
     src/Editor.cpp \
     src/EditorScene.cpp \
     src/EditorView.cpp \
-    src/ImageItem.cpp \
     src/main.cpp \
     src/MainWindow.cpp \
     src/Renderer.cpp \
