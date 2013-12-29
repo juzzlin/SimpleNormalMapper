@@ -1,0 +1,21 @@
+Source: snm
+Section: utils
+Priority: extra
+Maintainer: Jussi Lind <jussi.lind@iki.fi>
+Build-Depends: cdbs, debhelper (>= 7), libqt4-dev (>= 4.7)
+Standards-Version: 3.9.1
+Homepage: https://sourceforge.net/projects/simplenormalmapper
+
+Package: snm
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Easy creation of normal maps 
+ Simple Normal Mapper is a normal map editor with which one can
+ easily create normal maps for 2D images. Normal mapping is used,
+ for example, in 2D games to make an illusion of a 3D object.
+ .
+ Simple Normal Mapper is fully automatic with some user-controllable
+ parameters.
+ .
+ Simple Normal Mapper is written in Qt and C++.
+

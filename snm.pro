@@ -48,26 +48,34 @@ RC_FILE = data/icons/Windows.rc
 # Install to /opt by calling "OPT=1 qmake" or to wanted prefix
 # by e.g. "PREFIX=/usr qmake".
 
-_OPT = $$(OPT)
-_BIN = ""
-_DAT = ""
-if (!isEmpty(_OPT)) {
-message("Installs to /opt")
-    _BIN = /opt/snm
-    _DAT = /usr
-} else {
-    # Check if PREFIX environment variable is set.
-    # If not, then assume /usr.
-    _PREFIX = $$(PREFIX)
-    isEmpty(_PREFIX) {
-        _PREFIX = /usr
-    }
-    message("Installs to "$$_PREFIX)
-    _BIN = $$_PREFIX
-    _DAT = $$_PREFIX
-}
-
 unix {
+
+    _OPT = $$(OPT)
+    _BIN = ""
+    _DAT = ""
+    if (!isEmpty(_OPT)) {
+    message("Installs to /opt")
+        _BIN = /opt/snm
+        _DAT = /usr
+    } else {
+        # Check if PREFIX environment variable is set.
+        # If not, then assume /usr.
+        _PREFIX = $$(PREFIX)
+        isEmpty(_PREFIX) {
+            _PREFIX = /usr
+        }
+        message("Installs to "$$_PREFIX)
+        _BIN = $$_PREFIX
+        _DAT = $$_PREFIX
+    }
+
+    # This is for DEB/RPM packaging
+    _DESTDIR = $$(DESTDIR)
+    if (!isEmpty(_DESTDIR)) {
+        _BIN = $$_DESTDIR/$$_BIN
+        _DAT = $$_DESTDIR/$$_DAT
+    }
+
     target.path    = $$_BIN/bin
     desktop.path   = $$_DAT/share/applications
     desktop.name   = snm.desktop
