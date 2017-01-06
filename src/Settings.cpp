@@ -16,11 +16,7 @@
 #include "Settings.hpp"
 
 #include <QSettings>
-#ifdef USE_QT5
 #include <QStandardPaths>
-#else
-#include <QDesktopServices>
-#endif
 
 namespace
 {
@@ -32,12 +28,7 @@ namespace
 
 QString homeLocation()
 {
-#ifdef USE_QT5
     return QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-#else
-    return QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-#endif
-
 }
 
 QString Settings::loadRecentResultPath()
