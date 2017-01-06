@@ -42,8 +42,8 @@ void AboutDlg::initWidgets()
     infoLabel->setText(QString("<h2>") + Config::name() + " v" + Config::version() + "</h2>"
                        + "<p>" + Config::name() + " is licenced under GNU GPLv3.</p>"
                        + "<p>Copyright (c) 2013 " + Config::name() + " developers.</p>"
-                       + "<a href='http://sourceforge.net/projects/simplenormalmapper'>"
-                       + "http://sourceforge.net/projects/simplenormalmapper</a>");
+                       + "<a href='https://github.com/juzzlin/SimpleNormalMapper'>"
+                       + "https://github.com/juzzlin/SimpleNormalMapper</a>");
 
     hLayout->addWidget(infoLabel);
     vLayout->addLayout(hLayout);
