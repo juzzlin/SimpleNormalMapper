@@ -28,4 +28,3 @@ going to build Simple Normal Mapper from sources.
 
 GNU GPL v3
 
--- Jussi Lind <jussi.lind@iki.fi>
