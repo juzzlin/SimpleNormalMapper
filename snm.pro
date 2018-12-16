@@ -3,10 +3,12 @@ TARGET          = snm
 INCLUDEPATH    += .
 QMAKE_CXXFLAGS += -std=c++11
 
-# Check Qt version
-!contains(QT_VERSION, ^5\\.[1-9]\\..*) {
-message("Cannot build Qt Creator with Qt version $${QT_VERSION}.")
-error("Use at least Qt 5.1.")
+# Qt version check
+contains(QT_VERSION, ^5\\..*) {
+    message("Building for Qt version $${QT_VERSION}.")
+    QT += widgets xml
+} else {
+    error("Qt5 is required!")
 }
 
 QT += widgets
