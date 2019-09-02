@@ -47,11 +47,10 @@
 
 namespace
 {
-    const int          MARGIN                  = 0;
-    const unsigned int MIN_ZOOM                = 0;
-    const unsigned int MAX_ZOOM                = 400;
-    const unsigned int INI_ZOOM                = 100;
-    const int          CONSOLE_HEIGHT          = 64;
+    const unsigned int MIN_ZOOM = 0;
+    const unsigned int MAX_ZOOM = 400;
+    const unsigned int INI_ZOOM = 100;
+    const int CONSOLE_HEIGHT = 64;
 }
 
 MainWindow::MainWindow(Editor & editor, Renderer & renderer)
