@@ -31,25 +31,26 @@ AboutDlg::AboutDlg(QWidget * parent)
 
 void AboutDlg::initWidgets()
 {
-    QVBoxLayout * vLayout     = new QVBoxLayout(this);
-    QHBoxLayout * hLayout     = new QHBoxLayout();
-    QLabel      * pixmapLabel = new QLabel(this);
+    auto hLayout = new QHBoxLayout();
+    auto pixmapLabel = new QLabel(this);
 
     pixmapLabel->setPixmap(QPixmap(":/about.png").scaledToWidth(256));
     hLayout->addWidget(pixmapLabel);
 
-    QLabel * infoLabel = new QLabel(this);
+    auto infoLabel = new QLabel(this);
     infoLabel->setText(QString("<h2>") + Config::name() + " v" + Config::version() + "</h2>"
-                       + "<p>" + Config::name() + " is licenced under GNU GPLv3.</p>"
-                       + "<p>Copyright (c) 2013 " + Config::name() + " developers.</p>"
-                       + "<a href='https://github.com/juzzlin/SimpleNormalMapper'>"
-                       + "https://github.com/juzzlin/SimpleNormalMapper</a>");
-
+        + "<p>" + Config::name() + " is licenced under GNU GPLv3.</p>"
+        + "<p>Copyright (c) 2013 " + Config::name() + " developers.</p>"
+        + "<a href='https://github.com/juzzlin/SimpleNormalMapper'>"
+        + "https://github.com/juzzlin/SimpleNormalMapper</a>");
     hLayout->addWidget(infoLabel);
+
+    auto vLayout = new QVBoxLayout(this);
     vLayout->addLayout(hLayout);
-    QHBoxLayout * buttonLayout = new QHBoxLayout();
-    QPushButton * button = new QPushButton("&Ok", this);
-    connect(button, SIGNAL(clicked()), this, SLOT(accept()));
+
+    auto buttonLayout = new QHBoxLayout();
+    auto button = new QPushButton("&Ok", this);
+    connect(button, &QPushButton::clicked, this, &AboutDlg::accept);
     buttonLayout->addWidget(button);
     buttonLayout->insertStretch(0);
     vLayout->addLayout(buttonLayout);
