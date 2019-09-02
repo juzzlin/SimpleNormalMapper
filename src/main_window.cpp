@@ -65,18 +65,19 @@ MainWindow::MainWindow(Editor & editor, Renderer & renderer)
     setWindowTitle(Config::name() + " v" + Config::version());
     setWindowIcon(QIcon(":/snm.png"));
 
-    QStatusBar * statusBar = new QStatusBar(this);
-    setStatusBar(statusBar);
+    setStatusBar(new QStatusBar(this));
 
     resize(Settings::loadWindowSize());
 
     // Try to center the window.
-    QRect geometry(QApplication::desktop()->availableGeometry());
+    const auto geometry(QApplication::desktop()->availableGeometry());
     move(geometry.width() / 2 - width() / 2,
         geometry.height() / 2 - height() / 2);
 
     addToolBar(Qt::LeftToolBarArea, m_controlToolbar);
+
     initMenuBar();
+
     initLayout();
 
     connect(m_controlToolbar, SIGNAL(amplitudeChanged(float)), &renderer, SLOT(setAmplitude(float)));
@@ -86,13 +87,13 @@ MainWindow::MainWindow(Editor & editor, Renderer & renderer)
 
 void MainWindow::initMenuBar()
 {
-    QMenuBar * menuBar = new QMenuBar(this);
+    auto menuBar = new QMenuBar(this);
     setMenuBar(menuBar);
 
-    QMenu * fileMenu = new QMenu(tr("&File"), this);
+    auto fileMenu = new QMenu(tr("&File"), this);
     menuBar->addMenu(fileMenu);
 
-    QAction * openImageAction = new QAction(tr("&Open new image.."), this);
+    auto openImageAction = new QAction(tr("&Open new image.."), this);
     connect(openImageAction, SIGNAL(triggered()), this, SLOT(openImage()));
     fileMenu->addAction(openImageAction);
 
@@ -101,19 +102,19 @@ void MainWindow::initMenuBar()
     m_saveNormalsAction->setEnabled(false);
     fileMenu->addAction(m_saveNormalsAction);
 
-    QAction * quitAction = new QAction(tr("&Quit"), this);
+    auto quitAction = new QAction(tr("&Quit"), this);
     connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
     fileMenu->addAction(quitAction);
 
-    QMenu * helpMenu = new QMenu(tr("&Help"), this);
+    auto helpMenu = new QMenu(tr("&Help"), this);
     menuBar->addMenu(helpMenu);
 
-    QAction * about = new QAction(tr("About"), this);
+    auto about = new QAction(tr("About"), this);
     helpMenu->addAction(about);
     connect(about, SIGNAL(triggered()), this, SLOT(showAboutDlg()));
 
     // Add "about Qt"-action
-    QAction * aboutQtAct = new QAction(tr("About &Qt"), this);
+    auto aboutQtAct = new QAction(tr("About &Qt"), this);
     helpMenu->addAction(aboutQtAct);
     connect(aboutQtAct, SIGNAL(triggered()), this, SLOT(showAboutQt()));
 }
@@ -132,8 +133,8 @@ void MainWindow::showAboutDlg()
 void MainWindow::initLayout()
 {
     // Create layouts for slider, view and toolbar
-    QVBoxLayout * centralLayout = new QVBoxLayout;
-    QSplitter * viewSplitter = new QSplitter(this);
+    auto centralLayout = new QVBoxLayout;
+    auto viewSplitter = new QSplitter(this);
     viewSplitter->setOrientation(Qt::Horizontal);
     viewSplitter->addWidget(qobject_cast<QWidget *>(&m_editor.view()));
     viewSplitter->addWidget(m_renderPreview);
@@ -145,8 +146,10 @@ void MainWindow::initLayout()
     m_scaleSlider->setTracking(false);
     m_scaleSlider->setTickInterval(10);
     m_scaleSlider->setTickPosition(QSlider::TicksBelow);
+
     connect(m_scaleSlider, SIGNAL(sliderMoved(int)), this, SLOT(updateScale(int)));
-    QHBoxLayout * sliderLayout = new QHBoxLayout;
+
+    auto sliderLayout = new QHBoxLayout;
     sliderLayout->addWidget(new QLabel(tr("Scale:")));
     sliderLayout->addWidget(m_scaleSlider);
     centralLayout->addLayout(sliderLayout);
@@ -155,9 +158,9 @@ void MainWindow::initLayout()
     m_console->setReadOnly(true);
     m_console->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
     m_console->resize(m_console->width(), 50);
-    QWidget * views = new QWidget(this);
+    auto views = new QWidget(this);
 
-    QSplitter * consoleSplitter = new QSplitter(this);
+    auto consoleSplitter = new QSplitter(this);
     consoleSplitter->setOrientation(Qt::Vertical);
     consoleSplitter->addWidget(views);
     views->setLayout(centralLayout);
@@ -187,8 +190,8 @@ void MainWindow::initLayout()
 
 void MainWindow::openImage()
 {
-    const QString path = Settings::loadRecentImagePath();
-    const QString fileName = QFileDialog::getOpenFileName(
+    const auto path = Settings::loadRecentImagePath();
+    const auto fileName = QFileDialog::getOpenFileName(
         this, tr("Open an image"), path, tr("All files (*.*);;JPEG (*.jpg *.jpeg);;PNG (*.png)"));
     loadImageFile(fileName);
     Settings::saveRecentImagePath(fileName);
@@ -238,6 +241,6 @@ void MainWindow::updateScale(int value)
 
 void MainWindow::console(QString text)
 {
-    QDateTime date = QDateTime::currentDateTime();
+    const auto date = QDateTime::currentDateTime();
     m_console->append(QString("(") + date.toString("hh:mm:ss") + "): " + text);
 }
