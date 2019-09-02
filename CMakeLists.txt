@@ -25,11 +25,30 @@ set(VERSION_MINOR "1")
 set(VERSION_PATCH "0")
 set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 
+# Some common CPack variables
+set(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${VERSION_PATCH})
+
+set(CPACK_PACKAGE_NAME snm)
+set(CPACK_PACKAGE_VENDOR Juzzlin)
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Quickly and easily generate normal maps from your 2D images")
+set(CPACK_PACKAGE_ICON ${CMAKE_SOURCE_DIR}/data/icons/snm.png)
+
+set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/COPYING)
+set(CPACK_RESOURCE_FILE_README ${CMAKE_SOURCE_DIR}/README.md)
+
 # Default to release C++ flags if CMAKE_BUILD_TYPE not set
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE STRING
         "Choose the type of build, options are: None Debug Release RelWithDebInfo
 MinSizeRel." FORCE)
+endif()
+
+if(UNIX)
+    include("InstallLinux.cmake")
+elseif(WIN32)
+    include("InstallWindows.cmake")
 endif()
 
 set(CMAKE_CXX_STANDARD 11)
@@ -63,6 +82,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(QT_MIN_VER 5.5.1) # The version in Ubuntu 16.04
 find_package(Qt5Core ${QT_MIN_VER} REQUIRED)
 find_package(Qt5Widgets ${QT_MIN_VER} REQUIRED)
+
+# Install paths depend on the build type and target platform
+setup_install_targets()
 
 add_subdirectory(src)
 

@@ -29,6 +29,12 @@ $ cmake ..
 $ make
 ```
 
+Create a Debian package for Debian-based Linux distributions (in build dir):
+
+```
+$ cpack -G DEB
+```
+
 ## Licence
 
 GNU GPL v3

@@ -33,7 +33,6 @@ endif()
 # Add the executable
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 add_executable(${BINARY_NAME} WIN32 ${SRC} ${MOC_SRC} ${RC_SRC})
-install(PROGRAMS ${CMAKE_BINARY_DIR}/${BINARY_NAME} DESTINATION bin)
 
 target_link_libraries(${BINARY_NAME} Qt5::Widgets)
 
