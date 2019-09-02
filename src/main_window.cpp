@@ -13,15 +13,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#include "MainWindow.hpp"
+#include "main_window.hpp"
 
-#include "AboutDlg.hpp"
-#include "Config.hpp"
-#include "ControlToolBar.hpp"
-#include "Editor.hpp"
-#include "EditorView.hpp"
-#include "RenderPreview.hpp"
-#include "Settings.hpp"
+#include "about_dlg.hpp"
+#include "config.hpp"
+#include "control_tool_bar.hpp"
+#include "editor.hpp"
+#include "editor_view.hpp"
+#include "render_preview.hpp"
+#include "settings.hpp"
 
 #include <QAction>
 #include <QApplication>

@@ -13,9 +13,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#include "EditorScene.hpp"
+#include "config.hpp"
 
-EditorScene::EditorScene(QObject * parent)
-    : QGraphicsScene(parent)
+static const QString nameStr = "Simple Normal Mapper";
+static const QString verStr  = VERSION;
+
+QString Config::name()
 {
+    return nameStr;
+}
+
+QString Config::version()
+{
+    return verStr;
 }

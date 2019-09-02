@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#include "Renderer.hpp"
+#include "renderer.hpp"
 
 #include <QImage>
 #include <QRgb>

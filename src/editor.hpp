@@ -23,7 +23,7 @@
 #include <vector>
 #include <memory>
 
-#include "Renderer.hpp"
+#include "renderer.hpp"
 
 class EditorScene;
 class EditorView;

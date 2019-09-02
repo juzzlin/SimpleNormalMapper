@@ -13,10 +13,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#include "Editor.hpp"
-#include "EditorScene.hpp"
-#include "EditorView.hpp"
-#include "MainWindow.hpp"
+#include "editor.hpp"
+#include "editor_scene.hpp"
+#include "editor_view.hpp"
+#include "main_window.hpp"
 
 #include <QGraphicsItem>
 

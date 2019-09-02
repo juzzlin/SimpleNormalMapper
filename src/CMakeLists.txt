@@ -1,16 +1,16 @@
 # Set sources
 set(SRC
-    AboutDlg.cpp
-    Config.cpp
-    ControlToolBar.cpp
-    Editor.cpp
-    EditorScene.cpp
-    EditorView.cpp
+    about_dlg.cpp
+    config.cpp
+    control_tool_bar.cpp
+    editor.cpp
+    editor_scene.cpp
+    editor_view.cpp
     main.cpp
-    MainWindow.cpp
-    Renderer.cpp
-    RenderPreview.cpp
-    Settings.cpp
+    main_window.cpp
+    renderer.cpp
+    render_preview.cpp
+    settings.cpp
 )
 
 set(RCS

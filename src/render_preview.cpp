@@ -13,16 +13,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#include "RenderPreview.hpp"
-#include "Editor.hpp"
-#include "Settings.hpp"
+#include "render_preview.hpp"
+#include "editor.hpp"
+#include "settings.hpp"
 
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
 #include <QMessageBox>
 #include <QPixmap>
 
-RenderPreview::RenderPreview(Renderer & renderer, QWidget* parent)
+RenderPreview::RenderPreview(Renderer & renderer, QWidget * parent)
     : QGraphicsView(parent)
     , m_scene()
     , m_renderer(renderer)

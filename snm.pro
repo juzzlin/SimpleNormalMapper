@@ -17,29 +17,29 @@ DEFINES += VERSION=\\\"1.1.0\\\"
 
 # Input
 HEADERS += \
-    src/AboutDlg.hpp \
-    src/Config.hpp \
-    src/ControlToolBar.hpp \
-    src/Editor.hpp \
-    src/EditorScene.hpp \
-    src/EditorView.hpp \
-    src/MainWindow.hpp \
-    src/Renderer.hpp \
-    src/RenderPreview.hpp \
-    src/Settings.hpp
+    src/about_dlg.hpp \
+    src/config.hpp \
+    src/control_tool_bar.hpp \
+    src/editor.hpp \
+    src/editor_scene.hpp \
+    src/editor_view.hpp \
+    src/main_window.hpp \
+    src/renderer.hpp \
+    src/render_preview.hpp \
+    src/settings.hpp
 
 SOURCES += \
-    src/AboutDlg.cpp \
-    src/Config.cpp \
-    src/ControlToolBar.cpp \
-    src/Editor.cpp \
-    src/EditorScene.cpp \
-    src/EditorView.cpp \
+    src/about_dlg.cpp \
+    src/config.cpp \
+    src/control_tool_bar.cpp \
+    src/editor.cpp \
+    src/editor_scene.cpp \
+    src/editor_view.cpp \
     src/main.cpp \
-    src/MainWindow.cpp \
-    src/Renderer.cpp \
-    src/RenderPreview.cpp \
-    src/Settings.cpp
+    src/main_window.cpp \
+    src/renderer.cpp \
+    src/render_preview.cpp \
+    src/settings.cpp
 
 RESOURCES += data/icons/Icons.qrc
 RC_FILE = data/icons/Windows.rc

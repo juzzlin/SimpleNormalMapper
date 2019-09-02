@@ -13,9 +13,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#include "EditorView.hpp"
-#include "Editor.hpp"
-#include "EditorScene.hpp"
+#include "editor_view.hpp"
+#include "editor.hpp"
+#include "editor_scene.hpp"
 
 EditorView::EditorView(Editor & editor, QWidget * parent)
     : QGraphicsView(&editor.scene(), parent)

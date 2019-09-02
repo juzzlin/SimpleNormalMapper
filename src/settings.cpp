@@ -13,17 +13,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#include "Settings.hpp"
+#include "settings.hpp"
 
 #include <QSettings>
 #include <QStandardPaths>
 
 namespace
 {
-    const char * QSETTINGS_COMPANY_NAME     = "snm";
-    const char * QSETTINGS_SOFTWARE_NAME    = "snm";
-    const char * SETTINGS_GROUP             = "Global";
-    const char * SETTINGS_GROUP_MAIN_WINDOW = "MainWindow";
+    const auto QSETTINGS_COMPANY_NAME = "snm";
+    const auto QSETTINGS_SOFTWARE_NAME = "snm";
+    const auto SETTINGS_GROUP = "Global";
+    const auto SETTINGS_GROUP_MAIN_WINDOW = "MainWindow";
 }
 
 QString homeLocation()

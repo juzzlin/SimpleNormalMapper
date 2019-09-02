@@ -13,8 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#include "AboutDlg.hpp"
-#include "Config.hpp"
+#include "about_dlg.hpp"
+#include "config.hpp"
 
 #include <QHBoxLayout>
 #include <QLabel>

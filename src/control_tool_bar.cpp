@@ -13,9 +13,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
-#include "ControlToolBar.hpp"
-#include "Editor.hpp"
-#include "RenderPreview.hpp"
+#include "control_tool_bar.hpp"
+#include "editor.hpp"
+#include "render_preview.hpp"
 #include <QCheckBox>
 #include <QLabel>
 #include <QPushButton>
