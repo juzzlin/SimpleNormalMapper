@@ -59,7 +59,7 @@ private:
 
     QThread * m_renderThread;
 
-    MainWindow * m_window;
+    std::unique_ptr<MainWindow> m_window;
 
     QImage m_image;
 

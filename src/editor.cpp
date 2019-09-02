@@ -76,7 +76,4 @@ QPixmap Editor::image() const
     return m_pixmap;
 }
 
-Editor::~Editor()
-{
-    delete m_window;
-}
+Editor::~Editor() = default;
