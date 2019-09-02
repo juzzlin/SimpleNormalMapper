@@ -62,13 +62,19 @@ private:
 
     float getHeight(int x, int y);
 
-    QImage              m_image;
-    QImage              m_result;
+    QImage m_image;
+
+    QImage m_result;
+
     Renderer::HeightMap m_map;
-    int                 m_width;
-    int                 m_height;
-    float               m_radius;
-    float               m_amplitude;
+
+    int m_width = 0;
+
+    int m_height = 0;
+
+    float m_radius = 1.0f;
+
+    float m_amplitude = 1.0f;
 };
 
 #endif // RENDERER_HPP

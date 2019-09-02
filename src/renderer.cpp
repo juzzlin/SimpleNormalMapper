@@ -23,10 +23,6 @@ static const int DEFAULT_Z = -10;
 
 Renderer::Renderer(QObject * parent)
     : QObject(parent)
-    , m_width(0)
-    , m_height(0)
-    , m_radius(1)
-    , m_amplitude(1.0f)
 {
 }
 
