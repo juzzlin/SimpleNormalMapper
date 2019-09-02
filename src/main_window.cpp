@@ -80,9 +80,9 @@ MainWindow::MainWindow(Editor & editor, Renderer & renderer)
 
     initLayout();
 
-    connect(m_controlToolbar, SIGNAL(amplitudeChanged(float)), &renderer, SLOT(setAmplitude(float)));
-    connect(m_controlToolbar, SIGNAL(radiusChanged(float)), &renderer, SLOT(setRadius(float)));
-    connect(m_renderPreview, SIGNAL(messageLogged(QString)), this, SLOT(console(QString)));
+    connect(m_controlToolbar, &ControlToolBar::amplitudeChanged, &renderer, &Renderer::setAmplitude);
+    connect(m_controlToolbar, &ControlToolBar::radiusChanged, &renderer, &Renderer::setRadius);
+    connect(m_renderPreview, &RenderPreview::messageLogged, this, &MainWindow::console);
 }
 
 void MainWindow::initMenuBar()
@@ -94,16 +94,16 @@ void MainWindow::initMenuBar()
     menuBar->addMenu(fileMenu);
 
     auto openImageAction = new QAction(tr("&Open new image.."), this);
-    connect(openImageAction, SIGNAL(triggered()), this, SLOT(openImage()));
+    connect(openImageAction, &QAction::triggered, this, &MainWindow::openImage);
     fileMenu->addAction(openImageAction);
 
     m_saveNormalsAction = new QAction(tr("&Save normal map.."), this);
-    connect(m_saveNormalsAction, SIGNAL(triggered()), m_renderPreview, SLOT(save()));
+    connect(m_saveNormalsAction, &QAction::triggered, m_renderPreview, &RenderPreview::save);
     m_saveNormalsAction->setEnabled(false);
     fileMenu->addAction(m_saveNormalsAction);
 
     auto quitAction = new QAction(tr("&Quit"), this);
-    connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(quitAction, &QAction::triggered, this, &MainWindow::close);
     fileMenu->addAction(quitAction);
 
     auto helpMenu = new QMenu(tr("&Help"), this);
@@ -111,12 +111,12 @@ void MainWindow::initMenuBar()
 
     auto about = new QAction(tr("About"), this);
     helpMenu->addAction(about);
-    connect(about, SIGNAL(triggered()), this, SLOT(showAboutDlg()));
+    connect(about, &QAction::triggered, this, &MainWindow::showAboutDlg);
 
     // Add "about Qt"-action
     auto aboutQtAct = new QAction(tr("About &Qt"), this);
     helpMenu->addAction(aboutQtAct);
-    connect(aboutQtAct, SIGNAL(triggered()), this, SLOT(showAboutQt()));
+    connect(aboutQtAct, &QAction::triggered, this, &MainWindow::showAboutQt);
 }
 
 void MainWindow::showAboutQt()
@@ -147,7 +147,7 @@ void MainWindow::initLayout()
     m_scaleSlider->setTickInterval(10);
     m_scaleSlider->setTickPosition(QSlider::TicksBelow);
 
-    connect(m_scaleSlider, SIGNAL(sliderMoved(int)), this, SLOT(updateScale(int)));
+    connect(m_scaleSlider, &QSlider::sliderMoved, this, &MainWindow::updateScale);
 
     auto sliderLayout = new QHBoxLayout;
     sliderLayout->addWidget(new QLabel(tr("Scale:")));
