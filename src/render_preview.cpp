@@ -28,9 +28,9 @@ RenderPreview::RenderPreview(Renderer & renderer, QWidget * parent)
     , m_renderer(renderer)
 {
     setScene(&m_scene);
-    setBackgroundBrush(QBrush(Qt::black));
+    setBackgroundBrush(QBrush{Qt::black});
 
-    connect(&m_renderer, SIGNAL(processingFinished(const QImage &)), this, SLOT(updatePreview(const QImage &)));
+    connect(&m_renderer, &Renderer::processingFinished, this, &RenderPreview::updatePreview);
 }
 
 RenderPreview::~RenderPreview()
@@ -51,7 +51,7 @@ void RenderPreview::render()
 
 void RenderPreview::updatePreview(const QImage & result)
 {
-    QPixmap pixmap = QPixmap::fromImage(result);
+    const auto pixmap = QPixmap::fromImage(result);
 
     m_scene.clear();
     m_scene.setSceneRect(0, 0, pixmap.width(), pixmap.height());
@@ -60,8 +60,8 @@ void RenderPreview::updatePreview(const QImage & result)
 
 void RenderPreview::save()
 {
-    const QString path = Settings::loadRecentResultPath();
-    const QString fileName = QFileDialog::getSaveFileName(
+    const auto path = Settings::loadRecentResultPath();
+    const auto fileName = QFileDialog::getSaveFileName(
         this, tr("Save the normal map image"), path, tr("JPEG (*.jpg *.jpeg);;PNG (*.png)"));
 
     if (m_renderer.image().save(fileName))
