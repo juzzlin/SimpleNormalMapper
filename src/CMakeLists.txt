@@ -4,7 +4,6 @@ set(SRC
     config.cpp
     control_tool_bar.cpp
     editor.cpp
-    editor_scene.cpp
     editor_view.cpp
     main.cpp
     main_window.cpp

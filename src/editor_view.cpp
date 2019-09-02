@@ -15,7 +15,6 @@
 
 #include "editor_view.hpp"
 #include "editor.hpp"
-#include "editor_scene.hpp"
 
 EditorView::EditorView(Editor & editor, QWidget * parent)
     : QGraphicsView(&editor.scene(), parent)

@@ -25,7 +25,7 @@
 
 #include "renderer.hpp"
 
-class EditorScene;
+class QGraphicsScene;
 class EditorView;
 class MainWindow;
 
@@ -36,6 +36,7 @@ class Editor : public QObject
 public:
 
     Editor(const std::vector<std::string> & args);
+
     virtual ~Editor();
 
     void setImage(QImage image);
@@ -46,15 +47,22 @@ public:
 
     EditorView & view() const;
 
-    EditorScene & scene() const;
+    QGraphicsScene & scene() const;
 
 private:
 
-    EditorScene * m_scene;
-    EditorView  * m_view;
-    Renderer    * m_renderer;
-    QThread     * m_renderThread;
-    MainWindow  * m_window;
-    QImage        m_image;
-    QPixmap       m_pixmap;
+    QGraphicsScene * m_scene;
+
+    EditorView * m_view;
+
+    Renderer * m_renderer;
+
+    QThread * m_renderThread;
+
+    MainWindow * m_window;
+
+    QImage m_image;
+
+    QPixmap m_pixmap;
 };
+

@@ -21,7 +21,6 @@ HEADERS += \
     src/config.hpp \
     src/control_tool_bar.hpp \
     src/editor.hpp \
-    src/editor_scene.hpp \
     src/editor_view.hpp \
     src/main_window.hpp \
     src/renderer.hpp \
@@ -33,7 +32,6 @@ SOURCES += \
     src/config.cpp \
     src/control_tool_bar.cpp \
     src/editor.cpp \
-    src/editor_scene.cpp \
     src/editor_view.cpp \
     src/main.cpp \
     src/main_window.cpp \

@@ -14,16 +14,16 @@
 // along with Simple Normal Mapper. If not, see <http://www.gnu.org/licenses/>.
 
 #include "editor.hpp"
-#include "editor_scene.hpp"
 #include "editor_view.hpp"
 #include "main_window.hpp"
 
 #include <QGraphicsItem>
+#include <QGraphicsScene>
 
 #include <cassert>
 
 Editor::Editor(const std::vector<std::string> & args)
-    : m_scene(new EditorScene(this))
+    : m_scene(new QGraphicsScene(this))
     , m_view(new EditorView(*this))
     , m_renderer(new Renderer)
     , m_renderThread(new QThread(this))
@@ -45,7 +45,7 @@ EditorView & Editor::view() const
     return *m_view;
 }
 
-EditorScene & Editor::scene() const
+QGraphicsScene & Editor::scene() const
 {
     assert(m_scene);
     return *m_scene;
