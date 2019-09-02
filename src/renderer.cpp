@@ -44,7 +44,7 @@ Renderer::HeightMap Renderer::buildHeightMap()
             const int r = qRed(m_image.pixel(i, j));
             const int g = qGreen(m_image.pixel(i, j));
             const int b = qBlue(m_image.pixel(i, j));
-            const int intensity = 0.2989 * r + 0.5870 * g + 0.1140 * b;
+            const int intensity = static_cast<int>(0.2989 * r + 0.5870 * g + 0.1140 * b);
             minIntensity = intensity < minIntensity ? intensity : minIntensity;
             maxIntensity = intensity > maxIntensity ? intensity : maxIntensity;
         }
@@ -58,7 +58,7 @@ Renderer::HeightMap Renderer::buildHeightMap()
             const int g = qGreen(m_image.pixel(i, j));
             const int b = qBlue(m_image.pixel(i, j));
             const int a = qAlpha(m_image.pixel(i, j));
-            const int intensity = 0.2989 * r + 0.5870 * g + 0.1140 * b;
+            const int intensity = static_cast<int>(0.2989 * r + 0.5870 * g + 0.1140 * b);
             const int index = j * m_width + i;
 
             if (a == 0)
@@ -89,14 +89,14 @@ float Renderer::getHeight(int x, int y)
 
 QVector3D Renderer::calculateNormal(int x, int y, float r, float a)
 {
-    const float DEG_TO_RAD = 3.1415 / 180.0;
+    const float DEG_TO_RAD = 3.1415f / 180.0f;
 
-    const int sx1 = x + std::cos(a * DEG_TO_RAD) * r;
-    const int sy1 = y + std::sin(a * DEG_TO_RAD) * r;
-    const int sx2 = x + std::cos((a + 60) * DEG_TO_RAD) * r;
-    const int sy2 = y + std::sin((a + 60) * DEG_TO_RAD) * r;
-    const int sx3 = x + std::cos((a + 120) * DEG_TO_RAD) * r;
-    const int sy3 = y + std::sin((a + 120) * DEG_TO_RAD) * r;
+    const int sx1 = static_cast<int>(x + std::cos(a * DEG_TO_RAD) * r);
+    const int sy1 = static_cast<int>(y + std::sin(a * DEG_TO_RAD) * r);
+    const int sx2 = static_cast<int>(x + std::cos((a + 60) * DEG_TO_RAD) * r);
+    const int sy2 = static_cast<int>(y + std::sin((a + 60) * DEG_TO_RAD) * r);
+    const int sx3 = static_cast<int>(x + std::cos((a + 120) * DEG_TO_RAD) * r);
+    const int sy3 = static_cast<int>(y + std::sin((a + 120) * DEG_TO_RAD) * r);
 
     const QVector3D h1(sx2 - sx1, sy2 - sy1, getHeight(sx2, sy2) - getHeight(sx1, sy1));
     const QVector3D h2(sx3 - sx1, sy3 - sy1, getHeight(sx3, sy3) - getHeight(sx1, sy1));
@@ -132,17 +132,17 @@ void Renderer::render()
         {
             const int index = j * m_width + i;
 
-            int r = m_map.at(index).normal.x() * 128;
+            int r = static_cast<int>(m_map.at(index).normal.x() * 128);
             r += 128;
             r = r < 0   ? 0   : r;
             r = r > 255 ? 255 : r;
 
-            int g = m_map.at(index).normal.y() * 128;
+            int g = static_cast<int>(m_map.at(index).normal.y() * 128);
             g += 128;
             g = g < 0   ? 0   : g;
             g = g > 255 ? 255 : g;
 
-            int b = m_map.at(index).normal.z() * 128;
+            int b = static_cast<int>(m_map.at(index).normal.z() * 128);
             b += 128;
             b = b < 0   ? 0   : b;
             b = b > 255 ? 255 : b;
@@ -165,7 +165,7 @@ void Renderer::setInput(const QImage & input)
 
 void Renderer::setAmplitude(float amplitude)
 {
-    if (m_amplitude != amplitude)
+    if (!qFuzzyCompare(m_amplitude, amplitude))
     {
         m_amplitude = amplitude;
         m_map = buildHeightMap();
