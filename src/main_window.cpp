@@ -27,7 +27,6 @@
 #include <QApplication>
 #include <QCloseEvent>
 #include <QDateTime>
-#include <QDesktopWidget>
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QIcon>
@@ -78,7 +77,6 @@ MainWindow::MainWindow(Editor & editor, Renderer & renderer)
     addToolBar(Qt::LeftToolBarArea, m_controlToolbar);
 
     initMenuBar();
-
     initLayout();
 
     connect(m_controlToolbar, &ControlToolBar::amplitudeChanged, &renderer, &Renderer::setAmplitude);
@@ -88,13 +86,13 @@ MainWindow::MainWindow(Editor & editor, Renderer & renderer)
 
 void MainWindow::initMenuBar()
 {
-    auto menuBar = new QMenuBar(this);
+    const auto menuBar = new QMenuBar(this);
     setMenuBar(menuBar);
 
-    auto fileMenu = new QMenu(tr("&File"), this);
+    const auto fileMenu = new QMenu(tr("&File"), this);
     menuBar->addMenu(fileMenu);
 
-    auto openImageAction = new QAction(tr("&Open new image.."), this);
+    const auto openImageAction = new QAction(tr("&Open new image.."), this);
     connect(openImageAction, &QAction::triggered, this, &MainWindow::openImage);
     fileMenu->addAction(openImageAction);
 
@@ -103,19 +101,19 @@ void MainWindow::initMenuBar()
     m_saveNormalsAction->setEnabled(false);
     fileMenu->addAction(m_saveNormalsAction);
 
-    auto quitAction = new QAction(tr("&Quit"), this);
+    const auto quitAction = new QAction(tr("&Quit"), this);
     connect(quitAction, &QAction::triggered, this, &MainWindow::close);
     fileMenu->addAction(quitAction);
 
-    auto helpMenu = new QMenu(tr("&Help"), this);
+    const auto helpMenu = new QMenu(tr("&Help"), this);
     menuBar->addMenu(helpMenu);
 
-    auto about = new QAction(tr("About"), this);
+    const auto about = new QAction(tr("About"), this);
     helpMenu->addAction(about);
     connect(about, &QAction::triggered, this, &MainWindow::showAboutDlg);
 
     // Add "about Qt"-action
-    auto aboutQtAct = new QAction(tr("About &Qt"), this);
+    const auto aboutQtAct = new QAction(tr("About &Qt"), this);
     helpMenu->addAction(aboutQtAct);
     connect(aboutQtAct, &QAction::triggered, this, &MainWindow::showAboutQt);
 }
@@ -134,8 +132,8 @@ void MainWindow::showAboutDlg()
 void MainWindow::initLayout()
 {
     // Create layouts for slider, view and toolbar
-    auto centralLayout = new QVBoxLayout;
-    auto viewSplitter = new QSplitter(this);
+    const auto centralLayout = new QVBoxLayout;
+    const auto viewSplitter = new QSplitter(this);
     viewSplitter->setOrientation(Qt::Horizontal);
     viewSplitter->addWidget(qobject_cast<QWidget *>(&m_editor.view()));
     viewSplitter->addWidget(m_renderPreview);
@@ -150,7 +148,7 @@ void MainWindow::initLayout()
 
     connect(m_scaleSlider, &QSlider::sliderMoved, this, &MainWindow::updateScale);
 
-    auto sliderLayout = new QHBoxLayout;
+    const auto sliderLayout = new QHBoxLayout;
     sliderLayout->addWidget(new QLabel(tr("Scale:")));
     sliderLayout->addWidget(m_scaleSlider);
     centralLayout->addLayout(sliderLayout);
@@ -159,9 +157,9 @@ void MainWindow::initLayout()
     m_console->setReadOnly(true);
     m_console->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
     m_console->resize(m_console->width(), 50);
-    auto views = new QWidget(this);
+    const auto views = new QWidget(this);
 
-    auto consoleSplitter = new QSplitter(this);
+    const auto consoleSplitter = new QSplitter(this);
     consoleSplitter->setOrientation(Qt::Vertical);
     consoleSplitter->addWidget(views);
     views->setLayout(centralLayout);
@@ -230,9 +228,8 @@ void MainWindow::closeEvent(QCloseEvent * event)
 
 void MainWindow::updateScale(int value)
 {
-    qreal scale = static_cast<qreal>(value) / 100;
-
     QTransform transform;
+    const auto scale = static_cast<qreal>(value) / 100;
     transform.scale(scale, scale);
     m_editor.view().setTransform(transform);
     m_renderPreview->setTransform(transform);
