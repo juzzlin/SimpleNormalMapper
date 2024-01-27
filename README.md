@@ -18,22 +18,25 @@ a 3D object.
 
 ## Building the project
 
-Simple Normal Mapper is developed in C++/Qt so it can be built on any
-platform that Qt5 runs on. There are project files for `qmake` and `CMake`.
+Currently the build depends on `Qt 5` and `CMake` only. Support for `Qt 6` is preliminary and can be explicitly enabled.
 
-Building in CLI with CMake:
+Use the official `Qt SDK` or install the needed development tools from a package repository.
 
-```
-$ mkdir build && cd build
-$ cmake ..
-$ make
-```
+Building for Linux in a nutshell:
+
+    $ mkdir build && cd build
+
+    $ cmake ..
+
+    $ cmake --build . -j4
+
+`Qt 6` can be explicitly enabled by:
+
+    $ cmake -DBUILD_WITH_QT6=ON ..
 
 Create a Debian package for Debian-based Linux distributions (in build dir):
 
-```
-$ cpack -G DEB
-```
+    $ cpack -G DEB
 
 ## Licence
 
