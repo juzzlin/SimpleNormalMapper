@@ -27,4 +27,5 @@ TODO
 TODO~
 snm.pro.user
 .gitignore~
-
+build*
+*.user
