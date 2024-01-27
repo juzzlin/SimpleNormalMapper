@@ -16,7 +16,12 @@ set(RCS
     ${CMAKE_SOURCE_DIR}/data/icons/Icons.qrc
 )
 
-qt5_add_resources(RC_SRC ${RCS})
+if(${QT_VERSION_MAJOR} STREQUAL "6")
+    qt_add_resources(RC_SRC ${RCS})
+# This is needed for Qt < 5.15
+else()
+    qt5_add_resources(RC_SRC ${RCS})
+endif()
 
 # Resource compilation for MinGW
 if(MINGW)
@@ -33,5 +38,5 @@ endif()
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 add_executable(${BINARY_NAME} WIN32 ${SRC} ${MOC_SRC} ${RC_SRC})
 
-target_link_libraries(${BINARY_NAME} Qt5::Widgets)
+target_link_libraries(${BINARY_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
 

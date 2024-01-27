@@ -1,29 +1,19 @@
 project(SimpleNormalMapper)
 
-cmake_minimum_required(VERSION 2.8.12)
-cmake_policy(VERSION 2.8.12)
-
-if(POLICY CMP0005)
-    cmake_policy(SET CMP0005 NEW)
-endif()
-
-if(POLICY CMP0020)
-    cmake_policy(SET CMP0020 NEW)
-endif()
-
-if(POLICY CMP0043)
-    cmake_policy(SET CMP0043 NEW)
-endif()
-
-if(POLICY CMP0071)
-    cmake_policy(SET CMP0071 NEW)
-endif()
+cmake_minimum_required(VERSION 3.10)
+cmake_policy(VERSION 3.10)
 
 # Global game version
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "1")
 set(VERSION_PATCH "0")
 set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
+
+message("\n${CMAKE_PROJECT_NAME} ${VERSION}\n")
+message(STATUS "System name       : ${CMAKE_HOST_SYSTEM_NAME}")
+message(STATUS "System version    : ${CMAKE_SYSTEM_VERSION}")
+message(STATUS "Compiler identity : ${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "Compiler version  : ${CMAKE_CXX_COMPILER_VERSION}")
 
 # Some common CPack variables
 set(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
@@ -79,9 +69,15 @@ add_definitions(-DVERSION="${VERSION}")
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(QT_MIN_VER 5.5.1) # The version in Ubuntu 16.04
-find_package(Qt5Core ${QT_MIN_VER} REQUIRED)
-find_package(Qt5Widgets ${QT_MIN_VER} REQUIRED)
+set(QT_MIN_VER 5.9.5) # The version in Ubuntu 18.04 LTS
+if (BUILD_WITH_QT6)
+    find_package(QT NAMES Qt6 COMPONENTS Core REQUIRED)
+    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets REQUIRED)
+else()
+    find_package(QT NAMES Qt5 COMPONENTS Core REQUIRED)
+    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Widgets REQUIRED)
+endif()
+message(STATUS "Qt version found  : ${QT_VERSION_MAJOR}.${QT_VERSION_MINOR}.${QT_VERSION_PATCH}\n")
 
 # Install paths depend on the build type and target platform
 setup_install_targets()
