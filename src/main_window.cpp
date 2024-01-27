@@ -37,6 +37,7 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
+#include <QScreen>
 #include <QSizePolicy>
 #include <QSlider>
 #include <QSplitter>
@@ -70,9 +71,9 @@ MainWindow::MainWindow(Editor & editor, Renderer & renderer)
     resize(Settings::loadWindowSize());
 
     // Try to center the window.
-    const auto geometry(QApplication::desktop()->availableGeometry());
-    move(geometry.width() / 2 - width() / 2,
-        geometry.height() / 2 - height() / 2);
+    const auto screen = QGuiApplication::primaryScreen();
+    const auto screenGeometry = screen->geometry();
+    move(screenGeometry.width() / 2 - width() / 2, screenGeometry.height() / 2 - height() / 2);
 
     addToolBar(Qt::LeftToolBarArea, m_controlToolbar);
 
